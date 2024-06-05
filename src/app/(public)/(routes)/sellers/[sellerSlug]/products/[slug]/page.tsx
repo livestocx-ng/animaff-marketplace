@@ -1,30 +1,15 @@
 'use client';
-import {cn} from '@/lib/utils';
-import Image from 'next/image';
-import {
-	AlertDialog,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import Lottie from 'lottie-react';
-import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
-import {ProductInfo} from '@/types/types';
+import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/store/use-global-store';
-import AuthHeader from '@/components/header/auth-header';
+import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import {useProductMediaModalStore} from '@/store/use-global-store';
 import SingleProductContent from '@/components/product/single-product-content';
-import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../../../../public/animations/animation__3.json';
-import ProductMediaModal from '../../../../../../../../components/modals/product/product-media-modal';
-import {useRouter} from 'next/navigation';
-import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
+import ProductMediaModal from '../../../../../../../components/modals/product/product-media-modal';
 
 interface SellerProductPageParams {
 	params: {

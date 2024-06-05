@@ -5,7 +5,7 @@ import axios, {AxiosError} from 'axios';
 import {useGlobalStore} from '@/store/use-global-store';
 import ChatConversationCard from '@/components/chat/chat-conversation-card';
 import ChatConversationContent from '@/components/chat/chat-conversation-content';
-import EmptyMessagesAnimation from '../../../../../../../../public/animations/animation__chat__1.json';
+import EmptyMessagesAnimation from '../../../../../../../public/animations/animation__chat__1.json';
 
 const MessagesContent = () => {
 	const {

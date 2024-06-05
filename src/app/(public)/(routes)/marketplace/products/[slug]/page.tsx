@@ -14,9 +14,8 @@ import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import SingleProductContent from '@/components/product/single-product-content';
-import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
-import type {Metadata, ResolvingMetadata} from 'next';
+import EmptyAnimation from '../../../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
 	params: {

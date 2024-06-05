@@ -5,7 +5,7 @@ import {Button} from '@/components/ui/button';
 import {Dispatch, SetStateAction} from 'react';
 import {useGlobalStore} from '@/store/use-global-store';
 import ProductCard from '@/components/cards/product-card';
-import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
+import EmptyAnimation from '../../../../../../../public/animations/animation__3.json';
 
 interface SellerInfoProductsProps {
 	currentPage: number;
