@@ -121,9 +121,9 @@ const SignInPage = () => {
 									onKeyDown={(e) => {
 										handleKeyDown(e, index);
 									}}
-									ref={(ref) =>
-										(inputRefs.current[index] = ref)
-									}
+									ref={(ref) => {
+										inputRefs.current[index] = ref;
+									}}
 									className='h-10 py-8 md:py-10 px-4 w-[60px] md:w-[100px] text-center text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
 								/>
 							))}
