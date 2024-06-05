@@ -4,6 +4,9 @@ import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/store/use-global-store';
+import {useEffect} from 'react';
+import {DesiredItemInfo} from '@/types/types';
+import {Button} from '@/components/ui/button';
 import {
 	AlertDialog,
 	AlertDialogTitle,
@@ -17,9 +20,6 @@ import {
 import axios, {AxiosError} from 'axios';
 import {Badge} from '@/components/ui/badge';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useEffect} from 'react';
-import {DesiredItemInfo} from '@/types/types';
-import {Button} from '@/components/ui/button';
 
 const DesiredItemContent = () => {
 	const {
