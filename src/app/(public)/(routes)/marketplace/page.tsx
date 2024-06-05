@@ -8,8 +8,8 @@ import SearchForm from '../components/search-form';
 import {useGlobalStore} from '@/store/use-global-store';
 import MarketplaceProducts from './components/marketplace-products';
 import MarketplaceFilterForm from './components/marketplace-filterform';
-import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
+import EmptyAnimation from '../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
 
 const MarketPlacePage = () => {
 	const userStore = useUserHook();

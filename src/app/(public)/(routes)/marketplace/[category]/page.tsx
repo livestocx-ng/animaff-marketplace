@@ -6,7 +6,7 @@ import {useGlobalStore} from '@/store/use-global-store';
 import AuthHeader from '@/components/header/auth-header';
 import MarketplaceProducts from '../components/marketplace-products';
 import MarketplaceFilterForm from '../components/marketplace-filterform';
-import Animation1 from '../../../../../../../public/animations/animation__2.json';
+import Animation1 from '../../../../../../public/animations/animation__2.json';
 
 interface MarketPlaceFilterPageProps {
 	params: {

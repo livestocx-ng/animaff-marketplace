@@ -8,7 +8,7 @@ import {useGlobalStore} from '@/store/use-global-store';
 import {getVendorIdFromSlug} from '@/utils/slug.formatter';
 import SellerInfoSearchForm from './components/seller-search-form';
 import SellerInfoProducts from './components/seller-info-products';
-import LoadingAnimation from '../../../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../../public/animations/animation__3.json';
 
 interface SellerInfoPageProps {
 	params: {

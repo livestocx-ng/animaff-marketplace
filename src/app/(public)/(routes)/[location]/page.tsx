@@ -29,7 +29,7 @@ const SearchLocationPage = ({params}: SearchLocationPageParams) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const fetchProducts = async () => {
-		try 
+		try {
 			setLoading(false);
 
 			// console.log(currentPage);

@@ -6,8 +6,8 @@ import React, {useEffect, useState} from 'react';
 import SearchForm from '../components/search-form';
 import HomeSellers from './components/home-sellers';
 import {useGlobalStore} from '@/store/use-global-store';
-import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
+import EmptyAnimation from '../../../../../public/animations/animation__3.json';
+import LoadingAnimation from '../../../../../public/animations/loading__animation__1.json';
 
 const SellersPage = () => {
 	const userStore = useUserHook();
