@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import ButtonLoader from '../loader/button-loader';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import PromotionPlanCard from '../cards/promotion-plan-card';
 
 const PromotionPlansContent = () => {

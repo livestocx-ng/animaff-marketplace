@@ -3,7 +3,7 @@ import Image from 'next/image';
 import {
 	useGlobalStore,
 	useCreatePromotionModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';

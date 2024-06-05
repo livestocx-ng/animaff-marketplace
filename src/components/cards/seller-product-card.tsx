@@ -5,7 +5,7 @@ import {toast} from 'react-hot-toast';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {ShoppingCartIcon, ThumbsDown, ThumbsUp} from 'lucide-react';
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';

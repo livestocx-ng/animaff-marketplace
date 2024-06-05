@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {X} from 'lucide-react';
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
-import {useDownloadAppStore} from '@/store/use-global-store';
+import {useDownloadAppStore} from '@/hooks/use-global-store';
 
 const DownloadMobileAppModal = () => {
 	const {onClose} = useDownloadAppStore();

@@ -6,7 +6,7 @@ import {
 	checkPromotionDaysRemaining,
 } from '@/utils/promotion.util.formatter';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 
 const PromotionInfoContent = () => {

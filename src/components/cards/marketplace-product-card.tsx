@@ -5,7 +5,7 @@ import axios, {AxiosError} from 'axios';
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {ShoppingCartIcon, ThumbsDown, ThumbsUp} from 'lucide-react';
 
 interface ProductCardProps {

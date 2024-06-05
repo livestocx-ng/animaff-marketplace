@@ -1,7 +1,7 @@
 import React from 'react';
 import {LineChart} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 const PromotionBanner = () => {
 	const router = useRouter();

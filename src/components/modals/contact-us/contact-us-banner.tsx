@@ -2,7 +2,7 @@ import Image from 'next/image';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {getLocalStorage} from '@/lib/localstorageHelper';
 
 const ContactUsBanner = () => {

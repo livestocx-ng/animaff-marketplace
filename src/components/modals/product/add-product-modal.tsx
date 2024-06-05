@@ -11,7 +11,7 @@ import {
 	useGlobalStore,
 	useCreateProductModalStore,
 	useShareNewProductModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {
 	getFilesTypeCount,
 	createBlobImageUrls,

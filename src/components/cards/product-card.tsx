@@ -12,7 +12,7 @@ import {useEffect, useState} from 'react';
 import {
 	useGlobalStore,
 	useShareProductModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {usePathname, useRouter} from 'next/navigation';

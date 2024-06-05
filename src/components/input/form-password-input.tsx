@@ -1,6 +1,6 @@
 import {cn} from '@/lib/utils';
-import React, {useState} from 'react';
 import {Eye, EyeOff} from 'lucide-react';
+import React, {useState} from 'react';
 
 interface FormPasswordInputProps {
 	disabled?: boolean;

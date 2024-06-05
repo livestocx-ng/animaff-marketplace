@@ -6,7 +6,7 @@ import {Button} from '@/components/ui/button';
 import {ProductInfoReview} from '@/types/types';
 import {FaStar, FaStarHalf} from 'react-icons/fa';
 import {useEffect, useReducer, useState} from 'react';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {ValidateProductReviewFormData} from '@/utils/form-validations/product.validation';
 import ButtonLoader from '@/components/loader/button-loader';

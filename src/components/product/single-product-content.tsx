@@ -23,7 +23,7 @@ import {cn} from '@/lib/utils';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {Badge} from '../ui/badge';
 import {Button} from '../ui/button';
 import {

@@ -4,7 +4,7 @@ import {X} from 'lucide-react';
 import {
 	useGlobalStore,
 	useUpgradeToPremiumAccessStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -173,10 +173,8 @@ const UpgradeToPremiumModal = () => {
 
 												if (user?.role !== 'FARMER') {
 													return toast.error(
-														'Only sellers are allowed to this service.',
-														{
-															className:
-																'text-xs, font-medium',
+														'Only sellers are allowed to this service.', {
+															className: 'text-xs, font-medium'
 														}
 													);
 												}

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {AccountNavLinks, HelpNavLinks, NavLinks, OtherNavLinks} from '@/data';
 import {Facebook, Instagram, Linkedin} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 interface IconLinkProps {
 	href: string;

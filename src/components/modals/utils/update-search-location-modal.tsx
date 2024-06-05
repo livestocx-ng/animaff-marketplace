@@ -2,7 +2,7 @@
 import {
 	useGlobalStore,
 	useUpdateSearchLocationModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -234,12 +234,7 @@ const UpdateSearchLocationModal = () => {
 								}}
 								className='border-b text-sm py-2 flex justify-between w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 							>
-								<p>
-									All {formData.searchLocationState}{' '}
-									{formData.searchLocationState === 'Abuja'
-										? ''
-										: `${formData.searchLocationState} State`}
-								</p>{' '}
+								<p>All {formData.searchLocationState} {formData.searchLocationState === 'Abuja'? '' : `${formData.searchLocationState} State`}</p>{' '}
 								<ChevronRight className='text-slate-400' />
 							</div>
 							{NigerianCities[formData.searchLocationState]

@@ -2,7 +2,7 @@
 import {
 	useGlobalStore,
 	useUpdateWelcomeFarmerModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 

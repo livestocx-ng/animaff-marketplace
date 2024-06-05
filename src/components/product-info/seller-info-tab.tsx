@@ -1,4 +1,4 @@
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 const SellerInfoTab = () => {
 	const {productInfo} = useGlobalStore();

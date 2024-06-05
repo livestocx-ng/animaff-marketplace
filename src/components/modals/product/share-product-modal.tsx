@@ -14,7 +14,7 @@ import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatProductSlug} from '@/utils/slug.formatter';
-import {useShareProductModalStore} from '@/store/use-global-store';
+import {useShareProductModalStore} from '@/hooks/use-global-store';
 
 const ShareProductModal = () => {
 	const {payload, onClose} = useShareProductModalStore();

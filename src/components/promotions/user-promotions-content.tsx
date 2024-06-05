@@ -7,7 +7,7 @@ import PromotionInfoContent from './promotion-info-content';
 import {
 	useCreatePromotionModalStore,
 	useGlobalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 
 const UserPromotionsContent = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);

@@ -4,7 +4,7 @@ import {X} from 'lucide-react';
 import {
 	useGlobalStore,
 	useUpdateVendorProfileModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {NigerianCities, NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';

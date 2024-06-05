@@ -4,7 +4,7 @@ import {useEffect} from 'react';
 import {
 	useGlobalStore,
 	useReadNotificationModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';

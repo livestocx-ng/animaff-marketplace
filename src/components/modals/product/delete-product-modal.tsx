@@ -3,7 +3,7 @@ import {X} from 'lucide-react';
 import {
 	useGlobalStore,
 	useDeleteProductModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';

@@ -2,7 +2,7 @@
 import {Maximize2, ChevronLeftCircle, ChevronRightCircle} from 'lucide-react';
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
-import {useProductMediaModalStore} from '@/store/use-global-store';
+import {useProductMediaModalStore} from '@/hooks/use-global-store';
 
 const ProductMediaModal = () => {
 	const modal = useProductMediaModalStore();

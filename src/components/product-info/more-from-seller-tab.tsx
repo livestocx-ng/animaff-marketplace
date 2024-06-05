@@ -1,6 +1,6 @@
 'use client';
 import {usePathname} from 'next/navigation';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import ProductCard from '@/components/cards/product-card';
 import SellerProductCard from '../cards/seller-product-card';
 import MarketPlaceProductCard from '../cards/marketplace-product-card';

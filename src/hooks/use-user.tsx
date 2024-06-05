@@ -1,7 +1,7 @@
 'use client';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
-import { useGlobalStore } from '@/store/use-global-store';
+import {useGlobalStore} from './use-global-store';
 
 export function useUserHook() {
 	const {user, updateUser} = useGlobalStore();

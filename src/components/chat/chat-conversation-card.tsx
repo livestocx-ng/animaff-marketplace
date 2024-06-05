@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import {ChatConversation} from '@/types/types';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 interface ChatConversationCardProps {
 	conversation: ChatConversation;

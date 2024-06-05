@@ -13,8 +13,8 @@ import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatProductSlug} from '@/utils/slug.formatter';
-import {useShareNewProductModalStore} from '@/store/use-global-store';
-import {useEffect} from 'react';
+import {useShareNewProductModalStore} from '@/hooks/use-global-store';
+import { useEffect } from 'react';
 
 const ShareNewProductModal = () => {
 	const {payload, onClose} = useShareNewProductModalStore();

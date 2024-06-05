@@ -3,7 +3,7 @@ import Image from 'next/image';
 import {Button} from '../ui/button';
 import {DesiredItem} from '@/types/types';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 const DesiredItemCard = ({item}: {item: DesiredItem}) => {
 	const {updatePayload, updateCurrentAccountTab} = useGlobalStore();

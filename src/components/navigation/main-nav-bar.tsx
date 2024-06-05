@@ -20,7 +20,7 @@ import {
 	useGlobalStore,
 	useUpdateUserRoleModalStore,
 	useUpgradeToPremiumAccessStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useRouter} from 'next/navigation';

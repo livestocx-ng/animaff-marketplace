@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {PromotionPlan} from '@/types/types';
 import {ChevronDown} from 'lucide-react';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 interface PromotionPlanCardProps {
 	plan: PromotionPlan;

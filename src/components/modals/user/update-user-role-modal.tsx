@@ -4,7 +4,7 @@ import {X} from 'lucide-react';
 import {
 	useGlobalStore,
 	useUpdateUserRoleModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';

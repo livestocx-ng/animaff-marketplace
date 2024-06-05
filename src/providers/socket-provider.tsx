@@ -1,7 +1,7 @@
 'use client';
 import {Socket, io} from 'socket.io-client';
 import {Fragment, useEffect} from 'react';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 let SocketInstance: Socket;
 

@@ -1,5 +1,5 @@
 {
-  "name": "livestocx-us",
+  "name": "livestocx-marketplace",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -26,12 +26,9 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-table": "^8.10.6",
     "@types/cookie": "^0.5.3",
-    "@types/gtag.js": "^0.0.20",
     "@types/jsonwebtoken": "^9.0.4",
-    "@types/react-collapse": "^5.0.4",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@vercel/og": "^0.6.2",
-    "autoprefixer": "^10.4.19",
     "aws-sdk": "^2.1622.0",
     "axios": "^1.5.1",
     "bufferutil": "^4.0.8",
@@ -72,11 +69,14 @@
     "zustand": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@types/gtag.js": "^0.0.18",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-collapse": "^5.0.4",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
   }
 }

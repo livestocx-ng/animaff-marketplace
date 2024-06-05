@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import {Cookie} from 'lucide-react';
 import {useEffect, useState} from 'react';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import {getLocalStorage, setLocalStorage} from '@/lib/localstorageHelper';
 
 export default function CookieBannerProvider() {

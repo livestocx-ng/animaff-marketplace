@@ -10,7 +10,7 @@ import {
 import {
 	useGlobalStore,
 	useUpdateProductModalStore,
-} from '@/store/use-global-store';
+} from '@/hooks/use-global-store';
 import {Media} from '@/types/types';
 import {
 	getFilesTypeCount,

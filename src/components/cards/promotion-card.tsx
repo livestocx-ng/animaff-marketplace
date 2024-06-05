@@ -1,10 +1,10 @@
 import React from 'react';
 import {Promotion} from '@/types/types';
 import {
-	isDateInThePast,
+    isDateInThePast,
 	formatPromotionPlanTitle,
 } from '@/utils/promotion.util.formatter';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 interface PromotionCardProps {
 	promotion: Promotion;
@@ -16,9 +16,9 @@ const PromotionCard = ({promotion}: PromotionCardProps) => {
 	return (
 		<div
 			onClick={() => {
-				updateShowPromotionInfo(true);
-				updateCurrentPromotion(promotion);
-			}}
+                updateShowPromotionInfo(true);
+                updateCurrentPromotion(promotion);
+            }}
 			className={`border shadow-md ${
 				isDateInThePast(promotion.expiration_date)
 					? 'border-slate-100 shadow-slate-300'

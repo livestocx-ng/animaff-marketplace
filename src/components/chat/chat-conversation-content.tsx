@@ -5,7 +5,7 @@ import {ChatMessage} from '@/types/types';
 import {SendHorizonal, X} from 'lucide-react';
 import ChatBubble from '../bubbles/chat-bubble';
 import FormTextInput from '../input/form-text-input';
-import {useGlobalStore} from '@/store/use-global-store';
+import {useGlobalStore} from '@/hooks/use-global-store';
 import React, {useEffect, useReducer, useRef} from 'react';
 import {getSocketInstance} from '@/providers/socket-provider';
 import EmptyMessagesAnimation from '../../../public/animations/animation__chat__1.json';

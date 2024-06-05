@@ -1,13 +1,15 @@
 import ReactGA from 'react-ga4';
 import type {Metadata} from 'next';
 import {Poppins} from 'next/font/google';
+import {Toaster} from '@/components/ui/toaster';
 
 import './globals.css';
+import Head from 'next/head';
 import {ToastProvider} from '@/providers';
 import AuthProvider from '@/providers/auth-provider';
-import SocketProvider from '@/providers/socket-provider';
 import CookieBannerProvider from '@/providers/cookie-banner-provider';
 import GoogleAnalyticsProvider from '@/providers/google-analytics-provider';
+import SocketProvider from '@/providers/socket-provider';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -46,6 +48,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 				<AuthProvider>
 					<SocketProvider>
 						<ToastProvider />
+						<Toaster />
 						{children}
 					</SocketProvider>
 				</AuthProvider>
