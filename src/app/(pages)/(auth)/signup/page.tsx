@@ -7,7 +7,7 @@ import {signIn} from 'next-auth/react';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
-import {useEffect, useReducer, useState} from 'react';
+import {Suspense, useEffect, useReducer, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
@@ -151,82 +151,130 @@ const SignUpPage = () => {
 	};
 
 	return (
-		<div className='w-full'>
-			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white'>
-					Sign Up
-				</h1>
-			</section>
-
-			<div className='flex flex-col justify-center items-center  py-20'>
-				<form
-					autoComplete='off'
-					onSubmit={handleSubmit}
-					className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded shadow-md flex flex-col space-y-8'
-				>
-					<h1 className='text-center text-2xl font-semibold'>
+		<Suspense>
+			<div className='w-full'>
+				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+					<h1 className='text-xl md:text-5xl font-medium text-white'>
 						Sign Up
 					</h1>
-					<div className='space-y-4'>
-						<FormTextInput
-							name='firstName'
-							padding='py-4 px-4'
-							value={formData.firstName}
-							handleChange={handleChange}
-							placeHolder='First Name'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-						<FormTextInput
-							name='lastName'
-							padding='py-4 px-4'
-							value={formData.lastName}
-							handleChange={handleChange}
-							placeHolder='Last Name'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-						<FormTextInput
-							name='email'
-							padding='py-4 px-4'
-							value={formData.email}
-							handleChange={handleChange}
-							placeHolder='Email'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-						<FormTextInput
-							name='phoneNumber'
-							type='number'
-							padding='py-4 px-4'
-							value={formData.phoneNumber}
-							handleChange={handleChange}
-							placeHolder='Phone Number'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-						{formData.role === 'FARMER' && (
-							<>
-								<FormTextInput
-									name='businessName'
-									padding='py-4 px-4'
-									value={formData.businessName}
-									handleChange={handleChange}
-									placeHolder='Business Name'
-									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-								/>
-								<FormTextInput
-									name='businessAddress'
-									padding='py-4 px-4'
-									value={formData.businessAddress}
-									handleChange={handleChange}
-									placeHolder='Business Address'
-									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-								/>
+				</section>
 
-								<div className='w-full'>
+				<div className='flex flex-col justify-center items-center  py-20'>
+					<form
+						autoComplete='off'
+						onSubmit={handleSubmit}
+						className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded shadow-md flex flex-col space-y-8'
+					>
+						<h1 className='text-center text-2xl font-semibold'>
+							Sign Up
+						</h1>
+						<div className='space-y-4'>
+							<FormTextInput
+								name='firstName'
+								padding='py-4 px-4'
+								value={formData.firstName}
+								handleChange={handleChange}
+								placeHolder='First Name'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+							<FormTextInput
+								name='lastName'
+								padding='py-4 px-4'
+								value={formData.lastName}
+								handleChange={handleChange}
+								placeHolder='Last Name'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+							<FormTextInput
+								name='email'
+								padding='py-4 px-4'
+								value={formData.email}
+								handleChange={handleChange}
+								placeHolder='Email'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+							<FormTextInput
+								name='phoneNumber'
+								type='number'
+								padding='py-4 px-4'
+								value={formData.phoneNumber}
+								handleChange={handleChange}
+								placeHolder='Phone Number'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+							{formData.role === 'FARMER' && (
+								<>
+									<FormTextInput
+										name='businessName'
+										padding='py-4 px-4'
+										value={formData.businessName}
+										handleChange={handleChange}
+										placeHolder='Business Name'
+										classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+									/>
+									<FormTextInput
+										name='businessAddress'
+										padding='py-4 px-4'
+										value={formData.businessAddress}
+										handleChange={handleChange}
+										placeHolder='Business Address'
+										classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+									/>
+
+									<div className='w-full'>
+										<select
+											name='businessState'
+											className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
+											onChange={handleSelectChange}
+										>
+											<option value=''>
+												Business State
+											</option>
+											{NigerianStates.map((option) => (
+												<option
+													key={option}
+													value={option}
+													className='cursor-pointer'
+												>
+													{option}
+												</option>
+											))}
+										</select>
+									</div>
+
+									<div className='w-full'>
+										<select
+											name='businessCity'
+											className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
+											onChange={handleSelectChange}
+										>
+											<option value=''>
+												Business City
+											</option>
+											{NigerianCities[
+												formData.businessState
+											].map((option) => (
+												<option
+													key={option}
+													value={option}
+													className='cursor-pointer'
+												>
+													{option}
+												</option>
+											))}
+										</select>
+									</div>
+								</>
+							)}
+
+							{formData.role === 'CUSTOMER' && (
+								<div>
 									<select
-										name='businessState'
+										name='location'
 										className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
 										onChange={handleSelectChange}
 									>
-										<option value=''>Business State</option>
+										<option value=''>Location</option>
 										{NigerianStates.map((option) => (
 											<option
 												key={option}
@@ -238,191 +286,150 @@ const SignUpPage = () => {
 										))}
 									</select>
 								</div>
+							)}
 
-								<div className='w-full'>
-									<select
-										name='businessCity'
-										className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
-										onChange={handleSelectChange}
-									>
-										<option value=''>Business City</option>
-										{NigerianCities[
-											formData.businessState
-										].map((option) => (
-											<option
-												key={option}
-												value={option}
-												className='cursor-pointer'
-											>
-												{option}
-											</option>
-										))}
-									</select>
-								</div>
-							</>
-						)}
+							<FormPasswordInput
+								name='password'
+								padding='py-4 px-4'
+								value={formData.password}
+								handleChange={handleChange}
+								placeHolder='Password'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+							<FormPasswordInput
+								name='confirmPassword'
+								padding='py-4 px-4'
+								value={formData.confirmPassword}
+								handleChange={handleChange}
+								placeHolder='Confirm Password'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
 
-						{formData.role === 'CUSTOMER' && (
-							<div>
-								<select
-									name='location'
-									className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-									onChange={handleSelectChange}
-								>
-									<option value=''>Location</option>
-									{NigerianStates.map((option) => (
-										<option
-											key={option}
-											value={option}
-											className='cursor-pointer'
-										>
-											{option}
-										</option>
-									))}
-								</select>
-							</div>
-						)}
-
-						<FormPasswordInput
-							name='password'
-							padding='py-4 px-4'
-							value={formData.password}
-							handleChange={handleChange}
-							placeHolder='Password'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-						<FormPasswordInput
-							name='confirmPassword'
-							padding='py-4 px-4'
-							value={formData.confirmPassword}
-							handleChange={handleChange}
-							placeHolder='Confirm Password'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-
-						<div className='flex flex-col space-y-5'>
-							<p className='text-sm text-center'>
-								Do you want to signup as a
-							</p>
-							<div className='flex justify-center space-x-10'>
-								<div className='space-x-3 flex items-center'>
-									<p className='text-sm'>Buyer</p>
-									<input
-										name='role'
-										value={'CUSTOMER'}
-										checked={formData.role === 'CUSTOMER'}
-										type='radio'
-										onChange={(
-											event: React.ChangeEvent<HTMLInputElement>
-										) => {
-											updateFormData({
-												type: 'UPDATE_FORMDATA',
-												payload: {
-													role: 'CUSTOMER',
-												},
-											});
-										}}
-									/>
-								</div>
-								<div className='space-x-3 flex items-center'>
-									<p className='text-sm'>Seller</p>
-									<input
-										name='role'
-										value={'FARMER'}
-										checked={formData.role === 'FARMER'}
-										type='radio'
-										onChange={(
-											event: React.ChangeEvent<HTMLInputElement>
-										) => {
-											updateFormData({
-												type: 'UPDATE_FORMDATA',
-												payload: {
-													role: 'FARMER',
-												},
-											});
-										}}
-									/>
-								</div>
-							</div>
-						</div>
-
-						<div className='flex justify-center'>
-							<div className='space-x-3 flex items-center'>
-								{' '}
-								<input
-									type='checkbox'
-									disabled={loading}
-									checked={formData.acceptedTerms}
-									onChange={() => {
-										updateFormData({
-											type: 'UPDATE_FORMDATA',
-											payload: {
-												acceptedTerms:
-													!formData.acceptedTerms,
-											},
-										});
-									}}
-								/>
-								<p className='text-sm'>
-									I agree your{' '}
-									<Link
-										target='_blank'
-										className='text-main'
-										href={'/terms-of-service'}
-									>
-										Terms of service
-									</Link>{' '}
-									and{' '}
-									<Link
-										target='_blank'
-										className='text-main'
-										href={'/privacy-policy'}
-									>
-										Privacy Policy
-									</Link>
+							<div className='flex flex-col space-y-5'>
+								<p className='text-sm text-center'>
+									Do you want to signup as a
 								</p>
+								<div className='flex justify-center space-x-10'>
+									<div className='space-x-3 flex items-center'>
+										<p className='text-sm'>Buyer</p>
+										<input
+											name='role'
+											value={'CUSTOMER'}
+											checked={
+												formData.role === 'CUSTOMER'
+											}
+											type='radio'
+											onChange={(
+												event: React.ChangeEvent<HTMLInputElement>
+											) => {
+												updateFormData({
+													type: 'UPDATE_FORMDATA',
+													payload: {
+														role: 'CUSTOMER',
+													},
+												});
+											}}
+										/>
+									</div>
+									<div className='space-x-3 flex items-center'>
+										<p className='text-sm'>Seller</p>
+										<input
+											name='role'
+											value={'FARMER'}
+											checked={formData.role === 'FARMER'}
+											type='radio'
+											onChange={(
+												event: React.ChangeEvent<HTMLInputElement>
+											) => {
+												updateFormData({
+													type: 'UPDATE_FORMDATA',
+													payload: {
+														role: 'FARMER',
+													},
+												});
+											}}
+										/>
+									</div>
+								</div>
 							</div>
-						</div>
 
-						{loading ? (
+							<div className='flex justify-center'>
+								<div className='space-x-3 flex items-center'>
+									{' '}
+									<input
+										type='checkbox'
+										disabled={loading}
+										checked={formData.acceptedTerms}
+										onChange={() => {
+											updateFormData({
+												type: 'UPDATE_FORMDATA',
+												payload: {
+													acceptedTerms:
+														!formData.acceptedTerms,
+												},
+											});
+										}}
+									/>
+									<p className='text-sm'>
+										I agree your{' '}
+										<Link
+											target='_blank'
+											className='text-main'
+											href={'/terms-of-service'}
+										>
+											Terms of service
+										</Link>{' '}
+										and{' '}
+										<Link
+											target='_blank'
+											className='text-main'
+											href={'/privacy-policy'}
+										>
+											Privacy Policy
+										</Link>
+									</p>
+								</div>
+							</div>
+
+							{loading ? (
+								<Button
+									type='button'
+									className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-3 cursor-default'
+								>
+									<ButtonLoader />
+								</Button>
+							) : (
+								<Button
+									type='submit'
+									className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-3'
+								>
+									Sign Up
+								</Button>
+							)}
+
+							<div className='flex items-center justify-between space-x-3'>
+								<Separator className='w-[43%]' />
+								<span>Or</span>
+								<Separator className='w-[43%]' />
+							</div>
+
 							<Button
 								type='button'
-								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-3 cursor-default'
+								variant={'outline'}
+								onClick={() => signIn('google')}
+								className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-3'
 							>
-								<ButtonLoader />
+								<Image
+									unoptimized={true}
+									alt='google icon'
+									src={'/icon_google.svg'}
+									width={30}
+									height={30}
+								/>
+								<p>Continue with Google</p>
 							</Button>
-						) : (
-							<Button
-								type='submit'
-								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-3'
-							>
-								Sign Up
-							</Button>
-						)}
 
-						<div className='flex items-center justify-between space-x-3'>
-							<Separator className='w-[43%]' />
-							<span>Or</span>
-							<Separator className='w-[43%]' />
-						</div>
-
-						<Button
-							type='button'
-							variant={'outline'}
-							onClick={() => signIn('google')}
-							className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-3'
-						>
-							<Image
-								unoptimized={true}
-								alt='google icon'
-								src={'/icon_google.svg'}
-								width={30}
-								height={30}
-							/>
-							<p>Continue with Google</p>
-						</Button>
-
-						{/* <div className='flex justify-center mt-5'>
+							{/* <div className='flex justify-center mt-5'>
 							<Link
 								href='/farmer/signup'
 								className='text-sm text-center mx-auto'
@@ -431,19 +438,20 @@ const SignUpPage = () => {
 								<span className='text-main'>Register here</span>
 							</Link>
 						</div> */}
-						<div className='flex justify-center mt-5'>
-							<Link
-								href='/signin'
-								className='text-sm text-center mx-auto'
-							>
-								Already have an account?{' '}
-								<span className='text-main'>Login</span>
-							</Link>
+							<div className='flex justify-center mt-5'>
+								<Link
+									href='/signin'
+									className='text-sm text-center mx-auto'
+								>
+									Already have an account?{' '}
+									<span className='text-main'>Login</span>
+								</Link>
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
-		</div>
+		</Suspense>
 	);
 };
 
