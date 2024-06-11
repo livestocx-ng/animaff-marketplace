@@ -55,7 +55,7 @@ const ProductsContent = () => {
 					}}
 					className='bg-green-600 flex items-center space-x-3 text-white h-10 hover:bg-green-700 w-fit rounded py-2'
 				>
-					<Plus className='h-4 w-4' /> <p>Add Product</p>
+					<Plus className='h-4 w-4' /> <p>Post Product</p>
 				</Button>
 			</div>
 

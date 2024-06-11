@@ -52,6 +52,7 @@ export interface Vendor {
 	email: string;
 	user: string;
 	phoneNumber: string;
+	zipPostalCode: string;
 	isUpdated: boolean;
 }
 
@@ -67,6 +68,13 @@ export interface Product {
 	impressionCount: number;
 	isPromotion: boolean;
 	isNegotiable: boolean;
+	zipPostalCode: string;
+	isOrganicallyRaised: boolean;
+	isHomeBred: boolean;
+	isMeat: boolean;
+	isPet: boolean;
+	isPedigree: boolean;
+	isNonPedigree: boolean;
 	totalReviews: number;
 	viewCount: number;
 	likeCount: number;

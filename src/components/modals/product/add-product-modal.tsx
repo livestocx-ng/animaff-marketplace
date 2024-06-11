@@ -23,7 +23,7 @@ import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {useReducer, useRef, useState} from 'react';
-import {FileImage, FileVideo, ImagePlus, X} from 'lucide-react';
+import {FileImage, FileVideo, ImagePlus, InfoIcon, X} from 'lucide-react';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
@@ -40,6 +40,13 @@ export type FormData = {
 	media: File[];
 	inStock: boolean;
 	isNegotiable: boolean;
+	zipPostalCode: string;
+	isOrganicallyRaised: boolean;
+	isHomeBred: boolean;
+	isMeat: boolean;
+	isPet: boolean;
+	isPedigree: boolean;
+	isNonPedigree: boolean;
 };
 
 type FormAction = {
@@ -56,6 +63,13 @@ const initialState: FormData = {
 	media: [],
 	inStock: false,
 	isNegotiable: false,
+	zipPostalCode: '',
+	isOrganicallyRaised: false,
+	isHomeBred: false,
+	isMeat: false,
+	isPet: false,
+	isPedigree: false,
+	isNonPedigree: false,
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -207,7 +221,7 @@ const AddProductModal = () => {
 				return toast.error(validationError);
 			}
 
-			// console.log('[CREATE-PRODUCT-PAYLOAD] :: ', FormData);
+			console.log('[CREATE-PRODUCT-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/create`,
@@ -249,10 +263,11 @@ const AddProductModal = () => {
 				className='flex flex-col w-[90%] lg:w-[60%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'
 			>
 				<div className='flex items-center justify-between px4 w-full'>
-					<h1 className='font-medium'>Add Product</h1>
+					<h1 className='font-medium'>Post Product</h1>
 
 					<Button
 						type='button'
+						disabled={loading}
 						onClick={() => modal.onClose()}
 						className='bg-white hover:bg-white'
 					>
@@ -262,16 +277,6 @@ const AddProductModal = () => {
 
 				<div className='flex flex-col-reverse lg:flex-row items-start justify-between w-full'>
 					<div className='w-full lg:w-[30%] flex flex-col space-y-5'>
-						{/* <div
-							onClick={openImageFileInput}
-							className='w-full bg-slate-200  flex flex-col items-center justify-center space-y-3 px-4 py-8 cursor-pointer'
-						>
-							<UploadCloud className='w-10 h-10' />
-							<p className='text-center text-xs'>
-								Upload picture of product
-							</p>
-						</div> */}
-
 						<input
 							type='file'
 							name='media'
@@ -402,18 +407,14 @@ const AddProductModal = () => {
 								Videos
 							</p>
 						)}
+
+						<div className='flex items-center space-x-2 border border-sky-300 rounded-md px-2 py-4 bg-sky-50 text-xs shadow-md shadow-sky-100'>
+							<InfoIcon size={16} className='text-sky-600' />{' '}
+							<p>You have 3 free post uploads left</p>
+						</div>
 					</div>
 
 					<div className='w-full lg:w-[70%] flex flex-col space-y-3 lg:pl-8 mb-5 lg:mb-0'>
-						{/* <div className='flex items-center justify-between w-full'>
-							<CategoryDropDownButton
-								value={category}
-								setValue={setProductCategory}
-								setShowStatusBar={setShowStatusBar}
-								classes='bg-green-600 rounded-none hover:bg-green-600 text-white hover:text-white w-full lg:w-fit'
-							/>
-						</div> */}
-
 						<div className='w-full'>
 							<p className='text-xs'>Product Category</p>
 							<select
@@ -445,6 +446,19 @@ const AddProductModal = () => {
 								value={formData.name}
 								handleChange={handleChange}
 								placeHolder='Product name'
+								classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
+							/>
+						</div>
+						<div className='space-y-'>
+							<p className='text-xs'>Zip/Postal Code</p>
+							<FormTextInput
+								type='number'
+								disabled={loading}
+								padding='py-3 px-4'
+								name='zipPostalCode'
+								handleChange={handleChange}
+								placeHolder='Zip/Postal Code'
+								value={formData.zipPostalCode}
 								classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
 							/>
 						</div>
@@ -489,7 +503,7 @@ const AddProductModal = () => {
 							/>
 						</div>
 
-						<div className='flex items-center space-x-5'>
+						<div className='flex flex-wrap gap-4 items-center justify- space-x-'>
 							<div className='flex items-center space-x-2'>
 								<Checkbox
 									id='isNegotiable'
@@ -530,6 +544,125 @@ const AddProductModal = () => {
 										: 'Sold Out'}
 								</label>
 							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isOrganicallyRaised'
+									checked={formData.isOrganicallyRaised}
+									onCheckedChange={(
+										isOrganicallyRaised: boolean
+									) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isOrganicallyRaised},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Organically Raised
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isHomeBred'
+									checked={formData.isHomeBred}
+									onCheckedChange={(isHomeBred: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isHomeBred},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Home Bred
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isMeat'
+									checked={formData.isMeat}
+									onCheckedChange={(isMeat: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isMeat},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Meat
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isPet'
+									checked={formData.isPet}
+									onCheckedChange={(isPet: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isPet},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Pet
+								</label>
+							</div>
+
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isPedigree'
+									checked={formData.isPedigree}
+									onCheckedChange={(isPedigree: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {
+												isPedigree,
+												isNonPedigree: false,
+											},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Pedigree
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isNonPedigree'
+									checked={formData.isNonPedigree}
+									onCheckedChange={(
+										isNonPedigree: boolean
+									) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {
+												isNonPedigree,
+												isPedigree: false,
+											},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Non Pedigree
+								</label>
+							</div>
 						</div>
 
 						<div className='flex flex-wrap items-center w-full gap-y-3 gap-x-5'>
@@ -547,10 +680,9 @@ const AddProductModal = () => {
 					</div>
 				</div>
 
-				<div className='flex justify-end pt-10'>
+				<div className='flex justify-end pt-1'>
 					{loading ? (
 						<Button
-							// disabled
 							type='button'
 							variant={'outline'}
 							className='w-full lg:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'

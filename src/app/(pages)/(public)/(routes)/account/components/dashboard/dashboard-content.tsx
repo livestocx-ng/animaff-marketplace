@@ -233,7 +233,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 					)}
 				</div>
 				<div className='flex flex-col items-start justify-between h-[350px] w-full md:w-[45%]'>
-					<div className='p-5 flex flex-col items-start w-full h-[300px] justify-between border rounded-lg'>
+					<div className='p-5 flex flex-col items-start w-full h-full justify-between border rounded-lg'>
 						<div className='space-y-3'>
 							<h1 className='text-base font-medium'>Profile</h1>
 							<div className='space-y-1 '>
@@ -260,34 +260,6 @@ const DashboardContent = ({}: DashboardContentProps) => {
 							Edit Profile
 						</p>
 					</div>
-
-					{loading ? (
-						<Button
-							type='button'
-							className='bg-main text-white text-xs hover:bg-main hover:text-white w-full px-3 rounded-lg'
-						>
-							<ButtonLoader />
-						</Button>
-					) : (
-						<Button
-							type='button'
-							onClick={() => {
-								if (user?.role === 'FARMER') {
-									return;
-									// return handleUpdateUserRole('CUSTOMER');
-								}
-
-								if (user?.role === 'CUSTOMER') {
-									return handleUpdateUserRole('FARMER');
-								}
-							}}
-							className='bg-main text-white text-xs hover:bg-main hover:text-white w-full px-3 rounded-lg'
-						>
-							{user?.role === 'CUSTOMER'
-								? 'Become a Seller'
-								: 'Seller'}
-						</Button>
-					)}
 				</div>
 			</div>
 

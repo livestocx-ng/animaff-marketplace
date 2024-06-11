@@ -1,17 +1,16 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import {NigerianCities, NigerianStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import {signIn} from 'next-auth/react';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
+import {RegionCities, RegionStates} from '@/data';
 import {Separator} from '@/components/ui/separator';
-import {Suspense, useEffect, useReducer, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
-import AuthHeader from '../../../../components/header/auth-header';
+import {Suspense, useEffect, useReducer, useState} from 'react';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {useUpdateWelcomeFarmerModalStore} from '@/hooks/use-global-store';
 import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
@@ -28,6 +27,9 @@ type FormData = {
 	businessState: string;
 	businessCity: string;
 	location: string;
+	zipPostalCode: string;
+	country: string;
+	countryCode: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
 };
@@ -45,10 +47,13 @@ const initialState: FormData = {
 	password: '',
 	businessName: '',
 	businessAddress: '',
-	businessState: 'Abia',
+	businessState: 'Alabama',
 	businessCity: '',
 	location: '',
 	role: 'CUSTOMER',
+	zipPostalCode: '',
+	country: 'United States',
+	countryCode: '+1',
 	acceptedTerms: false,
 	confirmPassword: '',
 };
@@ -122,12 +127,12 @@ const SignUpPage = () => {
 
 			const {data} = await axios.post('/api/auth/signup', formData);
 
-			// // console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
 
-				toast.error('An error occured');
+				toast.error('An error occurred');
 			} else {
 				setLoading(false);
 
@@ -146,7 +151,7 @@ const SignUpPage = () => {
 
 			// console.error('[SIGNUP-ERROR]', error);
 
-			toast.error('An error occured');
+			toast.error('An error occurred');
 		}
 	};
 
@@ -230,7 +235,7 @@ const SignUpPage = () => {
 											<option value=''>
 												Business State
 											</option>
-											{NigerianStates.map((option) => (
+											{RegionStates.map((option) => (
 												<option
 													key={option}
 													value={option}
@@ -242,28 +247,15 @@ const SignUpPage = () => {
 										</select>
 									</div>
 
-									<div className='w-full'>
-										<select
-											name='businessCity'
-											className='w-full border py-3 rounded px-3 text-sm scrollbar__1'
-											onChange={handleSelectChange}
-										>
-											<option value=''>
-												Business City
-											</option>
-											{NigerianCities[
-												formData.businessState
-											].map((option) => (
-												<option
-													key={option}
-													value={option}
-													className='cursor-pointer'
-												>
-													{option}
-												</option>
-											))}
-										</select>
-									</div>
+									<FormTextInput
+										name='businessCity'
+										type='text'
+										padding='py-4 px-4'
+										value={formData.businessCity}
+										handleChange={handleChange}
+										placeHolder='Los Angeles'
+										classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+									/>
 								</>
 							)}
 
@@ -274,8 +266,8 @@ const SignUpPage = () => {
 										className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
 										onChange={handleSelectChange}
 									>
-										<option value=''>Location</option>
-										{NigerianStates.map((option) => (
+										<option value=''>State</option>
+										{RegionStates.map((option) => (
 											<option
 												key={option}
 												value={option}
@@ -287,6 +279,16 @@ const SignUpPage = () => {
 									</select>
 								</div>
 							)}
+
+							<FormTextInput
+								name='zipPostalCode'
+								type='number'
+								padding='py-4 px-4'
+								value={formData.zipPostalCode}
+								handleChange={handleChange}
+								placeHolder='Zip/Postal Code'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
 
 							<FormPasswordInput
 								name='password'
@@ -371,7 +373,7 @@ const SignUpPage = () => {
 										}}
 									/>
 									<p className='text-sm'>
-										I agree your{' '}
+										I agree to your{' '}
 										<Link
 											target='_blank'
 											className='text-main'

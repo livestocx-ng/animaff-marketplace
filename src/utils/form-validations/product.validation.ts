@@ -9,6 +9,13 @@ interface CreateProductDto {
 	media: File[];
 	inStock: boolean;
 	isNegotiable: boolean;
+	zipPostalCode: string;
+	isOrganicallyRaised: boolean;
+	isHomeBred: boolean;
+	isMeat: boolean;
+	isPet: boolean;
+	isPedigree: boolean;
+	isNonPedigree: boolean;
 }
 
 interface UpdateProductDto {
@@ -23,6 +30,13 @@ interface UpdateProductDto {
 	inStock: boolean;
 	isNegotiable: boolean;
 	removedMediaIds: string[];
+	zipPostalCode: string;
+	isOrganicallyRaised: boolean;
+	isHomeBred: boolean;
+	isMeat: boolean;
+	isPet: boolean;
+	isPedigree: boolean;
+	isNonPedigree: boolean;
 }
 
 interface ProductReviewDto {
@@ -31,6 +45,8 @@ interface ProductReviewDto {
 }
 
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
+
+const zipPostalCodeRegEX = new RegExp(/^\d{5}$/);
 
 export function ValidateCreateProductFormData(
 	formData: CreateProductDto
@@ -49,11 +65,17 @@ export function ValidateCreateProductFormData(
 	if (!isNumberRegEX.test(formData.price)) {
 		return (message = 'Product price must be a number.');
 	}
-	// if (!formData.discountPrice) {
-	// 	return (message = 'Product discount price is required.');
-	// }
 	if (formData.discountPrice && !isNumberRegEX.test(formData.discountPrice)) {
 		return (message = 'Product discount price must be a number..');
+	}
+	if (!formData.zipPostalCode) {
+		return (message = 'Product zip/postal code is required.');
+	}
+	if (!formData.zipPostalCode) {
+		return (message = 'Product zip/postal code is required.');
+	}
+	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
+		return (message = 'Product zip/postal code must be at least 5 digits.');
 	}
 	if (!formData.description) {
 		return (message = 'Product description is required.');

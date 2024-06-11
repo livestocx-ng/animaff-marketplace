@@ -7,6 +7,7 @@ import {
 	FacebookShareButton,
 	WhatsappShareButton,
 } from 'react-share';
+import axios from 'axios';
 import Image from 'next/image';
 import {
 	useGlobalStore,
@@ -34,7 +35,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
-			fetch(
+			axios.get(
 				`https://livestocx.com/marketplace/products/${formatProductSlug(
 					row.original
 				)}`
@@ -48,13 +49,13 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					}}
 					className='flex items-center space-x-4 cursor-pointer'
 				>
-					<div className='h-[70px] w-[70px] relative'>
+					<div className='h-[60px] w-[70px] relative'>
 						<Image
 							fill
 							// width={40}
 							// height={40}
 							unoptimized={true}
-							className='w-full h-full object-fill'
+							className='w-full h-full object-fill rounded-sm'
 							alt={row.original.name}
 							src={
 								row.original.media?.find(

@@ -7,7 +7,7 @@ import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {NigerianCities, NigerianStates} from '@/data';
+import {RegionCities, RegionStates} from '@/data';
 import {useEffect, useReducer, useState} from 'react';
 import {ChevronLeft, ChevronRight, X} from 'lucide-react';
 import ButtonLoader from '@/components/loader/button-loader';
@@ -92,7 +92,7 @@ const UpdateSearchLocationModal = () => {
 			<div className='flex flex-col w-[90%] lg:w-[60%] bg-white py-4 px-4 rounded-md overflow-y-auto z-[20] scrollbar__1'>
 				<div className='flex flex-col-reverse lg:flex-row items-center justify-between mb-2'>
 					{!formData.showCities && (
-						<h1 className='text-sm'>All Nigeria</h1>
+						<h1 className='text-sm'>All United States</h1>
 					)}
 					{formData.showCities && (
 						<div
@@ -125,7 +125,7 @@ const UpdateSearchLocationModal = () => {
 				{!formData.showCities && (
 					<div className='flex flex-col lg:grid grid-cols-3 gap-x-8 w-full py-5 border-t border-t-slate-600 max-h-[500px] lg:max-h-[600px] overflow-y-auto scrollbar__1'>
 						<div>
-							{NigerianStates.slice(0, 13).map((state) => (
+							{RegionStates.slice(0, 13).map((state) => (
 								<div
 									key={state}
 									onClick={() => {
@@ -139,17 +139,13 @@ const UpdateSearchLocationModal = () => {
 									}}
 									className='border-b text-sm py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
 								>
-									<p>
-										{state === 'Abuja'
-											? 'FCT Abuja'
-											: `${state} State`}
-									</p>{' '}
+									<p>{state}</p>
 									<ChevronRight className='text-slate-400' />
 								</div>
 							))}
 						</div>
 						<div>
-							{NigerianStates.slice(13, 26).map((state) => (
+							{RegionStates.slice(13, 26).map((state) => (
 								<div
 									key={state}
 									onClick={() => {
@@ -163,17 +159,13 @@ const UpdateSearchLocationModal = () => {
 									}}
 									className='border-b text-sm py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
 								>
-									<p>
-										{state.includes('Federal')
-											? 'Abuja (FCT)'
-											: `${state} State`}
-									</p>{' '}
+									<p>{state}</p>
 									<ChevronRight className='text-slate-400' />
 								</div>
 							))}
 						</div>
 						<div>
-							{NigerianStates.slice(27, 40).map((state) => (
+							{RegionStates.slice(27, 40).map((state) => (
 								<div
 									key={state}
 									onClick={() => {
@@ -187,11 +179,7 @@ const UpdateSearchLocationModal = () => {
 									}}
 									className='border-b text-sm py-2 flex justify-between cursor-pointer hover:translate-y-1 transition-all duration-700'
 								>
-									<p>
-										{state.includes('Federal')
-											? 'Abuja (FCT)'
-											: `${state} State`}
-									</p>{' '}
+									<p>{state}</p>
 									<ChevronRight className='text-slate-400' />
 								</div>
 							))}
@@ -234,10 +222,10 @@ const UpdateSearchLocationModal = () => {
 								}}
 								className='border-b text-sm py-2 flex justify-between w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 							>
-								<p>All {formData.searchLocationState} {formData.searchLocationState === 'Abuja'? '' : `${formData.searchLocationState} State`}</p>{' '}
+								<p>All {formData.searchLocationState} Cities</p>
 								<ChevronRight className='text-slate-400' />
 							</div>
-							{NigerianCities[formData.searchLocationState]
+							{RegionCities[formData.searchLocationState]
 								.slice(0, 5)
 								.map((city) => (
 									<div
@@ -281,17 +269,14 @@ const UpdateSearchLocationModal = () => {
 										className='border-b text-sm py-2 flex flex-col w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 									>
 										<div className='flex justify-between'>
-											<p>{city}</p>{' '}
+											<p>{city}</p>
 											<ChevronRight className='text-slate-400' />
 										</div>
-										<p className='text-xs text-slate-500'>
-											{formData.searchLocationState} State
-										</p>{' '}
 									</div>
 								))}
 						</div>
 						<div>
-							{NigerianCities[formData.searchLocationState]
+							{RegionCities[formData.searchLocationState]
 								.slice(5, 10)
 								.map((city) => (
 									<div
@@ -335,17 +320,14 @@ const UpdateSearchLocationModal = () => {
 										className='border-b text-sm py-2 flex flex-col w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 									>
 										<div className='flex justify-between'>
-											<p>{city}</p>{' '}
+											<p>{city}</p>
 											<ChevronRight className='text-slate-400' />
 										</div>
-										<p className='text-xs text-slate-500'>
-											{formData.searchLocationState} State
-										</p>{' '}
 									</div>
 								))}
 						</div>
 						<div>
-							{NigerianCities[formData.searchLocationState]
+							{RegionCities[formData.searchLocationState]
 								.slice(10, 20)
 								.map((city) => (
 									<div
@@ -389,12 +371,9 @@ const UpdateSearchLocationModal = () => {
 										className='border-b text-sm py-2 flex flex-col w-full cursor-pointer hover:translate-y-1 transition-all duration-700'
 									>
 										<div className='flex justify-between'>
-											<p>{city}</p>{' '}
+											<p>{city}</p>
 											<ChevronRight className='text-slate-400' />
 										</div>
-										<p className='text-xs text-slate-500'>
-											{formData.searchLocationState} State
-										</p>{' '}
 									</div>
 								))}
 						</div>

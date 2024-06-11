@@ -111,7 +111,7 @@ const ContactUsPage = () => {
 
 			// console.error('[SIGNIN-ERROR]', _error);
 
-			toast.error('An error occured!');
+			toast.error('An error occurred!');
 		}
 	};
 

@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import {NigerianStates} from '@/data';
+import {RegionStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
@@ -109,7 +109,7 @@ const SignUpPage = () => {
 			if (data?.ok == false) {
 				setLoading(false);
 
-				toast.error('An error occured');
+				toast.error('An error occurred');
 			} else {
 				setLoading(false);
 
@@ -120,7 +120,7 @@ const SignUpPage = () => {
 		} catch (error) {
 			setLoading(false);
 			// console.error('[SIGNUP-ERROR]', error);
-			toast.error('An error occured');
+			toast.error('An error occurred');
 		}
 	};
 
@@ -194,7 +194,7 @@ const SignUpPage = () => {
 								className='w-full border py-3 rounded px-3 text-xs scrollbar__1'
 								onChange={handleSelectChange}
 							>
-								{NigerianStates.map((option) => (
+								{RegionStates.map((option) => (
 									<option
 										key={option}
 										value={option}

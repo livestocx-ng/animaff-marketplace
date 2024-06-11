@@ -7,7 +7,7 @@ import {User} from '@/types/types';
 import {Button} from '@/components/ui/button';
 import FormTextInput from '@/components/input/form-text-input';
 import SelectDropdown from '@/components/ui/select-dropdown';
-import {NigerianCities, NigerianStates} from '@/data';
+import {RegionCities, RegionStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ButtonLoader from '@/components/loader/button-loader';
 import {ValidateUpdateBillingFormData} from '@/utils/form-validations/billing.validation';
@@ -222,7 +222,7 @@ const BillingSettings = () => {
 										});
 									}}
 								>
-									{NigerianStates.map((option) => (
+									{RegionStates.map((option) => (
 										<option
 											key={option}
 											value={option}
@@ -247,7 +247,7 @@ const BillingSettings = () => {
 										});
 									}}
 								>
-									{NigerianCities[formData.state]?.map(
+									{RegionCities[formData.state]?.map(
 										(option) => (
 											<option
 												key={option}

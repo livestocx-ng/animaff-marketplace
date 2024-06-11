@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 		const error = e as AxiosError;
 
 		return NextResponse.json(
-			{message: 'An error occured', error: error},
+			{message: 'An error occurred', error: error},
 			{status: 400}
 		);
 	}

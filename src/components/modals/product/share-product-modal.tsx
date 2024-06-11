@@ -7,6 +7,7 @@ import {
 	FacebookShareButton,
 	WhatsappShareButton,
 } from 'react-share';
+import axios from 'axios';
 import Image from 'next/image';
 import {useEffect} from 'react';
 import {Copy, X} from 'lucide-react';
@@ -20,7 +21,7 @@ const ShareProductModal = () => {
 	const {payload, onClose} = useShareProductModalStore();
 
 	useEffect(() => {
-		fetch(
+		axios.get(
 			`https://livestocx.com/marketplace/products/${formatProductSlug(
 				payload!
 			)}`

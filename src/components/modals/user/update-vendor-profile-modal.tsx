@@ -5,7 +5,7 @@ import {
 	useGlobalStore,
 	useUpdateVendorProfileModalStore,
 } from '@/hooks/use-global-store';
-import {NigerianCities, NigerianStates} from '@/data';
+import {RegionCities, RegionStates} from '@/data';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
@@ -257,7 +257,7 @@ const UpdateVendorProfileModal = () => {
 										? formData.state
 										: 'Business State'}
 								</option>
-								{NigerianStates.map((option) => (
+								{RegionStates.map((option) => (
 									<option
 										key={option}
 										value={option}
@@ -285,7 +285,7 @@ const UpdateVendorProfileModal = () => {
 										? formData.city
 										: 'Business City'}
 								</option>
-								{NigerianCities[
+								{RegionCities[
 									formData.state ? formData.state : 'Abia'
 								].map((option) => (
 									<option

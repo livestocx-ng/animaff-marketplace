@@ -7,7 +7,7 @@ import {useEffect, useReducer, useRef, useState} from 'react';
 import {User} from '@/types/types';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
-import {NigerianCities, NigerianStates} from '@/data';
+import {RegionCities, RegionStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import FormTextInput from '@/components/input/form-text-input';
 import ButtonLoader from '@/components/loader/button-loader';
@@ -27,6 +27,7 @@ type FormData = {
 	avatarUrl: string;
 	email: string;
 	phoneNumber: string;
+	zipPostalCode: string;
 	isUpdated: boolean;
 };
 
@@ -44,6 +45,7 @@ const initialState: FormData = {
 	avatarUrl: '',
 	email: '',
 	phoneNumber: '',
+	zipPostalCode: '',
 	isUpdated: false,
 };
 
@@ -102,11 +104,12 @@ const VendorSettings = () => {
 				avatarUrl: vendor?.avatar,
 				email: vendor?.email,
 				phoneNumber: vendor?.phoneNumber,
+				zipPostalCode: vendor?.zipPostalCode,
 				isUpdated: vendor?.isUpdated,
 			},
 		});
 
-		setCities(NigerianCities[vendor?.state!]);
+		setCities(RegionCities[vendor?.state!]);
 	}, [vendor]);
 
 	// console.log(vendor);
@@ -177,7 +180,7 @@ const VendorSettings = () => {
 
 			const _error = error as AxiosError;
 
-			// console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
+			console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -214,7 +217,7 @@ const VendorSettings = () => {
 							<option value={formData.state}>
 								{formData.state}
 							</option>
-							{NigerianStates.map((option) => (
+							{RegionStates.map((option) => (
 								<option
 									key={option}
 									value={option}
@@ -245,6 +248,18 @@ const VendorSettings = () => {
 								</option>
 							))}
 						</select>
+					</div>
+					<div className='space-y-1 w-full'>
+						<p className='text-sm'>Zip/Postal Code</p>
+						<FormTextInput
+							name='zipPostalCode'
+							padding='py-3 px-4'
+							disabled={loading}
+							handleChange={handleChange}
+							placeHolder='Zip/Postal Code'
+							value={formData.zipPostalCode}
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+						/>
 					</div>
 					<div className='space-y-1 w-full'>
 						<p className='text-sm'>Address</p>

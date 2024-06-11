@@ -99,7 +99,7 @@ const AccountSettings = () => {
 
 			if (validationError) {
 				setLoading(false);
-				return toast.error(validationError);
+				return toast.error(validationError, {duration: 10000});
 			}
 
 			// console.log('[UPDATE-PROFILE-PAYLOAD] :: ', formData);
@@ -132,7 +132,7 @@ const AccountSettings = () => {
 
 			const _error = error as AxiosError;
 
-			// console.log('[UPDATE-PROFILE-ERROR]', _error);
+			console.log('[UPDATE-PROFILE-ERROR]', _error);
 
 			toast.error('Error');
 		}

@@ -9,14 +9,11 @@ import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import {Fragment, useEffect, useState} from 'react';
-import {getMediaImageUrl} from '@/utils/media/media.url';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
-import {generateOGImageFromURL} from '@/utils/og.image.generator';
-import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import SingleProductContent from '@/components/product/single-product-content';
+import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
-import type {Metadata, ResolvingMetadata} from 'next';
 
 interface ProductPageParams {
 	params: {
@@ -65,8 +62,8 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 				),
 			]);
 
-			// // console.log('[DATA] ::  ', _product.data.data);
-			// // console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', _product.data.data);
+			// console.log('[DATA] ::  ', data);
 
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);

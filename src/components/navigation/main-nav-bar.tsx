@@ -112,7 +112,7 @@ const MainNavbar = () => {
 
 				<div className='flex items-center space-x-5'>
 					{chatConversations?.filter(
-						(conversation) => conversation.unreadMessages !== 0
+						(conversation) => conversation?.unreadMessages !== 0
 					).length !== 0 && (
 						<div
 							onClick={() => {
@@ -142,7 +142,7 @@ const MainNavbar = () => {
 								{
 									chatConversations?.filter(
 										(conversation) =>
-											conversation.unreadMessages !== 0
+											conversation?.unreadMessages !== 0
 									).length
 								}
 							</div>
@@ -456,7 +456,7 @@ const MainNavbar = () => {
 					)} */}
 
 					{chatConversations?.filter(
-						(conversation) => conversation.unreadMessages !== 0
+						(conversation) => conversation?.unreadMessages !== 0
 					).length !== 0 && (
 						<div
 							onClick={() => {
@@ -486,7 +486,7 @@ const MainNavbar = () => {
 								{
 									chatConversations?.filter(
 										(conversation) =>
-											conversation.unreadMessages !== 0
+											conversation?.unreadMessages !== 0
 									).length
 								}
 							</div>

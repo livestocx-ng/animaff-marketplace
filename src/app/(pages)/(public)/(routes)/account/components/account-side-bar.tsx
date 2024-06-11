@@ -43,6 +43,14 @@ const FarmerTabs: Tab[] = [
 	'Logout',
 ];
 
+const AdminTabs: Tab[] = [
+	'Account',
+	'Messages',
+	'Notifications',
+	'Settings',
+	'Logout',
+];
+
 const AccountSideBar = ({}: AccountSideBarProps) => {
 	const router = useRouter();
 	const {user, updateUser, currentAccountTab, updateCurrentAccountTab} =
@@ -213,6 +221,81 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 									}`}
 								/>
 							)}
+							{tab === 'Settings' && (
+								<Settings
+									className={`h-6 w-6 ${
+										currentAccountTab == tab &&
+										'text-green-600'
+									}`}
+								/>
+							)}
+							{tab === 'Logout' && (
+								<LogOut
+									className={`h-6 w-6 ${
+										currentAccountTab == tab &&
+										tab === 'Logout' &&
+										'text-red-600'
+									}`}
+								/>
+							)}
+
+							<p
+								className={cn(
+									'text-xs',
+									currentAccountTab === tab
+										? 'text-black'
+										: 'text-gray-500'
+								)}
+							>
+								{tab}
+							</p>
+						</li>
+					))}
+				</ul>
+			)}
+			
+			{user && user?.role === 'ADMIN' && (
+				<ul className='space-y- mt-5'>
+					{AdminTabs.map((tab) => (
+						<li
+							key={tab}
+							onClick={() => handleTabClick(tab)}
+							className={cn(
+								`cursor-pointer flex items-center space-x-3 py-4 px-4`,
+								currentAccountTab === tab
+									? 'bg-slate-100 border-l-4 border-l-green-500'
+									: 'text-gray-500',
+								tab === 'Logout'
+									? 'rounded-bl hover:border-l-4 border-l-red-500 hover:border-l-red-500 hover:text-red-400'
+									: ''
+							)}
+						>
+							{tab === 'Account' && (
+								<UserSquare
+									className={`h-6 w-6 ${
+										currentAccountTab == tab &&
+										'text-green-600'
+									}`}
+								/>
+							)}
+							
+							{tab === 'Messages' && (
+								<Mails
+									className={`h-6 w-6 ${
+										currentAccountTab == tab &&
+										'text-green-600'
+									}`}
+								/>
+							)}
+							{tab === 'Notifications' && (
+								<Bell
+									className={`h-6 w-6 ${
+										currentAccountTab == tab &&
+										'text-green-600'
+									}`}
+								/>
+							)}
+
 							{tab === 'Settings' && (
 								<Settings
 									className={`h-6 w-6 ${

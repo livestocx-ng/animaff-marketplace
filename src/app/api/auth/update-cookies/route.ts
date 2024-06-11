@@ -8,7 +8,7 @@ export async function PATCH(req: NextRequest) {
 	try {
 		const payload = await req.json();
 
-		// // console.log('[PAYLOAD] :: ', payload);
+		// console.log('[PAYLOAD] :: ', payload);
 
 		const cookieStore = cookies();
 
@@ -21,10 +21,10 @@ export async function PATCH(req: NextRequest) {
 			...payload,
 		};
 
-		// // console.log('[NEW-USER] :: ', user);
+		// console.log('[NEW-USER] :: ', user);
 
 		await cookieStore.delete(COOKIE_NAME);
-		// // console.log('[COOKIE-STORE] :: ', cookieStore);
+		// console.log('[COOKIE-STORE] :: ', cookieStore);
 
 		const serialized = serialize(COOKIE_NAME, JSON.stringify(user), {
 			httpOnly: true,
@@ -34,7 +34,7 @@ export async function PATCH(req: NextRequest) {
 			maxAge: COOKIE_MAX_AGE,
 		});
 
-		// // console.log('[DATA] :: ', data.data);
+		// console.log('[DATA] :: ', data.data);
 
 		return NextResponse.json(user, {
 			status: 200,
@@ -46,7 +46,7 @@ export async function PATCH(req: NextRequest) {
 		// console.log('[ERROR] :: ', error);
 
 		return NextResponse.json(
-			{message: 'An error occured while updating cookies', error: error},
+			{message: 'An error occurred while updating cookies', error: error},
 			{status: 400}
 		);
 	}

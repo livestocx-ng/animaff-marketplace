@@ -22,7 +22,7 @@ export async function PATCH(req: NextRequest) {
 		// console.log('[ERROR] :: ', error);
 
 		return NextResponse.json(
-			{message: 'An error occured', error: error},
+			{message: 'An error occurred', error: error},
 			{status: 400}
 		);
 	}

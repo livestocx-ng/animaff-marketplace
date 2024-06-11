@@ -66,7 +66,7 @@ const SignInPage = () => {
 
 			// console.log('[FORGOT-PASSWORD-ERROR] :: ', _error);
 
-			toast.error('An error occured');
+			toast.error('An error occurred');
 		}
 	};
 

@@ -2,6 +2,7 @@ import React from 'react';
 import {LineChart} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import { PriceFormatter } from '@/utils/price.formatter';
 
 const PromotionBanner = () => {
 	const router = useRouter();
@@ -26,8 +27,7 @@ const PromotionBanner = () => {
 			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-indigo-200 to-indigo-500 text-sm px-4 flex items-center justify-center space-x-3 cursor-pointer'
 		>
 			<p className='text-xs md:text-sm font-medium'>
-				Want to sell very fast? Boost your product with just &#8358;810
-				per week
+				Want to sell very fast? Boost your product with just {PriceFormatter(810)} per week
 			</p>
 
 			<LineChart size={18} />

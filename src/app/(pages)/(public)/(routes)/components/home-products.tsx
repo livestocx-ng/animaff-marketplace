@@ -5,6 +5,7 @@ import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {Dispatch, Fragment, SetStateAction, useState} from 'react';
 import ProductCard from '../../../../../components/cards/product-card';
+import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
 
 interface Tab {
 	id: number;

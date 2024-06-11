@@ -10,7 +10,7 @@ interface VendorProfileDto {
 	state: string;
 	city: string;
 	phoneNumber: string;
-};
+}
 
 interface SignupDto {
 	firstName: string;
@@ -23,12 +23,15 @@ interface SignupDto {
 	businessState: string;
 	businessCity: string;
 	phoneNumber: string;
+	zipPostalCode: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
 	role: 'FARMER' | 'CUSTOMER';
 }
 
-const phoneRegEX = new RegExp(/^\d{11}$/);
+const zipPostalCodeRegEX = new RegExp(/^\d{5}$/);
+
+const phoneRegEX = new RegExp(/^\d{10}$/);
 
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
 
@@ -73,7 +76,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 		return (message = 'Phone number is required.');
 	}
 	if (!phoneRegEX.test(formData.phoneNumber)) {
-		return (message = 'Phone number must be at least 11 characters.');
+		return (message = 'Phone number must be at least 10 characters.');
 	}
 	if (!isNumberRegEX.test(formData.phoneNumber)) {
 		return (message = 'Invalid phone number.');
@@ -90,6 +93,14 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	if (!passwordRegEX.test(formData.password)) {
 		return (message =
 			'Password must be at least 8 characters, include a capital letters and small letters.');
+	}
+
+	if (!formData.zipPostalCode) {
+		return (message = 'Zip/postal code is required.');
+	}
+
+	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
+		return (message = 'Zip/postal code must be at least 5 digits.');
 	}
 
 	if (formData.role === 'CUSTOMER' && !formData.location) {
@@ -110,13 +121,16 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 
 	if (formData.acceptedTerms === false) {
-		return (message = 'Please accept our terms of service and privacy policy.');
+		return (message =
+			'Please accept our terms of service and privacy policy.');
 	}
 
 	return message;
 }
 
-export function ValidateVendorProfileFormData(formData: VendorProfileDto): string {
+export function ValidateVendorProfileFormData(
+	formData: VendorProfileDto
+): string {
 	let message = '';
 
 	if (!formData.name) {

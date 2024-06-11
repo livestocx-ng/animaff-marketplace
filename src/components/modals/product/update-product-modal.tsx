@@ -22,20 +22,12 @@ import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
+import {X, FileVideo, ImagePlus} from 'lucide-react';
 import ButtonLoader from '@/components/loader/button-loader';
 import {useEffect, useReducer, useRef, useState} from 'react';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
-import {
-	FileImage,
-	FileVideo,
-	ImagePlus,
-	Plus,
-	UploadCloud,
-	X,
-} from 'lucide-react';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
-import {CategoryDropDownButton} from '../buttons/category-dropdown-button';
 import {DropdownMenuCheckboxItemProps} from '@radix-ui/react-dropdown-menu';
 import {ValidateUpdateProductFormData} from '@/utils/form-validations/product.validation';
 
@@ -51,6 +43,13 @@ export type FormData = {
 	removedMediaIds: string[];
 	inStock: boolean;
 	isNegotiable: boolean;
+	zipPostalCode: string;
+	isOrganicallyRaised: boolean;
+	isHomeBred: boolean;
+	isMeat: boolean;
+	isPet: boolean;
+	isPedigree: boolean;
+	isNonPedigree: boolean;
 };
 
 type FormAction = {
@@ -70,6 +69,13 @@ const initialState: FormData = {
 	isNegotiable: false,
 	existingMedia: [],
 	removedMediaIds: [],
+	zipPostalCode: '',
+	isOrganicallyRaised: false,
+	isHomeBred: false,
+	isMeat: false,
+	isPet: false,
+	isPedigree: false,
+	isNonPedigree: false,
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -111,6 +117,13 @@ const UpdateProductModal = () => {
 				existingMedia: payload?.media,
 				inStock: payload?.inStock,
 				isNegotiable: payload?.isNegotiable,
+				zipPostalCode: payload?.zipPostalCode,
+				isOrganicallyRaised: payload?.isOrganicallyRaised,
+				isHomeBred: payload?.isHomeBred,
+				isMeat: payload?.isMeat,
+				isPet: payload?.isPet,
+				isPedigree: payload?.isPedigree,
+				isNonPedigree: payload?.isNonPedigree,
 			},
 		});
 	}, [payload]);
@@ -449,7 +462,7 @@ const UpdateProductModal = () => {
 							<select
 								name='category'
 								value={formData.category}
-								className='w-full border py-3 rounde px-3 text-xs scrollbar__1'
+								className='w-full border py-3 px-3 text-xs scrollbar__1'
 								onChange={handleSelectChange}
 							>
 								<option value='' className='text-xs'>
@@ -476,6 +489,19 @@ const UpdateProductModal = () => {
 								value={formData.name}
 								handleChange={handleChange}
 								placeHolder='Product name'
+								classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
+							/>
+						</div>
+						<div className='space-y-'>
+							<p className='text-xs'>Zip/Postal Code</p>
+							<FormTextInput
+								type='number'
+								disabled={loading}
+								padding='py-3 px-4'
+								name='zipPostalCode'
+								handleChange={handleChange}
+								placeHolder='Zip/Postal Code'
+								value={formData.zipPostalCode}
 								classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 '
 							/>
 						</div>
@@ -520,7 +546,7 @@ const UpdateProductModal = () => {
 							/>
 						</div>
 
-						<div className='flex items-center space-x-5'>
+						<div className='flex flex-wrap gap-4 items-center justify- space-x-'>
 							<div className='flex items-center space-x-2'>
 								<Checkbox
 									id='isNegotiable'
@@ -559,6 +585,125 @@ const UpdateProductModal = () => {
 									{formData.inStock == true
 										? 'Available'
 										: 'Sold Out'}
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isOrganicallyRaised'
+									checked={formData.isOrganicallyRaised}
+									onCheckedChange={(
+										isOrganicallyRaised: boolean
+									) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isOrganicallyRaised},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Organically Raised
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isHomeBred'
+									checked={formData.isHomeBred}
+									onCheckedChange={(isHomeBred: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isHomeBred},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Home Bred
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isMeat'
+									checked={formData.isMeat}
+									onCheckedChange={(isMeat: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isMeat},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Meat
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isPet'
+									checked={formData.isPet}
+									onCheckedChange={(isPet: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {isPet},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Pet
+								</label>
+							</div>
+
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isPedigree'
+									checked={formData.isPedigree}
+									onCheckedChange={(isPedigree: boolean) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {
+												isPedigree,
+												isNonPedigree: false,
+											},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Pedigree
+								</label>
+							</div>
+							<div className='flex items-center space-x-2'>
+								<Checkbox
+									id='isNonPedigree'
+									checked={formData.isNonPedigree}
+									onCheckedChange={(
+										isNonPedigree: boolean
+									) => {
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {
+												isNonPedigree,
+												isPedigree: false,
+											},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+								>
+									Non Pedigree
 								</label>
 							</div>
 						</div>
@@ -633,7 +778,7 @@ const UpdateProductModal = () => {
 					</div>
 				</div>
 
-				<div className='flex justify-end pt-10'>
+				<div className='flex justify-end pt-1'>
 					{loading ? (
 						<Button
 							// disabled

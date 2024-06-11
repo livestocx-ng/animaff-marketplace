@@ -12,8 +12,6 @@ export async function POST(req: Request) {
 			payload
 		);
 
-		// console.log('[SIGNUP-DATA] :: ', data);
-
 		const user = {
 			...data?.data?.user,
 			accessToken: data?.data?.accessToken,
@@ -38,7 +36,7 @@ export async function POST(req: Request) {
 		// console.log('[ERROR] :: ', error);
 
 		return NextResponse.json(
-			{message: 'An error occured', error: error},
+			{message: 'An error occurred', error: error},
 			{status: 400}
 		);
 	}

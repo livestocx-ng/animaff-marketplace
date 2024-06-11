@@ -56,7 +56,7 @@ const UpdateUserRoleModal = () => {
 
 			// console.log('[DELETE-PRODUCT-ERROR]', _error);
 
-			toast.error('An error occured');
+			toast.error('An error occurred');
 		}
 	};
 

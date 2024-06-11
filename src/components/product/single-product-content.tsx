@@ -279,7 +279,7 @@ const SingleProductContent = ({
 							<Button
 								type='button'
 								variant={'outline'}
-								className='flex items-center space-x-3 border-red-500 text-red-500 text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
+								className='flex items-center space-x-3 border-red-500 text-red-500 hover:text-red-500 text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								<p>Report</p>{' '}
 								<FlagTriangleRight className='h-4 w-4 text-red-500' />
