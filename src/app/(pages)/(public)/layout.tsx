@@ -16,13 +16,13 @@ import {useUserHook} from '@/hooks/use-user';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
+import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
 import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premium-modal';
-import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;

@@ -2,7 +2,7 @@ import {fetchSiteProducts} from '@/lib/siteMapData';
 import {formatProductSlug} from '@/utils/slug.formatter';
 
 export default async function sitemap() {
-	const baseUrl = 'https://livestocx.com';
+	const baseUrl = 'https://animaff.com';
 
 	// const products = await fetchSiteProducts();
 
