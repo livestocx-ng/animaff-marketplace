@@ -9,6 +9,7 @@ import {
 	useUpdateVendorProfileModalStore,
 	useUpdateSearchLocationModalStore,
 	useUpgradeToPremiumAccessStore,
+	useUpdateWelcomeFarmerModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
@@ -21,6 +22,7 @@ import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
 import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premium-modal';
+import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -41,6 +43,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const shareProductModal = useShareProductModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 	const readNotificationModal = useReadNotificationModalStore();
+	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
@@ -154,8 +157,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	return (
 		<div className='relative'>
-			{downloadAppModal.isOpen && <DownloadMobileAppModal />}
 			{shareProductModal.isOpen && <ShareProductModal />}
+			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
+			{downloadAppModal.isOpen && <DownloadMobileAppModal />}
 			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
 			{readNotificationModal.isOpen && <NotificationModal />}
 			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}

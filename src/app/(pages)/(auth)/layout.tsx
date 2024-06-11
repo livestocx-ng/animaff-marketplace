@@ -32,7 +32,7 @@ const PagesLayout = ({children}: AuthPagesLayoutProps) => {
 
 	return (
 		<div className='relative'>
-			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
+			{/* {welcomeFarmerModal.isOpen && <WelcomeFarmerModal />} */}
 
 			<Navbar />
 			{children}
