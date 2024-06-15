@@ -8,16 +8,16 @@ import {
 	ThumbsUp,
 } from 'lucide-react';
 import Image from 'next/image';
-import {useEffect, useState} from 'react';
 import {
 	useGlobalStore,
 	useShareProductModalStore,
 } from '@/hooks/use-global-store';
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
+import {useEffect, useState} from 'react';
+import {useInView} from 'react-intersection-observer';
 import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
-import {useInView} from 'react-intersection-observer';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import {formatProductSlug, formatVendorSlug} from '@/utils/slug.formatter';
 
@@ -140,7 +140,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 	return (
 		<div
 			ref={ref}
-			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 rounde relative'
+			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 relative'
 		>
 			<div
 				onClick={() => {
@@ -169,7 +169,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						);
 					}
 				}}
-				className='h-[180px] relative cursor-pointer rela'
+				className='h-[180px] relative cursor-pointer'
 			>
 				<Image
 					fill
@@ -286,10 +286,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 						<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-2'>
 							<MapPin className='h-3 w-3 text-black' />
 							<p className='text-[10px]'>
-								{product?.vendor?.state ===
-								'Federal Capital Territory'
-									? `${product?.vendor?.city}, Abuja`
-									: `${product?.vendor?.city}, ${product?.vendor?.state}`}
+								{product?.vendor?.city}
 							</p>
 						</div>
 					)}

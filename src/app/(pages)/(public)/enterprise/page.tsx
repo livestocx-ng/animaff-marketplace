@@ -1,22 +1,22 @@
 'use client';
-import Link from 'next/link';
 import Image from 'next/image';
 import {useState} from 'react';
-import {toast} from 'react-hot-toast';
-import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import {Button} from '@/components/ui/button';
-import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
-import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
 import {
 	useGlobalStore,
 	useUpgradeToPremiumAccessStore,
 } from '@/hooks/use-global-store';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
+import {CheckCircle} from 'lucide-react';
+import {useRouter} from 'next/navigation';
+import {Button} from '@/components/ui/button';
 import {PaystackButton} from 'react-paystack';
 import ButtonLoader from '@/components/loader/button-loader';
-import {Check, CheckCircle} from 'lucide-react';
+import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
+import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
+import {PriceFormatter} from '@/utils/price.formatter';
 
-const PricingPage = () => {
+const EnterprisePage = () => {
 	const router = useRouter();
 
 	const {user, premiumSubscriptionPlans, updateUserPremiumSubscription} =
@@ -102,19 +102,13 @@ const PricingPage = () => {
 			<section className='w-full bg-gradient-to-b from-green-800 to-white flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
 				<div className='flex flex-col space-y-4 w-full md:w-[45%]'>
 					<h1 className='text-xl md:text-4xl text-white font-semibold text-center md:text-left'>
-						Livestocx Enterprise
+						Animaff for Enterprises
 					</h1>
 
 					<p className='text-sm text-white font-medium text-center md:text-left'>
-						Lorem ipsum dolor sit, amet consectetur adipisicing
-						elit. Totam, hic minima. Eius placeat porro similique,
-						corporis atque dolorum natus nostrum ad deserunt
-						delectus neque fugiat praesentium officiis commodi?
-						Asperiores optio, beatae pariatur voluptatibus maiores
-						aliquam dolor ipsum obcaecati ut iste ex similique
-						corporis. Cupiditate natus earum porro nostrum, nesciunt
-						beatae accusamus exercitationem repellat unde architecto
-						ipsa velit, rerum labore tempora?
+						Expand your business reach. Sell to thousands on our
+						Marketplace and showcase your products with our custom
+						website and catalog.
 					</p>
 
 					<Button
@@ -125,80 +119,56 @@ const PricingPage = () => {
 					</Button>
 				</div>
 
-				<div className='h-[350px] w-full md:w-[50%] relative bg-orange-200 mt-10 md:mt-0'>
-					{/* <Image
+				<div className='h-[400px] w-full md:w-[50%] relative bg-orange-20 mt-10 md:mt-0'>
+					<Image
 						alt=''
 						fill
-						src={'/pricing/mobile-ads-promotions.jpg'}
 						className='object-cover rounded-sm'
-					/> */}
+						src={'/enterprise/image__header__2.jpg'}
+					/>
 				</div>
 			</section>
 
 			<div className='space-y-10 my-14'>
 				<h1 className='text-xl font-semibold text-center'>
-					Lorem, ipsum dolor.
+					What you get
 				</h1>
-				<div className='flex flex-wrap items-start justify-between w-full px-4 md:px-8'>
+				<div className='flex flex-wrap items-center justify-between w-full px-4 md:px-8'>
 					<div className='h-[400px] w-full md:w-[45%] relative bg-orange-200 mb-10 md:mb-0'>
-						{/* <Image
-						alt=''
-						fill
-						src={'/pricing/mobile-ads-promotions.jpg'}
-						className='object-cover rounded-sm'
-					/> */}
+						<Image
+							alt=''
+							fill
+							className='object-cover rounded-sm'
+							src={'/enterprise/image__header__3.jpg'}
+						/>
 					</div>
 					<div className='w-full md:w-[50%] space-y-3'>
-						<h1 className='text-base font-medium'>
-							Lorem ipsum dolor sit.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum dolor sit amet consectetur adipisicing
-							elit. Ab autem ullam omnis obcaecati eaque nobis eos
-							repellat error beatae fugit?
-						</p>
-						<h1 className='text-base font-medium'>
-							Lorem, ipsum dolor.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum, dolor sit amet consectetur adipisicing
-							elit. Officia quisquam quos nam quae amet voluptas,
-							quidem quas accusantium accusamus qui architecto
-							explicabo omnis.
-						</p>
-						<h1 className='text-base font-medium'>
-							Lorem ipsum dolor sit.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum dolor sit amet consectetur adipisicing
-							elit. Ab autem ullam omnis obcaecati eaque nobis eos
-							repellat error beatae fugit?
-						</p>
-						<h1 className='text-base font-medium'>
-							Lorem, ipsum dolor.
-						</h1>
-						<p className='text-sm'>
-							Lorem ipsum, dolor sit amet consectetur adipisicing
-							elit. Officia quisquam quos nam quae amet voluptas,
-							quidem quas accusantium accusamus qui architecto
-							explicabo omnis.
+						<p className='text-sm md:text-lg'>
+							Our enterprise platform features a custom online
+							store, marketplace listings, sales management and
+							analytics, weekly product promotions, business logo
+							creation, and branded resources including social
+							media flyers.
 						</p>
 					</div>
 				</div>
 			</div>
 
-			<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0 mb-10'>
+			<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0 mb-20'>
 				{premiumSubscriptionPlans?.map((plan, index) => (
 					<div
 						key={plan.id}
-						className={`flex flex-col items-center space-y-5 border rounded-md py-12 px-6 w-[350px] hover:scale-105 transition-all duration-700 ${
-							plan.duration === 'THREE_MONTHS'
-								? 'border-sky-200 shadow-xl shadow-sky-300'
-								: 'border-slate-200 shadow-md shadow-slate-200'
-						}`}
+						className={`flex flex-col items-center space-y-5 border rounded-md py-12 px-6 w-full md:w-[400px] hover:scale-105 transition-all duration-700 border-slate-300 shadow-xl shadow-slate-300
+							${plan.duration === 'SIX_MONTHS' && 'md:scale-110 hover:scale-110'}`}
 					>
-						<h1 className='text-xl font-medium'>{plan.title}</h1>
-						<h1 className='text-lg'>{plan.description}</h1>
+						<h1 className='text-2xl font-medium'>{plan.title}</h1>
+						<h1 className='text-sm'>{plan.description}</h1>
+						<h1 className='text-lg font-semibold'>
+							{PriceFormatter(plan.price)} /{' '}
+							{premiumSubscriptionPlanDurationFormatter(
+								plan.duration
+							)}
+						</h1>
 
 						{loading && currentPlan.id === plan.id ? (
 							<Button
@@ -211,7 +181,7 @@ const PricingPage = () => {
 										? 'bg-sky-500 hover:bg-sky-600'
 										: plan.duration === 'SIX_MONTHS'
 										? 'bg-indigo-400 hover:bg-indigo-500'
-										: 'bg-red-600 hover:bg-red-700'
+										: 'bg-sky-600 hover:bg-sky-700'
 								}`}
 							>
 								<ButtonLoader />
@@ -220,19 +190,60 @@ const PricingPage = () => {
 							<>
 								{currentPlan.id !== 0 &&
 								plan.id === currentPlan.id ? (
-									<PaystackButton
-										{...payStackButtonProps}
-										className={`text-white h-10 w-fit rounded-full px-4 py-3 text-xs ${
+									<Button
+										type='button'
+										disabled={loading}
+										onClick={async () => {
+											if (!user) {
+												return router.push('/signin');
+											}
+
+											try {
+												setLoading(true);
+
+												const {data} = await axios.post(
+													`${process.env.NEXT_PUBLIC_API_URL}/vendor/initialize-premium-subscription-payment?plan=${currentPlan.id}`,
+													{},
+													{
+														headers: {
+															Authorization:
+																user?.accessToken,
+														},
+													}
+												);
+
+												// console.log(data);
+												router.push(
+													data.data.secureUrl
+												);
+
+												setLoading(false);
+											} catch (error) {
+												setLoading(false);
+
+												const _error =
+													error as AxiosError;
+
+												// console.log(_error);
+											}
+										}}
+										className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
 											plan.duration === 'ONE_MONTH'
-												? 'bg-green-600 hover:bg-green-600'
+												? 'bg-green-600 hover:bg-green-700'
 												: plan.duration ===
 												  'THREE_MONTHS'
-												? 'bg-sky-700 hover:bg-sky-700'
+												? 'bg-sky-500 hover:bg-sky-600'
 												: plan.duration === 'SIX_MONTHS'
-												? 'bg-indigo-600 hover:bg-indigo-600'
-												: 'bg-red-700 hover:bg-red-700'
+												? 'bg-indigo-600 hover:bg-indigo-700'
+												: 'bg-sky-600 hover:bg-sky-700'
 										}`}
-									/>
+									>
+										{loading === true ? (
+											<ButtonLoader />
+										) : (
+											`${currentPlan?.buttonTitle}`
+										)}
+									</Button>
 								) : (
 									<Button
 										type='button'
@@ -262,13 +273,13 @@ const PricingPage = () => {
 										}}
 										className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
 											plan.duration === 'ONE_MONTH'
-												? 'bg-green-200 hover:bg-green-500'
+												? 'bg-green-600 hover:bg-green-700'
 												: plan.duration ===
 												  'THREE_MONTHS'
 												? 'bg-sky-500 hover:bg-sky-600'
 												: plan.duration === 'SIX_MONTHS'
-												? 'bg-indigo-200 hover:bg-indigo-500'
-												: 'bg-red-600 hover:bg-red-700'
+												? 'bg-indigo-600 hover:bg-indigo-700'
+												: 'bg-sky-600 hover:bg-sky-700'
 										}`}
 									>
 										Subscribe to{' '}
@@ -302,4 +313,4 @@ const PricingPage = () => {
 	);
 };
 
-export default PricingPage;
+export default EnterprisePage;
