@@ -53,6 +53,7 @@ export interface Vendor {
 	user: string;
 	phoneNumber: string;
 	zipPostalCode: string;
+	isAccountDisabled: string;
 	isUpdated: boolean;
 }
 

@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
 	useGlobalStore,
 	useUpgradeToPremiumAccessStore,
@@ -8,7 +8,7 @@ import {
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {CheckCircle} from 'lucide-react';
-import {useRouter} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {PaystackButton} from 'react-paystack';
 import ButtonLoader from '@/components/loader/button-loader';
@@ -18,9 +18,16 @@ import {PriceFormatter} from '@/utils/price.formatter';
 
 const EnterprisePage = () => {
 	const router = useRouter();
+	const queryParams = useSearchParams();
+	const transactionRef = queryParams.get('transactionRef');
+	const transactionStatus = queryParams.get('transactionStatus');
 
-	const {user, premiumSubscriptionPlans, updateUserPremiumSubscription} =
-		useGlobalStore();
+	const {
+		user,
+		userPremiumSubscription,
+		premiumSubscriptionPlans,
+		updateUserPremiumSubscription,
+	} = useGlobalStore();
 
 	const {onClose} = useUpgradeToPremiumAccessStore();
 
@@ -30,20 +37,25 @@ const EnterprisePage = () => {
 		amount: number;
 		buttonTitle: string;
 	}>({id: 0, amount: 0, buttonTitle: ''});
+	const [isVerifyTransactionPending, setIsVerifyTransactionPending] =
+		useState<boolean>(false);
 
-	const handleSuccess = async (response: any) => {
+	useEffect(() => {
+		if (transactionStatus === 'success' && transactionRef !== '') {
+			handleCreatePremiumSubscription(transactionRef!);
+		}
+	}, [user, transactionRef, transactionStatus]);
+
+	const handleCreatePremiumSubscription = async (reference: string) => {
 		try {
-			setLoading(true);
-			// console.log(response);
+			if (!user) return;
 
-			const {data} = await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/vendor/create-premium-subscription?plan=${currentPlan.id}`,
-				{
-					payment_gateway: 'PAYSTACK',
-					payment_date: new Date(),
-					payment_reference: response.reference,
-					payment_method: 'WEB',
-				},
+			if (isVerifyTransactionPending === true) return;
+
+			setIsVerifyTransactionPending(true);
+
+			const verifyTransactionResponse = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/payments/verify-premium-subscription-payment?reference=${reference}`,
 				{
 					headers: {
 						Authorization: user?.accessToken,
@@ -51,15 +63,42 @@ const EnterprisePage = () => {
 				}
 			);
 
-			setLoading(false);
+			console.log(verifyTransactionResponse);
 
-			updateUserPremiumSubscription(data.data);
+			if (verifyTransactionResponse.data.data.paymentSession === true) {
+				const {data} = await axios.post(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/create-premium-subscription?plan=${verifyTransactionResponse.data.data.plan}`,
+					{
+						payment_gateway: 'STRIPE',
+						payment_date: new Date(),
+						payment_reference: reference,
+						payment_method: 'WEB',
+					},
+					{
+						headers: {
+							Authorization: user?.accessToken,
+						},
+					}
+				);
 
-			onClose();
+				setIsVerifyTransactionPending(false);
 
-			toast.success(`Success!`, {duration: 3500});
+				updateUserPremiumSubscription(data.data);
+
+				onClose();
+
+				toast.success(`Premium subscription successful!`, {
+					duration: 3500,
+				});
+
+				return router.push('/enterprise');
+			} else {
+				setIsVerifyTransactionPending(false);
+
+				return toast.success(`Payment unverified!`, {duration: 3500});
+			}
 		} catch (error) {
-			setLoading(false);
+			setIsVerifyTransactionPending(false);
 
 			const _error = error as AxiosError;
 
@@ -67,34 +106,6 @@ const EnterprisePage = () => {
 
 			toast.error('An error occurred.');
 		}
-	};
-
-	const handleClose = () => {
-		toast.error('Payment cancelled!');
-	};
-
-	const payStackButtonProps = {
-		reference: generateRandomPaymentReference(),
-		email: user?.email!,
-		metadata: {
-			custom_fields: [
-				{
-					display_name: 'payment_type',
-					variable_name: 'payment_type',
-					value: 'PREMIUM_SUBSCRIPTION',
-				},
-				{
-					display_name: 'premium_subscription_plan',
-					variable_name: 'premium_subscription_plan',
-					value: currentPlan.id,
-				},
-			],
-		},
-		amount: currentPlan.amount * 100,
-		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
-		text: currentPlan.buttonTitle,
-		onSuccess: (response: any) => handleSuccess(response),
-		onClose: handleClose,
 	};
 
 	return (
@@ -202,7 +213,7 @@ const EnterprisePage = () => {
 												setLoading(true);
 
 												const {data} = await axios.post(
-													`${process.env.NEXT_PUBLIC_API_URL}/vendor/initialize-premium-subscription-payment?plan=${currentPlan.id}`,
+													`${process.env.NEXT_PUBLIC_API_URL}/payments/initialize-premium-subscription-payment?plan=${currentPlan.id}`,
 													{},
 													{
 														headers: {
@@ -247,7 +258,10 @@ const EnterprisePage = () => {
 								) : (
 									<Button
 										type='button'
-										disabled={loading}
+										disabled={
+											loading ||
+											userPremiumSubscription !== null
+										}
 										onClick={() => {
 											if (!user) {
 												return router.push('/signin');

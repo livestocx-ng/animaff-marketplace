@@ -9,6 +9,7 @@ import {getVendorIdFromSlug} from '@/utils/slug.formatter';
 import SellerInfoSearchForm from './components/seller-search-form';
 import SellerInfoProducts from './components/seller-info-products';
 import LoadingAnimation from '../../../../../../../public/animations/animation__3.json';
+import DisabledAccountAnimation from '../../../../../../../public/animations/animation__4.json';
 
 interface SellerInfoPageProps {
 	params: {
@@ -32,14 +33,21 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 		try {
 			setLoading(true);
 
+			// const sellerAccountStatus = await axios.get(
+			// 	`${
+			// 		process.env.NEXT_PUBLIC_API_URL
+			// 	}/user/sellers/account-status?sellerId=${getVendorIdFromSlug(params.sellerSlug)}`
+			// );
+
+			// console.log(sellerAccountStatus);
+
 			const {data} = await axios.get(
 				`${
 					process.env.NEXT_PUBLIC_API_URL
 				}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
 			);
 
-			// // console.log('[DATA] ::  ', profile.data);
-			// console.log('[DATA] ::  ', products.data);
+			console.log(data.data);
 
 			updateVendor(data.data);
 
@@ -90,11 +98,9 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 	return (
 		<main className='bg-[#28312B]'>
 			<section className='h-[22vh] md:h-[220px] w-full bg-home flex flex-col items-center justify-center'>
-				<h1 className='text-base md:text-5xl font-medium text-white text-center'>
-					{vendor?.name}
+				<h1 className={`${vendor?.isAccountDisabled? 'text-base md:text-xl': 'text-base md:text-5xl'} font-medium text-white text-center`}>
+					{vendor?.isAccountDisabled ? 'Not Found' : vendor?.name}
 				</h1>
-
-				{/* <SearchForm /> */}
 			</section>
 
 			{loading && (
@@ -110,22 +116,36 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 			)}
 
 			{!loading && vendor && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 py-5 space-y-2 sm:space-y-5'>
-					<SellerBanner />
+				<>
+					{vendor?.isAccountDisabled ? (
+						<div className='flex flex-col justify-center w-full bg-white px-4 md:px-8 py-5 space-y-2 sm:space-y-5'>
+							<div className='h-[500px] w-1/2 mx-auto'>
+								<Lottie
+									loop={true}
+									className='h-full'
+									animationData={DisabledAccountAnimation}
+								/>
+							</div>
+						</div>
+					) : (
+						<div className='flex flex-col w-full bg-white px-4 md:px-8 py-5 space-y-2 sm:space-y-5'>
+							<SellerBanner />
 
-					<div className='flex items-center justify-between w-full'>
-						<SellerInfoSearchForm />
-					</div>
+							<div className='flex items-center justify-between w-full'>
+								<SellerInfoSearchForm />
+							</div>
 
-					<PageBanner
-						text={`${sellerProducts?.length} Products Found`}
-					/>
+							<PageBanner
+								text={`${sellerProducts?.length} Products Found`}
+							/>
 
-					<SellerInfoProducts
-						currentPage={currentPage}
-						updateCurrentPage={setCurrentPage}
-					/>
-				</div>
+							<SellerInfoProducts
+								currentPage={currentPage}
+								updateCurrentPage={setCurrentPage}
+							/>
+						</div>
+					)}
+				</>
 			)}
 		</main>
 	);
