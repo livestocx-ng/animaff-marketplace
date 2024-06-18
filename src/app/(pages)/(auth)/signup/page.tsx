@@ -262,7 +262,7 @@ const SignUpPage = () => {
 									padding='py-4 px-4'
 									value={formData.businessSlug}
 									handleChange={handleChange}
-									placeHolder='Business Domain handle (https://animaff.com/sellers/slug)'
+									placeHolder='Business Domain Handle (https://animaff.com/sellers/slug)'
 									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 								/>
 								<FormTextInput

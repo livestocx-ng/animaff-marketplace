@@ -221,7 +221,7 @@ const UpdateVendorProfileModal = () => {
 
 					<div className='w-full'>
 						<p className='text-sm font-medium flex items-center space-x-2'>
-							<p>Business Slug</p>
+							<p>Business Domain Handle</p>
 							<TooltipProvider>
 								<Tooltip>
 									<TooltipTrigger asChild>
@@ -245,7 +245,7 @@ const UpdateVendorProfileModal = () => {
 							padding='py-4 px-4'
 							value={formData.slug}
 							handleChange={handleChange}
-							placeHolder='Business Slug (https://animaff.com/sellers/slug)'
+							placeHolder='Business Domain Handle (https://animaff.com/sellers/slug)'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
