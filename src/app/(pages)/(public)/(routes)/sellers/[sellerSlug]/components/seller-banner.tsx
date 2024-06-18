@@ -21,7 +21,7 @@ const SellerBanner = () => {
 
 	return (
 		<div className='w-[100%] sm:h-[200px] flex flex-col sm:flex-row items-center sm:items-start justify-between'>
-			<div className='h-[200px] sm:h-full w-full sm:w-[15%] relative items-center justify-center'>
+			<div className='h-[100px] sm:h-full w-full sm:w-[150px] relative items-center justify-center'>
 				<Image
 					fill
 					unoptimized={true}
@@ -34,13 +34,8 @@ const SellerBanner = () => {
 			<div className='flex flex-col justify-be h-full sm:space-y-3 w-full sm:w-[85%] sm:px-10 mt-2 sm:mt-0'>
 				<h1 className='text-sm sm:text-xl font-semibold'>
 					{vendor?.name}
-					{/* Better Farms Better Farms Better Farms Better
-					Farms Better Farms */}
 				</h1>
-				<p className='text-xs sm:text-sm'>
-					{vendor?.state}{vendor?.state !== 'Abuja' ? ' State,' : ' ,'}{' '}
-					Nigeria
-				</p>
+				<p className='text-xs sm:text-sm'>{vendor?.city} {vendor?.state}</p>
 				{/* <p>
 						Email:{' '}
 						<span className='text-orange-500'>{vendor?.email}</span>

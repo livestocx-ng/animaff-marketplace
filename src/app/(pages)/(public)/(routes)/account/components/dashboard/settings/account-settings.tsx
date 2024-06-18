@@ -126,15 +126,15 @@ const AccountSettings = () => {
 
 			// // console.log('[PROFILE] :: ', cookieUpdate.data);
 
-			toast.success('Profile updated');
+			toast.success('Profile updated', {className: 'text-sm'});
 		} catch (error) {
 			setLoading(false);
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-PROFILE-ERROR]', _error);
+			// console.log('[UPDATE-PROFILE-ERROR]', _error);
 
-			toast.error('Error');
+			toast.error('Error', {className: 'text-sm'});
 		}
 	};
 

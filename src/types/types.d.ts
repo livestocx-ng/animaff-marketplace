@@ -51,6 +51,7 @@ export interface Vendor {
 	avatarKey: string;
 	email: string;
 	user: string;
+	slug: string;
 	phoneNumber: string;
 	zipPostalCode: string;
 	isAccountDisabled: string;

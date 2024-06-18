@@ -90,7 +90,7 @@ const PasswordSettings = () => {
 				},
 			});
 
-			toast.success('Password updated!');
+			toast.success('Password updated!', {className: 'text-sm'});
 		} catch (error) {
 			setLoading(false);
 
@@ -98,7 +98,7 @@ const PasswordSettings = () => {
 
 			// console.log('[UPDATE-PASSWORD-ERROR]', _error);
 
-			toast.error('Error');
+			toast.error('Error', {className: 'text-sm'});
 		}
 	};
 

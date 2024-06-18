@@ -119,7 +119,7 @@ const EnterprisePage = () => {
 					<p className='text-sm text-white font-medium text-center md:text-left'>
 						Expand your business reach. Sell to thousands on our
 						Marketplace and showcase your products with our custom
-						website and catalog.
+						website and catalog built for you.
 					</p>
 
 					<Button

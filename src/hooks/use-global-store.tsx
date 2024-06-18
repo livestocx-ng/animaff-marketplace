@@ -34,6 +34,7 @@ interface GlobalStore {
 	user: User | null;
 	userPremiumSubscription: PremiumSubscription | null;
 	premiumSubscriptionPlans: PremiumSubscriptionPlan[];
+	vendorProfile: Vendor | null;
 	vendor: Vendor | null;
 	vendors: Vendor[];
 	billing: Billing | null;
@@ -95,6 +96,7 @@ interface GlobalStore {
 	updateCurrentAccountTab: (value: Tab) => void;
 	updatePayload: (value: Product) => void;
 	updateVendor: (value: Vendor | null) => void;
+	updateVendorProfile: (value: Vendor | null) => void;
 	updateBilling: (value: Billing | null) => void;
 	updateUser: (value: User | null) => void;
 	updateProducts: (products: Product[]) => void;
@@ -402,6 +404,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	vendors: [],
 	billing: null,
 	vendor: null,
+	vendorProfile: null,
 	searchProducts: [],
 	products: [],
 	sellerProducts: [],
@@ -461,6 +464,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	updateCurrentAccountTab: (value: Tab) => set({currentAccountTab: value}),
 	updateProductInfo: (value: ProductInfo) => set({productInfo: value}),
 	updateVendor: (value: Vendor | null) => set({vendor: value}),
+	updateVendorProfile: (value: Vendor | null) => set({vendorProfile: value}),
 	updateBilling: (value: Billing | null) => set({billing: value}),
 	updateUser: (value: User | null) => set({user: value}),
 	updatePayload: (value: Product) => set({product: value}),

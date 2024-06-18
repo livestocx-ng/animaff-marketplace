@@ -71,8 +71,8 @@ export default function HomePage() {
 			)}
 
 			{!loading && products?.length > 0 && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[44px] pb-10 relative'>
-					<PromotionBanner />
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-16 sm:pt-[10px] :pt-[44p] pb-10 relative'>
+					{/* <PromotionBanner /> */}
 
 					<HomeProducts
 						currentPage={currentPage}

@@ -19,9 +19,7 @@ export async function generateMetadata(
 	let ogImage = '';
 
 	const {data} = await axios.get(
-		`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/${getVendorIdFromSlug(
-			params.sellerSlug
-		)}`
+		`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${params.sellerSlug}`
 	);
 
 	// console.log('[SEO-SELLER-DATA] :: ', data);

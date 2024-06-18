@@ -1,22 +1,22 @@
 'use client';
 import Image from 'next/image';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip';
+import {Info} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {useEffect, useReducer, useRef, useState} from 'react';
-
-import {User} from '@/types/types';
-import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
 import {RegionCities, RegionStates} from '@/data';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import FormTextInput from '@/components/input/form-text-input';
 import ButtonLoader from '@/components/loader/button-loader';
+import {useEffect, useReducer, useRef, useState} from 'react';
+import FormTextInput from '@/components/input/form-text-input';
 import {ValidateUpdateProfileFormData} from '@/utils/form-validations/settings.validation';
 import {ValidateUpdateVendorProfileFormData} from '@/utils/form-validations/vendor.profile.validation';
-
-interface AccountSettingsProps {
-	user: User | null;
-}
 
 type FormData = {
 	name: string;
@@ -60,7 +60,7 @@ const formReducer = (state: FormData, action: FormAction) => {
 
 // const VendorSettings = ({user}: AccountSettingsProps) => {
 const VendorSettings = () => {
-	const {user, vendor, updateVendor} = useGlobalStore();
+	const {user, vendorProfile, updateVendorProfile} = useGlobalStore();
 
 	const avatarRef = useRef<HTMLInputElement>(null);
 
@@ -81,11 +81,11 @@ const VendorSettings = () => {
 
 			// console.log('[DATA] ::  ', data);
 
-			updateVendor(data.data);
+			updateVendorProfile(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
-			// console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
+			console.log('[FETCH-VENDOR-PROFILE-ERROR] :: ', _error);
 		}
 	};
 
@@ -97,22 +97,20 @@ const VendorSettings = () => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
 			payload: {
-				name: vendor?.name,
-				state: vendor?.state,
-				city: vendor?.city,
-				address: vendor?.address,
-				avatarUrl: vendor?.avatar,
-				email: vendor?.email,
-				phoneNumber: vendor?.phoneNumber,
-				zipPostalCode: vendor?.zipPostalCode,
-				isUpdated: vendor?.isUpdated,
+				name: vendorProfile?.name,
+				state: vendorProfile?.state,
+				city: vendorProfile?.city,
+				address: vendorProfile?.address,
+				avatarUrl: vendorProfile?.avatar,
+				email: vendorProfile?.email,
+				phoneNumber: vendorProfile?.phoneNumber,
+				zipPostalCode: vendorProfile?.zipPostalCode,
+				isUpdated: vendorProfile?.isUpdated,
 			},
 		});
 
-		setCities(RegionCities[vendor?.state!]);
-	}, [vendor]);
-
-	// console.log(vendor);
+		setCities(RegionCities[vendorProfile?.state!]);
+	}, [vendorProfile]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		// console.log('[EVENT] :: ', event.target.name);
@@ -156,8 +154,6 @@ const VendorSettings = () => {
 				return toast.error(validationError);
 			}
 
-			// console.log('[UPDATE-VENDOR-PROFILE-PAYLOAD] :: ', formData);
-
 			const {data} = await axios.patch(
 				`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-profile`,
 				formData,
@@ -171,16 +167,15 @@ const VendorSettings = () => {
 
 			setLoading(false);
 
-			// console.log('[VENDOR-PROFILE] :: ', data);
-			updateVendor(data.data);
+			updateVendorProfile(data.data);
 
-			toast.success('Vendor profile updated');
+			toast.success('Vendor profile updated', {className: 'text-sm'});
 		} catch (error) {
 			setLoading(false);
 
 			const _error = error as AxiosError;
 
-			console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
+			// console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -207,6 +202,7 @@ const VendorSettings = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
+
 					<div className='space-y-1 w-full'>
 						<p className='text-sm'>State</p>
 						<select
@@ -253,6 +249,7 @@ const VendorSettings = () => {
 						<p className='text-sm'>Zip/Postal Code</p>
 						<FormTextInput
 							name='zipPostalCode'
+							type='number'
 							padding='py-3 px-4'
 							disabled={loading}
 							handleChange={handleChange}
@@ -332,7 +329,7 @@ const VendorSettings = () => {
 							src={
 								formData.avatarUrl
 									? formData.avatarUrl
-									: '/vendor.jpg'
+									: '/vendorProfile.jpg'
 							}
 						/>
 					</div>

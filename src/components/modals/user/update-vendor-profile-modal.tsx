@@ -1,14 +1,20 @@
 'use client';
-import {useEffect, useReducer, useState} from 'react';
-import {X} from 'lucide-react';
+import {Info, X} from 'lucide-react';
 import {
 	useGlobalStore,
 	useUpdateVendorProfileModalStore,
 } from '@/hooks/use-global-store';
-import {RegionCities, RegionStates} from '@/data';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
+import {RegionCities, RegionStates} from '@/data';
+import {useEffect, useReducer, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
 import FormTextInput from '@/components/input/form-text-input';
 import {ValidateVendorProfileFormData} from '@/utils/form-validations/auth.validation';
@@ -20,6 +26,8 @@ type FormData = {
 	address: string;
 	state: string;
 	city: string;
+	slug: string;
+	zipPostalCode: string;
 };
 
 type FormAction = {
@@ -32,8 +40,10 @@ const initialState: FormData = {
 	email: '',
 	phoneNumber: '',
 	address: '',
-	state: 'Abia',
+	state: 'Alabama',
 	city: '',
+	slug: '',
+	zipPostalCode: '',
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -46,7 +56,8 @@ const formReducer = (state: FormData, action: FormAction) => {
 };
 
 const UpdateVendorProfileModal = () => {
-	const {user, vendor, updateUser, updateVendor} = useGlobalStore();
+	const {user, vendorProfile, updateUser, updateVendorProfile} =
+		useGlobalStore();
 
 	const {onClose} = useUpdateVendorProfileModalStore();
 
@@ -64,9 +75,7 @@ const UpdateVendorProfileModal = () => {
 				}
 			);
 
-			// console.log('[DATA] ::  ', data);
-
-			updateVendor(data.data);
+			updateVendorProfile(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
@@ -82,15 +91,17 @@ const UpdateVendorProfileModal = () => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
 			payload: {
-				name: vendor?.name,
-				state: vendor?.state,
-				city: vendor?.city,
-				address: vendor?.address,
-				email: vendor?.email,
-				phoneNumber: vendor?.phoneNumber,
+				name: vendorProfile?.name,
+				state: vendorProfile?.state,
+				city: vendorProfile?.city,
+				address: vendorProfile?.address,
+				email: vendorProfile?.email,
+				slug: vendorProfile?.slug,
+				phoneNumber: vendorProfile?.phoneNumber,
+				zipPostalCode: vendorProfile?.zipPostalCode,
 			},
 		});
-	}, [vendor]);
+	}, [vendorProfile]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
@@ -116,41 +127,57 @@ const UpdateVendorProfileModal = () => {
 
 			if (validationError) {
 				setLoading(false);
-				return toast.error(validationError, {duration: 10000});
+				return toast.error(validationError, {
+					duration: 10000,
+					className: 'text-sm',
+				});
 			}
 
-			await axios.patch(
-				`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-profile`,
-				formData,
-				{
-					headers: {
-						'Content-Type': 'multipart/form-data',
-						Authorization: user?.accessToken,
-					},
-				}
+			const sellerSlugAvailability = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/seller-slug-availability?slug=${formData.slug}`
 			);
-			const cookieUpdate = await axios.patch('/api/auth/update-cookies', {
-				isVendorProfileUpdated: true,
-			});
 
-			await updateUser(cookieUpdate.data);
+			if (sellerSlugAvailability.data.data === true) {
+				setLoading(false);
 
-			// console.log('[DATA] :: ', cookieUpdate);
+				return toast.error('Business domain handle already exists!', {
+					duration: 10000,
+					className: 'text-sm',
+				});
+			} else {
+				await axios.patch(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-profile`,
+					formData,
+					{
+						headers: {
+							'Content-Type': 'multipart/form-data',
+							Authorization: user?.accessToken,
+						},
+					}
+				);
+				const cookieUpdate = await axios.patch(
+					'/api/auth/update-cookies',
+					{
+						isVendorProfileUpdated: true,
+					}
+				);
 
-			setLoading(false);
+				await updateUser(cookieUpdate.data);
 
-			updateUser(cookieUpdate.data);
+				setLoading(false);
 
-			toast.success('Success');
+				updateUser(cookieUpdate.data);
 
-			// close modal
-			onClose();
+				toast.success('Success');
+
+				onClose();
+			}
 		} catch (error) {
 			setLoading(false);
 
 			const _error = error as AxiosError;
 
-			// console.log('[UPDATE-GOOGLE-PROFILE-ERROR]', _error);
+			// console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
 
 			toast.error('Error');
 		}
@@ -158,7 +185,7 @@ const UpdateVendorProfileModal = () => {
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-[15]'>
-			<div className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4 overflow-y-auto scrollbar__1'>
+			<div className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'>
 				<div className='flex items-center justify-between px4'>
 					<h1 className='font-medium'>Update Business Profile</h1>
 
@@ -188,6 +215,37 @@ const UpdateVendorProfileModal = () => {
 							placeHolder='Business Name'
 							value={formData.name}
 							handleChange={handleChange}
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+						/>
+					</div>
+
+					<div className='w-full'>
+						<p className='text-sm font-medium flex items-center space-x-2'>
+							<p>Business Slug</p>
+							<TooltipProvider>
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<Info size={14} />
+									</TooltipTrigger>
+									<TooltipContent>
+										<p className='text-sm'>
+											This value will be used to create
+											your custom domain handle. Example
+											https://domain.com/sellers/slug
+										</p>
+									</TooltipContent>
+								</Tooltip>
+							</TooltipProvider>
+							<p className='text-red-500'>*</p>
+						</p>
+						<FormTextInput
+							name='slug'
+							type='number'
+							disabled={loading}
+							padding='py-4 px-4'
+							value={formData.slug}
+							handleChange={handleChange}
+							placeHolder='Business Slug (https://animaff.com/sellers/slug)'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
@@ -243,6 +301,23 @@ const UpdateVendorProfileModal = () => {
 
 					<div className='w-full'>
 						<p className='text-sm font-medium'>
+							Zip/Postal Code{' '}
+							<span className='text-red-500'>*</span>
+						</p>
+						<FormTextInput
+							type='text'
+							name='zipPostalCode'
+							padding='py-3 px-4'
+							disabled={loading}
+							handleChange={handleChange}
+							placeHolder='Zip/Postal Code'
+							value={formData.zipPostalCode}
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+						/>
+					</div>
+
+					<div className='w-full'>
+						<p className='text-sm font-medium'>
 							Business State{' '}
 							<span className='text-red-500'>*</span>
 						</p>
@@ -286,7 +361,7 @@ const UpdateVendorProfileModal = () => {
 										: 'Business City'}
 								</option>
 								{RegionCities[
-									formData.state ? formData.state : 'Abia'
+									formData.state ? formData.state : 'Alabama'
 								].map((option) => (
 									<option
 										key={option}

@@ -33,21 +33,17 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 		try {
 			setLoading(true);
 
-			// const sellerAccountStatus = await axios.get(
+			// const {data} = await axios.get(
 			// 	`${
 			// 		process.env.NEXT_PUBLIC_API_URL
-			// 	}/user/sellers/account-status?sellerId=${getVendorIdFromSlug(params.sellerSlug)}`
+			// 	}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
 			// );
 
-			// console.log(sellerAccountStatus);
-
 			const {data} = await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/user/sellers/${getVendorIdFromSlug(params.sellerSlug)}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${params.sellerSlug}`
 			);
 
-			console.log(data.data);
+			// console.log(data.data);
 
 			updateVendor(data.data);
 
@@ -65,15 +61,10 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 			setLoading(true);
 
 			const {data} = await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/user/sellers/${getVendorIdFromSlug(
-					params.sellerSlug
-				)}/products?page=${currentPage}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile/products?slug=${params.sellerSlug}&page=${currentPage}`
 			);
 
-			// // console.log('[DATA] ::  ', profile.data);
-			// console.log('[DATA] ::  ', products.data);
+			console.log('[DATA] ::  ', data);
 
 			updateSellerProducts(data.data.products);
 			updateSellerPagination(data.data.totalPages, data.data.hasNext);
@@ -98,7 +89,13 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 	return (
 		<main className='bg-[#28312B]'>
 			<section className='h-[22vh] md:h-[220px] w-full bg-home flex flex-col items-center justify-center'>
-				<h1 className={`${vendor?.isAccountDisabled? 'text-base md:text-xl': 'text-base md:text-5xl'} font-medium text-white text-center`}>
+				<h1
+					className={`${
+						vendor?.isAccountDisabled
+							? 'text-base md:text-xl'
+							: 'text-base md:text-4xl'
+					} font-medium text-white text-center`}
+				>
 					{vendor?.isAccountDisabled ? 'Not Found' : vendor?.name}
 				</h1>
 			</section>

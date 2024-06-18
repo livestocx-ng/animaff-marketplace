@@ -9,6 +9,7 @@ interface VendorProfileDto {
 	address: string;
 	state: string;
 	city: string;
+	slug: string;
 	phoneNumber: string;
 }
 
@@ -19,6 +20,7 @@ interface SignupDto {
 	password: string;
 	location: string;
 	businessName: string;
+	businessSlug: string;
 	businessAddress: string;
 	businessState: string;
 	businessCity: string;
@@ -28,6 +30,8 @@ interface SignupDto {
 	confirmPassword: string;
 	role: 'FARMER' | 'CUSTOMER';
 }
+
+const sellerSlugRegEX = new RegExp(/^[a-z]+$/);
 
 const zipPostalCodeRegEX = new RegExp(/^\d{5}$/);
 
@@ -110,6 +114,12 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	if (formData.role === 'FARMER' && !formData.businessName) {
 		return (message = 'Business name is required.');
 	}
+	if (!formData.businessSlug) {
+		return (message = 'Business slug is required.');
+	}
+	if (!sellerSlugRegEX.test(formData.businessSlug)) {
+		return (message = 'Invalid business slug, use lowercase characters without space.');
+	}
 	if (formData.role === 'FARMER' && !formData.businessAddress) {
 		return (message = 'Business address is required.');
 	}
@@ -153,6 +163,13 @@ export function ValidateVendorProfileFormData(
 
 	if (!formData.address) {
 		return (message = 'Business address is required.');
+	}
+
+	if (!formData.slug) {
+		return (message = 'Business slug is required.');
+	}
+	if (!sellerSlugRegEX.test(formData.slug)) {
+		return (message = 'Invalid business slug, use lowercase characters without space.');
 	}
 
 	if (!formData.state) {
