@@ -11,7 +11,7 @@ import {useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {PaystackButton} from 'react-paystack';
 import ButtonLoader from '@/components/loader/button-loader';
-import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
+import {subscriptionPlanDurationFormatter} from '@/utils';
 import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
 
 const UpgradeToPremiumModal = () => {
@@ -173,8 +173,10 @@ const UpgradeToPremiumModal = () => {
 
 												if (user?.role !== 'FARMER') {
 													return toast.error(
-														'Only sellers are allowed to this service.', {
-															className: 'text-xs, font-medium'
+														'Only sellers are allowed to this service.',
+														{
+															className:
+																'text-xs, font-medium',
 														}
 													);
 												}
@@ -182,7 +184,7 @@ const UpgradeToPremiumModal = () => {
 												setCurrentPlan({
 													id: plan.id,
 													amount: plan.price,
-													buttonTitle: `Proceed to pay for ${premiumSubscriptionPlanDurationFormatter(
+													buttonTitle: `Proceed to pay for ${subscriptionPlanDurationFormatter(
 														plan.duration
 													)} plan`,
 												});
@@ -200,7 +202,7 @@ const UpgradeToPremiumModal = () => {
 											}`}
 										>
 											Subscribe to{' '}
-											{premiumSubscriptionPlanDurationFormatter(
+											{subscriptionPlanDurationFormatter(
 												plan.duration
 											)}{' '}
 											plan

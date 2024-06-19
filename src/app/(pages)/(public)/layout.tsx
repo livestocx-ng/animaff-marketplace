@@ -19,10 +19,10 @@ import ShareProductModal from '@/components/modals/product/share-product-modal';
 import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
+import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premium-modal';
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
-import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premium-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -37,6 +37,8 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		updateUserPromotionPlan,
 		updateUserPremiumSubscription,
 		updatePremiumSubscriptionPlans,
+		updateUserProductUploadSubscription,
+		updateProductUploadSubscriptionPlans,
 	} = useGlobalStore();
 
 	const downloadAppModal = useDownloadAppStore();
@@ -79,13 +81,17 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		}
 	};
 
-	const fetchUserPromotionPlan = async () => {
+	const fetchUserSubscriptions = async () => {
 		try {
 			if (!user) {
 				return;
 			}
 
-			const [userPromotionPlanRequest, userPremiumSubscriptionRequest] = await Promise.all([
+			const [
+				userPromotionPlanRequest,
+				userPremiumSubscriptionPlansRequest,
+				userProductUploadSubscriptionPlansRequest,
+			] = await Promise.all([
 				axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plan`,
 					{
@@ -102,10 +108,25 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 						},
 					}
 				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/product-upload-subscription`,
+					{
+						headers: {
+							Authorization: user?.accessToken,
+						},
+					}
+				),
 			]);
 
 			updateUserPromotionPlan(userPromotionPlanRequest.data.data);
-			updateUserPremiumSubscription(userPremiumSubscriptionRequest.data.data);
+
+			updateUserPremiumSubscription(
+				userPremiumSubscriptionPlansRequest.data.data
+			);
+
+			updateUserProductUploadSubscription(
+				userProductUploadSubscriptionPlansRequest.data.data
+			);
 		} catch (error) {
 			const _error = error as AxiosError;
 
@@ -115,20 +136,33 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	const fetchSubscriptionPlans = async () => {
 		try {
-			const [promotionPlansRequest, premiumSubscriptionPlansRequest] =
-				await Promise.all([
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
-					),
-					axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-plans`
-					),
-				]);
+			const [
+				promotionPlansRequest,
+				premiumSubscriptionPlansRequest,
+				userProductUploadSubscriptionRequest,
+			] = await Promise.all([
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-plans`
+				),
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/vendor/product-upload-subscription-plans`
+				),
+			]);
 
 			updatePromotionPlans(promotionPlansRequest.data.data);
+
 			updatePremiumSubscriptionPlans(
 				premiumSubscriptionPlansRequest.data.data
 			);
+
+			updateProductUploadSubscriptionPlans(
+				userProductUploadSubscriptionRequest.data.data
+			);
+
+			console.log(userProductUploadSubscriptionRequest);
 		} catch (error) {
 			const _error = error as AxiosError;
 
@@ -151,7 +185,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		}
 
 		fetchChatConversations();
-		fetchUserPromotionPlan();
+		fetchUserSubscriptions();
 		fetchSubscriptionPlans();
 	}, [user]);
 

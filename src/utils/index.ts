@@ -1,6 +1,4 @@
-export function premiumSubscriptionPlanDurationFormatter(
-	duration: string
-): string {
+export function subscriptionPlanDurationFormatter(duration: string): string {
 	let result = '';
 
 	switch (duration) {

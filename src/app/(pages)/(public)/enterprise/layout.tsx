@@ -1,9 +1,9 @@
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
-	title: 'Livestocx - Enterprise',
+	title: 'Animaff - Enterprise',
 	description: 'Best deals, Everything Animals',
-	keywords: ['Livestocx', 'Livestock', 'Nigeria', 'Animals', 'Meat'],
+	keywords: ['Livestock', 'United States', 'Animals', 'Meat', 'Pets'],
 	openGraph: {
 		images: [
 			{

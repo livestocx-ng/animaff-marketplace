@@ -26,6 +26,8 @@ export interface User {
 	isVendorProfileUpdated: boolean;
 	accessToken: string;
 	refreshToken: string;
+	productUploadLimit: number;
+	isMonthlyProductUploadSubscriptionActive: boolean;
 }
 
 export interface Billing {
@@ -81,7 +83,7 @@ export interface Product {
 	viewCount: number;
 	likeCount: number;
 	purchaseCount: number;
-	likedUsers: null | number[]; // Change the type of likedUsers accordingly
+	likedUsers: null | number[];
 	media: Media[];
 	createdAt: string;
 	vendor?: Vendor;
@@ -303,4 +305,29 @@ export interface PremiumSubscriptionPlan {
 		id: number;
 		title: string;
 	}[];
+}
+
+export interface ProductUploadSubscription {
+	id: number;
+	subscription_date: Date;
+	expiration_date: Date;
+	payment_method: string;
+	amount_paid: number;
+	payment_reference: string;
+	payment_gateway: string;
+	payment_date: Date;
+	isExpired: boolean;
+	user: number;
+	plan: number;
+}
+
+export interface ProductUploadSubscriptionPlan {
+	id: number;
+	title: string;
+	description: string;
+	price: number;
+	duration: string;
+	duration_days: number;
+	bonus_days: number;
+	position: number;
 }

@@ -2,9 +2,11 @@
 import {
 	useGlobalStore,
 	useCreateProductModalStore,
+	useProductUploadSubscriptionModalStore,
 } from '@/hooks/use-global-store';
 import {useEffect} from 'react';
-import {Plus} from 'lucide-react';
+import {Plus, ZapIcon} from 'lucide-react';
+import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Button} from '@/components/ui/button';
 import {columns} from './tables/products-column';
@@ -14,7 +16,9 @@ const ProductsContent = () => {
 	const isModalOpen = useCreateProductModalStore((state) => state.isOpen);
 	const onModalOpen = useCreateProductModalStore((state) => state.onOpen);
 
-	const {user, products, updateProducts} = useGlobalStore();
+	const modal = useProductUploadSubscriptionModalStore();
+	const {user, userProductUploadSubscription, products, updateProducts} =
+		useGlobalStore();
 
 	const fetchProducts = async () => {
 		try {
@@ -45,10 +49,33 @@ const ProductsContent = () => {
 
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5 '>
-			<div className='flex justify-end'>
+			<div className='flex justify-end space-x-5'>
+				{userProductUploadSubscription === null &&
+					user?.productUploadLimit === 0 && (
+						<Button
+							type='button'
+							onClick={() => {
+								modal.onOpen();
+							}}
+							className='bg-sky-600 flex items-center space-x-3 text-white h-10 hover:bg-sky-700 w-fit rounded py-2'
+						>
+							<ZapIcon className='h-4 w-4' /> <p>Subscribe</p>
+						</Button>
+					)}
+
 				<Button
 					type='button'
 					onClick={() => {
+						if (
+							userProductUploadSubscription === null &&
+							user?.productUploadLimit === 0
+						) {
+							return toast.error(
+								'Product upload limit exceeded!',
+								{className: 'text-sm'}
+							);
+						}
+
 						if (!isModalOpen) {
 							onModalOpen();
 						}
@@ -61,7 +88,6 @@ const ProductsContent = () => {
 
 			<DataTable
 				data={products}
-				// data={Products}
 				columns={columns}
 				borderRadius='rounded-b'
 			/>

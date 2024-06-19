@@ -57,10 +57,10 @@ export default function HomePage() {
 			</section>
 
 			{!loading && products?.length === 0 && (
-				<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
-					<PromotionBanner />
+				<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-[10px] pb-10 relative'>
+					{/* <PromotionBanner /> */}
 
-					<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 pt-8 sm:pt-0 mt-8'>
+					<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 sm:pt-0 mt-2'>
 						{Array(50)
 							.fill(1)
 							.map((item, index) => (

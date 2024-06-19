@@ -85,7 +85,7 @@ type Checked = DropdownMenuCheckboxItemProps['checked'];
 
 const AddProductModal = () => {
 	const {user} = useUserHook();
-	const {products, updateProducts} = useGlobalStore();
+	const {products, updateUser, updateProducts} = useGlobalStore();
 
 	const modal = useCreateProductModalStore();
 	const shareProductModal = useShareNewProductModalStore();
@@ -221,7 +221,7 @@ const AddProductModal = () => {
 				return toast.error(validationError);
 			}
 
-			console.log('[CREATE-PRODUCT-PAYLOAD] :: ', formData);
+			// console.log('[CREATE-PRODUCT-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/products/create`,
@@ -234,11 +234,18 @@ const AddProductModal = () => {
 				}
 			);
 
+			const cookieUpdate = await axios.patch('/api/auth/update-cookies', {
+				productUploadLimit: user?.productUploadLimit! - 1,
+			});
+
+			await updateUser(cookieUpdate.data);
+
 			setLoading(false);
 
 			toast.success('New product created');
 
 			shareProductModal.onOpen();
+
 			shareProductModal.updatePayload(data.data);
 
 			updateProducts([...products, data.data]);
@@ -280,10 +287,10 @@ const AddProductModal = () => {
 						<input
 							type='file'
 							name='media'
-							ref={mediaImageRef}
 							multiple={true}
-							style={{display: 'none'}}
+							ref={mediaImageRef}
 							accept='.jpeg, .jpg'
+							style={{display: 'none'}}
 							onChange={(
 								event: React.ChangeEvent<HTMLInputElement>
 							) => handleMediaUpload(event, 'IMAGE')}
@@ -292,10 +299,10 @@ const AddProductModal = () => {
 						<input
 							type='file'
 							name='media'
-							ref={mediaVideoRef}
-							multiple={true}
-							style={{display: 'none'}}
 							accept='.mp4'
+							multiple={true}
+							ref={mediaVideoRef}
+							style={{display: 'none'}}
 							onChange={(
 								event: React.ChangeEvent<HTMLInputElement>
 							) => handleMediaUpload(event, 'VIDEO')}
@@ -408,10 +415,28 @@ const AddProductModal = () => {
 							</p>
 						)}
 
-						<div className='flex items-center space-x-2 border border-sky-300 rounded-md px-2 py-4 bg-sky-50 text-xs shadow-md shadow-sky-100'>
-							<InfoIcon size={16} className='text-sky-600' />{' '}
-							<p>You have 3 free post uploads left</p>
-						</div>
+						{!user?.isMonthlyProductUploadSubscriptionActive && (
+							<div
+								className={`flex items-center space-x-2 border text-xs rounded-md px-2 py-4 shadow-md ${
+									user?.productUploadLimit === 1
+										? 'border-orange-300 bg-orange-50 shadow-orange-100 animate-pulse'
+										: 'border-sky-300 bg-sky-50 shadow-sky-100'
+								}`}
+							>
+								<InfoIcon
+									size={16}
+									className={`${
+										user?.productUploadLimit === 1
+											? 'text-orange-600'
+											: 'text-sky-600'
+									}`}
+								/>{' '}
+								<p>
+									You have {user?.productUploadLimit} free
+									post uploads left
+								</p>
+							</div>
+						)}
 					</div>
 
 					<div className='w-full lg:w-[70%] flex flex-col space-y-3 lg:pl-8 mb-5 lg:mb-0'>
@@ -419,7 +444,7 @@ const AddProductModal = () => {
 							<p className='text-xs'>Product Category</p>
 							<select
 								name='category'
-								className='w-full border py-3 rounde px-3 text-xs scrollbar__1'
+								className='w-full border py-3 px-3 text-xs scrollbar__1'
 								onChange={handleSelectChange}
 							>
 								<option value='' className='text-xs'>
@@ -693,6 +718,12 @@ const AddProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
+							disabled={
+								loading ||
+								(user?.productUploadLimit === 0 &&
+									user?.isMonthlyProductUploadSubscriptionActive ===
+										false)
+							}
 							className='w-full lg:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							Submit

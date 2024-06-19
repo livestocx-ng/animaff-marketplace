@@ -17,6 +17,8 @@ import {
 	PremiumSubscription,
 	PromotionProductInfo,
 	PremiumSubscriptionPlan,
+	ProductUploadSubscription,
+	ProductUploadSubscriptionPlan,
 } from '@/types/types';
 import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
@@ -34,6 +36,8 @@ interface GlobalStore {
 	user: User | null;
 	userPremiumSubscription: PremiumSubscription | null;
 	premiumSubscriptionPlans: PremiumSubscriptionPlan[];
+	userProductUploadSubscription: ProductUploadSubscription | null;
+	productUploadSubscriptionPlans: ProductUploadSubscriptionPlan[];
 	vendorProfile: Vendor | null;
 	vendor: Vendor | null;
 	vendors: Vendor[];
@@ -67,6 +71,8 @@ interface GlobalStore {
 	promotionProductsHasNextPage: boolean;
 	updateUserPremiumSubscription: (value: PremiumSubscription | null)=> void;
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[])=> void;
+	updateUserProductUploadSubscription: (value: ProductUploadSubscription | null)=> void;
+	updateProductUploadSubscriptionPlans: (value: ProductUploadSubscriptionPlan[])=> void;
 	updatePromotionInfoProducts: (value: Product[])=> void;
 	updatePromotionProducts: (value: Product[])=> void;
 	updateCurrentPromotion: (value: Promotion | null)=> void;
@@ -149,6 +155,18 @@ interface ProductModal {
 }
 
 interface UpdateUserRoleModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
+interface ProductUploadSubscriptionModal {
+	isOpen: boolean;
+	onOpen: () => void;
+	onClose: () => void;
+}
+
+interface VerifyProductUploadSubscriptionPaymentModal {
 	isOpen: boolean;
 	onOpen: () => void;
 	onClose: () => void;
@@ -240,6 +258,18 @@ export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
 		onClose: () => set({isOpen: false}),
 	})
 );
+
+export const useProductUploadSubscriptionModalStore = create<ProductUploadSubscriptionModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const useVerifyProductUploadSubscriptionPaymentModalStore = create<VerifyProductUploadSubscriptionPaymentModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
 
 export const useCreateProductModalStore = create<CreateProductModal>((set) => ({
 	isOpen: false,
@@ -391,6 +421,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	chatConversationMessages: [],
 	userPremiumSubscription: null,
 	premiumSubscriptionPlans: [],
+	userProductUploadSubscription: null,
+	productUploadSubscriptionPlans: [],
 	showChatConversation: false,
 	searchQuery: '',
 	searchQueryState: '',
@@ -428,8 +460,10 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	promotionInfoProducts: [],
 	promotionProductsTotalPages: 0,
 	promotionProductsHasNextPage: false,
-	updateUserPremiumSubscription: (value: PremiumSubscription|null) => set({userPremiumSubscription: value}),
+	updateUserPremiumSubscription: (value: PremiumSubscription | null) => set({userPremiumSubscription: value}),
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[]) => set({premiumSubscriptionPlans: value}),
+	updateUserProductUploadSubscription: (value: ProductUploadSubscription | null) => set({userProductUploadSubscription: value}),
+	updateProductUploadSubscriptionPlans: (value: ProductUploadSubscriptionPlan[]) => set({productUploadSubscriptionPlans: value}),
 	updatePromotionInfoProducts: (value: Product[]) => set({promotionInfoProducts: value}),
 	updatePromotionProducts: (value: Product[]) => set({promotionProducts: value}),
 	updateCurrentPromotion: (value: Promotion | null) => set({currentPromotion: value}),

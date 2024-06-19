@@ -1,34 +1,44 @@
 'use client';
 import {
-	useCreateProductModalStore,
-	useCreatePromotionModalStore,
-	useDeleteProductModalStore,
 	useGlobalStore,
-	useShareNewProductModalStore,
+	useCreateProductModalStore,
+	useDeleteProductModalStore,
 	useUpdateProductModalStore,
+	useCreatePromotionModalStore,
+	useShareNewProductModalStore,
+	useProductUploadSubscriptionModalStore,
+	useVerifyProductUploadSubscriptionPaymentModalStore,
 } from '@/hooks/use-global-store';
 import {useEffect} from 'react';
-import {redirect} from 'next/navigation';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
+import {redirect, useSearchParams} from 'next/navigation';
 import AddProductModal from '@/components/modals/product/add-product-modal';
 import UpdateProductModal from '@/components/modals/product/update-product-modal';
 import DeleteProductModal from '@/components/modals/product/delete-product-modal';
 import ShareNewProductModal from '@/components/modals/product/share-new-product-modal';
 import CreatePromotionModal from '@/components/modals/promotions/create-promotion-modal';
+import ProductUploadSubscriptionModal from '@/components/modals/premium/product-upload-subscription-modal';
+import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-modal';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;
 }
 
 export default function AccountLayout({children}: AccountLayoutProps) {
+	const queryParams = useSearchParams();
+	const paymentFor = queryParams.get('paymentFor');
+	const transactionRef = queryParams.get('transactionRef');
+	const transactionStatus = queryParams.get('transactionStatus');
+
 	const {user, error} = useUserHook();
 	const {updateChatConversations} = useGlobalStore();
 
 	const isCreatePromotionModalOpen = useCreatePromotionModalStore(
 		(state) => state.isOpen
 	);
-
+	const isProductUploadSubscriptionModalOpen =
+		useProductUploadSubscriptionModalStore((state) => state.isOpen);
 	const isCreateProductModalOpen = useCreateProductModalStore(
 		(state) => state.isOpen
 	);
@@ -41,6 +51,8 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 	const isDeleteProductModalOpen = useDeleteProductModalStore(
 		(state) => state.isOpen
 	);
+	const verifyProductUploadPaymentModal =
+		useVerifyProductUploadSubscriptionPaymentModalStore();
 
 	if (error && !user) {
 		redirect('/');
@@ -75,15 +87,36 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 		fetchChatConversations();
 	}, [user]);
 
+	useEffect(() => {
+		if (
+			paymentFor === 'product_upload' &&
+			transactionRef !== '' &&
+			transactionStatus !== ''
+		) {
+			if (verifyProductUploadPaymentModal.isOpen) return;
+
+			verifyProductUploadPaymentModal.onOpen();
+		}
+	}, [paymentFor]);
+
 	if (user) {
 		return (
 			<div className='relative'>
 				{' '}
-				{isCreatePromotionModalOpen && <CreatePromotionModal />}
 				{isCreateProductModalOpen && <AddProductModal />}
-				{isShareNewProductModalOpen && <ShareNewProductModal />}
 				{isUpdateProductModalOpen && <UpdateProductModal />}
 				{isDeleteProductModalOpen && <DeleteProductModal />}
+				{isCreatePromotionModalOpen && <CreatePromotionModal />}
+				{isShareNewProductModalOpen && <ShareNewProductModal />}
+				{isProductUploadSubscriptionModalOpen && (
+					<ProductUploadSubscriptionModal />
+				)}
+				{verifyProductUploadPaymentModal.isOpen && (
+					<VerifyProductUploadSubscriptionPaymentModal
+						transactionRef={transactionRef!}
+						transactionStatus={transactionStatus!}
+					/>
+				)}
 				{children}
 			</div>
 		);

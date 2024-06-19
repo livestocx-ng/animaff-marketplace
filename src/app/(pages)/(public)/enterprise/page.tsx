@@ -12,7 +12,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {PaystackButton} from 'react-paystack';
 import ButtonLoader from '@/components/loader/button-loader';
-import {premiumSubscriptionPlanDurationFormatter} from '@/utils';
+import {subscriptionPlanDurationFormatter} from '@/utils';
 import {generateRandomPaymentReference} from '@/utils/promotion.util.formatter';
 import {PriceFormatter} from '@/utils/price.formatter';
 
@@ -176,9 +176,7 @@ const EnterprisePage = () => {
 						<h1 className='text-sm'>{plan.description}</h1>
 						<h1 className='text-lg font-semibold'>
 							{PriceFormatter(plan.price)} /{' '}
-							{premiumSubscriptionPlanDurationFormatter(
-								plan.duration
-							)}
+							{subscriptionPlanDurationFormatter(plan.duration)}
 						</h1>
 
 						{loading && currentPlan.id === plan.id ? (
@@ -280,7 +278,7 @@ const EnterprisePage = () => {
 											setCurrentPlan({
 												id: plan.id,
 												amount: plan.price,
-												buttonTitle: `Proceed to pay for ${premiumSubscriptionPlanDurationFormatter(
+												buttonTitle: `Proceed to pay for ${subscriptionPlanDurationFormatter(
 													plan.duration
 												)} plan`,
 											});
@@ -297,7 +295,7 @@ const EnterprisePage = () => {
 										}`}
 									>
 										Subscribe to{' '}
-										{premiumSubscriptionPlanDurationFormatter(
+										{subscriptionPlanDurationFormatter(
 											plan.duration
 										)}{' '}
 										plan
