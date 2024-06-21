@@ -11,13 +11,13 @@ import SellerInfoProducts from './components/seller-info-products';
 import LoadingAnimation from '../../../../../../../public/animations/animation__3.json';
 import DisabledAccountAnimation from '../../../../../../../public/animations/animation__4.json';
 
-interface SellerInfoPageProps {
+interface SellerProfilePageProps {
 	params: {
 		sellerSlug: string;
 	};
 }
 
-const SellerInfoPage = ({params}: SellerInfoPageProps) => {
+const SellerProfilePage = ({params}: SellerProfilePageProps) => {
 	const {
 		vendor,
 		updateVendor,
@@ -148,4 +148,4 @@ const SellerInfoPage = ({params}: SellerInfoPageProps) => {
 	);
 };
 
-export default SellerInfoPage;
+export default SellerProfilePage;

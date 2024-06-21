@@ -15,8 +15,6 @@ export async function generateMetadata(
 	{params}: ProductDescriptionLayoutProps,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
-	console.log('SLUG ', params.slug);
-
 	let ogImage = '';
 
 	const {data} = await axios.get(

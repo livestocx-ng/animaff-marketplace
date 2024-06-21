@@ -1,32 +1,31 @@
 'use client';
-import {Info, X} from 'lucide-react';
 import {
 	useGlobalStore,
-	useUpdateVendorProfileModalStore,
+	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
+import {Button} from '@/components/ui/button';
+import {useEffect, useReducer, useState} from 'react';
+import {CircleDollarSign, Info, X} from 'lucide-react';
+import ButtonLoader from '@/components/loader/button-loader';
+import FormTextInput from '@/components/input/form-text-input';
+import {ValidatePremiumSubscriptionCheckoutFormData} from '@/utils/form-validations/auth.validation';
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import {toast} from 'react-hot-toast';
-import axios, {AxiosError} from 'axios';
-import {Button} from '@/components/ui/button';
-import {RegionCities, RegionStates} from '@/data';
-import {useEffect, useReducer, useState} from 'react';
-import ButtonLoader from '@/components/loader/button-loader';
-import FormTextInput from '@/components/input/form-text-input';
-import {ValidateVendorProfileFormData} from '@/utils/form-validations/auth.validation';
+import {Badge} from '@/components/ui/badge';
+import {useRouter} from 'next/navigation';
 
 type FormData = {
 	name: string;
 	email: string;
 	phoneNumber: string;
 	address: string;
-	// state: string;
-	// city: string;
-	// slug: string;
+	slug: string;
 	zipPostalCode: string;
 };
 
@@ -40,9 +39,7 @@ const initialState: FormData = {
 	email: '',
 	phoneNumber: '',
 	address: '',
-	// state: 'Alabama',
-	// city: '',
-	// slug: '',
+	slug: '',
 	zipPostalCode: '',
 };
 
@@ -55,13 +52,20 @@ const formReducer = (state: FormData, action: FormAction) => {
 	}
 };
 
-const UpdateVendorProfileModal = () => {
-	const {user, vendorProfile, updateUser, updateVendorProfile} =
-		useGlobalStore();
+const PremiumSubscriptionCheckoutModal = () => {
+	const {
+		user,
+		vendorProfile,
+		updateVendorProfile,
+		premiumSubscriptionPlanId,
+	} = useGlobalStore();
 
-	const {onClose} = useUpdateVendorProfileModalStore();
+	const router = useRouter();
+
+	const {onClose} = usePremiumSubscriptionCheckoutModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
+	const [vendorSlugExists, setVendorSlugExists] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
 	const fetchVendorProfile = async () => {
@@ -92,27 +96,18 @@ const UpdateVendorProfileModal = () => {
 			type: 'UPDATE_FORMDATA',
 			payload: {
 				name: vendorProfile?.name,
-				// state: vendorProfile?.state,
-				// city: vendorProfile?.city,
 				address: vendorProfile?.address,
 				email: vendorProfile?.email,
-				// slug: vendorProfile?.slug,
+				slug: vendorProfile?.slug,
 				phoneNumber: vendorProfile?.phoneNumber,
 				zipPostalCode: vendorProfile?.zipPostalCode,
 			},
 		});
+
+		setVendorSlugExists(vendorProfile?.slug.length !== 0 ? true : false);
 	}, [vendorProfile]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		updateFormData({
-			type: 'UPDATE_FORMDATA',
-			payload: {[event.target.name]: event.target.value},
-		});
-	};
-
-	const handleSelectChange = (
-		event: React.ChangeEvent<HTMLSelectElement>
-	) => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
 			payload: {[event.target.name]: event.target.value},
@@ -123,7 +118,8 @@ const UpdateVendorProfileModal = () => {
 		try {
 			setLoading(true);
 
-			const validationError = ValidateVendorProfileFormData(formData);
+			const validationError =
+				ValidatePremiumSubscriptionCheckoutFormData(formData);
 
 			if (validationError) {
 				setLoading(false);
@@ -133,29 +129,42 @@ const UpdateVendorProfileModal = () => {
 				});
 			}
 
-			await axios.patch(
-				`${process.env.NEXT_PUBLIC_API_URL}/vendor/update-profile`,
-				formData,
+			const sellerSlugAvailability = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/seller-slug-availability?slug=${formData.slug}`,
 				{
 					headers: {
-						'Content-Type': 'multipart/form-data',
 						Authorization: user?.accessToken,
 					},
 				}
 			);
-			const cookieUpdate = await axios.patch('/api/auth/update-cookies', {
-				isVendorProfileUpdated: true,
-			});
 
-			await updateUser(cookieUpdate.data);
+			if (sellerSlugAvailability.data.data === true) {
+				setLoading(false);
+
+				return toast.error('Business domain handle already exists!', {
+					duration: 10000,
+					className: 'text-sm',
+				});
+			}
+
+			const {data} = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/payments/initialize-premium-subscription-payment?plan=${premiumSubscriptionPlanId}`,
+				{},
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			localStorage.setItem(
+				'animaff_premium_subscription_data',
+				JSON.stringify(formData)
+			);
+
+			router.push(data.data.secureUrl);
 
 			setLoading(false);
-
-			updateUser(cookieUpdate.data);
-
-			toast.success('Success');
-
-			onClose();
 		} catch (error) {
 			setLoading(false);
 
@@ -169,14 +178,14 @@ const UpdateVendorProfileModal = () => {
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-[15]'>
-			<div className='flex flex-col w-[90%] md:w-[40%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'>
+			<div className='flex flex-col w-[90%] md:w-[50%] bg-white pt-2 pb-5 px-4 max-h-[650px] overflow-y-auto scrollbar__1'>
 				<div className='flex items-center justify-between px4'>
-					<h1 className='font-medium'>Update Business Profile</h1>
+					<h1 className='font-medium text-sky-600'>Checkout</h1>
 
 					<Button
 						type='button'
 						onClick={() => {
-							if (!user?.isProfileUpdated) return;
+							if (loading) return;
 
 							onClose();
 						}}
@@ -186,7 +195,7 @@ const UpdateVendorProfileModal = () => {
 					</Button>
 				</div>
 
-				<div className='flex flex-col space-y-2 w-full py-5'>
+				<div className='flex flex-col space-y-2 w-full py-3'>
 					<div className='w-full'>
 						<p className='text-sm font-medium'>
 							Business Name{' '}
@@ -203,7 +212,7 @@ const UpdateVendorProfileModal = () => {
 						/>
 					</div>
 
-					{/* <div className='w-full'>
+					<div className='w-full'>
 						<p className='text-sm font-medium flex items-center space-x-2'>
 							<p>Business Domain Handle</p>
 							<TooltipProvider>
@@ -211,11 +220,13 @@ const UpdateVendorProfileModal = () => {
 									<TooltipTrigger asChild>
 										<Info size={14} />
 									</TooltipTrigger>
-									<TooltipContent>
-										<p className='text-sm'>
+									<TooltipContent className='w-[350px]'>
+										<p className='text-sm font-normal'>
 											This value will be used to create
-											your custom domain handle. Example
-											https://domain.com/sellers/slug
+											your custom domain handle. &nbsp;
+											<span className='font-medium'>
+												https://domain.com/store/handle
+											</span>
 										</p>
 									</TooltipContent>
 								</Tooltip>
@@ -224,15 +235,21 @@ const UpdateVendorProfileModal = () => {
 						</p>
 						<FormTextInput
 							name='slug'
-							type='number'
-							disabled={loading}
+							disabled={loading || vendorSlugExists}
 							padding='py-4 px-4'
 							value={formData.slug}
 							handleChange={handleChange}
-							placeHolder='Business Domain Handle (https://animaff.com/sellers/slug)'
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							placeHolder='Domain Handle'
+							classes='w-full text-sm placeholder:text-xs border focus:border-slate-500 rounded'
 						/>
-					</div> */}
+
+						<Badge
+							variant={'secondary'}
+							className='text-sky-500 text-xs'
+						>
+							https://domain.com/store/{formData.slug}
+						</Badge>
+					</div>
 
 					<div className='w-full'>
 						<p className='text-sm font-medium'>
@@ -298,66 +315,6 @@ const UpdateVendorProfileModal = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
-
-					{/* <div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business State{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<div>
-							<select
-								name='state'
-								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-								onChange={handleSelectChange}
-							>
-								<option value=''>
-									{formData.state
-										? formData.state
-										: 'Business State'}
-								</option>
-								{RegionStates.map((option) => (
-									<option
-										key={option}
-										value={option}
-										className='cursor-pointer'
-									>
-										{option}
-									</option>
-								))}
-							</select>
-						</div>
-					</div>
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business City{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<div>
-							<select
-								name='city'
-								className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-								onChange={handleSelectChange}
-							>
-								<option value=''>
-									{formData.city
-										? formData.city
-										: 'Business City'}
-								</option>
-								{RegionCities[
-									formData.state ? formData.state : 'Alabama'
-								]?.map((option) => (
-									<option
-										key={option}
-										value={option}
-										className='cursor-pointer'
-									>
-										{option}
-									</option>
-								))}
-							</select>
-						</div>
-					</div> */}
-
 				</div>
 
 				<div className='flex justify-end'>
@@ -366,7 +323,7 @@ const UpdateVendorProfileModal = () => {
 							// disabled
 							type='button'
 							variant={'outline'}
-							className='w-full bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
 						>
 							<ButtonLoader />
 						</Button>
@@ -375,9 +332,10 @@ const UpdateVendorProfileModal = () => {
 							type='button'
 							variant={'outline'}
 							onClick={handleSubmit}
-							className='w-full bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0 flex items-center space-x-2'
 						>
-							Submit
+							<p>Proceed to Checkout</p>{' '}
+							<CircleDollarSign size={15} />
 						</Button>
 					)}
 				</div>
@@ -386,4 +344,4 @@ const UpdateVendorProfileModal = () => {
 	);
 };
 
-export default UpdateVendorProfileModal;
+export default PremiumSubscriptionCheckoutModal;

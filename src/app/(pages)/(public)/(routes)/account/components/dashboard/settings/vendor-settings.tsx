@@ -20,8 +20,8 @@ import {ValidateUpdateVendorProfileFormData} from '@/utils/form-validations/vend
 
 type FormData = {
 	name: string;
-	state: string;
-	city: string;
+	// state: string;
+	// city: string;
 	address: string;
 	avatar: File | null;
 	avatarUrl: string;
@@ -38,8 +38,8 @@ type FormAction = {
 
 const initialState: FormData = {
 	name: '',
-	state: '',
-	city: '',
+	// state: '',
+	// city: '',
 	address: '',
 	avatar: null,
 	avatarUrl: '',
@@ -98,8 +98,8 @@ const VendorSettings = () => {
 			type: 'UPDATE_FORMDATA',
 			payload: {
 				name: vendorProfile?.name,
-				state: vendorProfile?.state,
-				city: vendorProfile?.city,
+				// state: vendorProfile?.state,
+				// city: vendorProfile?.city,
 				address: vendorProfile?.address,
 				avatarUrl: vendorProfile?.avatar,
 				email: vendorProfile?.email,
@@ -202,7 +202,7 @@ const VendorSettings = () => {
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 					</div>
-
+{/* 
 					<div className='space-y-1 w-full'>
 						<p className='text-sm'>State</p>
 						<select
@@ -244,9 +244,10 @@ const VendorSettings = () => {
 								</option>
 							))}
 						</select>
-					</div>
+					</div> */}
+
 					<div className='space-y-1 w-full'>
-						<p className='text-sm'>Zip/Postal Code</p>
+						<p className='text-sm'>Zip Code</p>
 						<FormTextInput
 							name='zipPostalCode'
 							type='number'

@@ -7,7 +7,7 @@ import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
-import DisabledAccountAnimation from '../../../../public/animations/animation__5.json';
+import CreditCardAnimation from '../../../../public/animations/animation__5.json';
 
 interface VerifyProductUploadSubscriptionPaymentModalProps {
 	transactionRef: string;
@@ -116,7 +116,7 @@ const VerifyProductUploadSubscriptionPaymentModal = ({
 					<Lottie
 						loop={true}
 						className='h-full'
-						animationData={DisabledAccountAnimation}
+						animationData={CreditCardAnimation}
 					/>
 				</div>
 			</div>

@@ -32,7 +32,8 @@ interface GlobalStore {
 	showChatConversation: boolean;
 	searchQuery: string;
 	searchQueryState: string;
-	searchQueryCity: string | 'Nigeria';
+	searchQueryCity: string | 'United States';
+	premiumSubscriptionPlanId: number;
 	user: User | null;
 	userPremiumSubscription: PremiumSubscription | null;
 	premiumSubscriptionPlans: PremiumSubscriptionPlan[];
@@ -69,6 +70,7 @@ interface GlobalStore {
 	promotionInfoProducts: Product[];
 	promotionProductsTotalPages: number;
 	promotionProductsHasNextPage: boolean;
+	updatePremiumSubscriptionPlanId: (value: number)=> void;
 	updateUserPremiumSubscription: (value: PremiumSubscription | null)=> void;
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[])=> void;
 	updateUserProductUploadSubscription: (value: ProductUploadSubscription | null)=> void;
@@ -114,116 +116,53 @@ interface GlobalStore {
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => void;
 }
 
-interface CreatePromotionModal {
+interface ActivateModal {
 	isOpen: boolean;
 	onOpen: () => void;
 	onClose: () => void;
 }
 
-interface UpdateVendorProfileModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface ReadNotificationModal {
-	isOpen: boolean;
+interface ReadNotificationModal extends ActivateModal {
 	payload: Notification | null;
-	onOpen: () => void;
-	onClose: () => void;
 	updatePayload: (value: Notification) => void;
 }
 
-interface WelcomeFarmerModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface UpdateSearchLocationModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface ProductModal {
-	isOpen: boolean;
+interface ProductModal extends ActivateModal {
 	payload: Media[];
-	onOpen: () => void;
-	onClose: () => void;
 	updatePayload: (value: Media[]) => void;
 }
 
-interface UpdateUserRoleModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface ProductUploadSubscriptionModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface VerifyProductUploadSubscriptionPaymentModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface CreateProductModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface DownloadAppModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface UpgradeToPremiumAccessModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface CreateProductModal {
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-}
-
-interface UpdateProductModal {
-	isOpen: boolean;
+interface UpdateProductModal extends ActivateModal {
 	payload: Product;
-	onOpen: () => void;
-	onClose: () => void;
 	updatePayload: (value: Product) => void;
 }
 
-interface DeleteProductModal {
-	isOpen: boolean;
+interface DeleteProductModal extends ActivateModal {
 	payload: {id: string; name: string};
-	onOpen: () => void;
-	onClose: () => void;
 	updatePayload: (value: Product) => void;
 }
 
 export const useUpdateVendorProfileModalStore =
-	create<UpdateVendorProfileModal>((set) => ({
+	create<ActivateModal>((set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
 		onClose: () => set({isOpen: false}),
-	}));
+	})
+);
 
-export const useCreatePromotionModalStore =	create<CreatePromotionModal>((set) => ({
+export const useCreatePromotionModalStore =	create<ActivateModal>((set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
 		onClose: () => set({isOpen: false}),
-	}));
+	})
+);
+
+export const usePremiumSubscriptionCheckoutModalStore =	create<ActivateModal>((set) => ({
+		isOpen: false,
+		onOpen: () => set({isOpen: true}),
+		onClose: () => set({isOpen: false}),
+	})
+);
 
 export const useReadNotificationModalStore = create<ReadNotificationModal>(
 	(set) => ({
@@ -235,7 +174,7 @@ export const useReadNotificationModalStore = create<ReadNotificationModal>(
 	})
 );
 
-export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>(
+export const useUpdateWelcomeFarmerModalStore = create<ActivateModal>(
 	(set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
@@ -243,7 +182,7 @@ export const useUpdateWelcomeFarmerModalStore = create<WelcomeFarmerModal>(
 	})
 );
 
-export const useUpdateSearchLocationModalStore = create<UpdateSearchLocationModal>(
+export const useUpdateSearchLocationModalStore = create<ActivateModal>(
 	(set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
@@ -251,7 +190,7 @@ export const useUpdateSearchLocationModalStore = create<UpdateSearchLocationModa
 	})
 );
 
-export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
+export const useUpdateUserRoleModalStore = create<ActivateModal>(
 	(set) => ({
 		isOpen: false,
 		onOpen: () => set({isOpen: true}),
@@ -259,31 +198,37 @@ export const useUpdateUserRoleModalStore = create<UpdateUserRoleModal>(
 	})
 );
 
-export const useProductUploadSubscriptionModalStore = create<ProductUploadSubscriptionModal>((set) => ({
+export const useProductUploadSubscriptionModalStore = create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
 }));
 
-export const useVerifyProductUploadSubscriptionPaymentModalStore = create<VerifyProductUploadSubscriptionPaymentModal>((set) => ({
+export const useVerifyProductUploadSubscriptionPaymentModalStore = create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
 }));
 
-export const useCreateProductModalStore = create<CreateProductModal>((set) => ({
+export const useVerifyPremiumSubscriptionPaymentModalStore = create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
 }));
 
-export const useDownloadAppStore = create<DownloadAppModal>((set) => ({
+export const useCreateProductModalStore = create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
 }));
 
-export const useUpgradeToPremiumAccessStore = create<UpgradeToPremiumAccessModal>((set) => ({
+export const useDownloadAppStore = create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const useUpgradeToPremiumAccessStore = create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
@@ -427,7 +372,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	searchQuery: '',
 	searchQueryState: '',
 	searchLocationState: '',
-	searchQueryCity: 'Nigeria',
+	searchQueryCity: 'United States',
+	premiumSubscriptionPlanId: 0,
 	user: null,
 	desiredProductInfo: null,
 	desiredProduct: null,
@@ -460,6 +406,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	promotionInfoProducts: [],
 	promotionProductsTotalPages: 0,
 	promotionProductsHasNextPage: false,
+	updatePremiumSubscriptionPlanId: (value: number) => set({premiumSubscriptionPlanId: value}),
 	updateUserPremiumSubscription: (value: PremiumSubscription | null) => set({userPremiumSubscription: value}),
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[]) => set({premiumSubscriptionPlans: value}),
 	updateUserProductUploadSubscription: (value: ProductUploadSubscription | null) => set({userProductUploadSubscription: value}),

@@ -131,61 +131,24 @@ const SignUpPage = () => {
 				});
 			}
 
-			if (formData.role === 'FARMER') {
-				const sellerSlugAvailability = await axios.get(
-					`${process.env.NEXT_PUBLIC_API_URL}/auth/seller-slug-availability?slug=${formData.businessSlug}`
-				);
+			const {data} = await axios.post('/api/auth/signup', formData);
 
-				if (sellerSlugAvailability.data.data === true) {
-					setLoading(false);
-
-					return toast.error(
-						'Business domain handle already exists!',
-						{
-							duration: 10000,
-							className: 'text-sm',
-						}
-					);
-				} else {
-					const {data} = await axios.post(
-						'/api/auth/signup',
-						formData
-					);
-					if (data?.ok == false) {
-						setLoading(false);
-						toast.error('An error occurred');
-					} else {
-						setLoading(false);
+			if (data?.ok == false) {
+				setLoading(false);
 				
-						toast.success('Account created successfully');
-				
-						router.push('/');
-				
-						setTimeout(() => {
-							if (formData.role === 'FARMER') {
-								welcomeFarmerModal.onOpen();
-							}
-						}, 2000);
-					}
-				}
+				toast.error('An error occurred');
 			} else {
-				const {data} = await axios.post('/api/auth/signup', formData);
-				if (data?.ok == false) {
-					setLoading(false);
-					toast.error('An error occurred');
-				} else {
-					setLoading(false);
-					
-					toast.success('Account created successfully');
-					
-					router.push('/');
-					
-					setTimeout(() => {
-						if (formData.role === 'FARMER') {
-							welcomeFarmerModal.onOpen();
-						}
-					}, 2000);
-				}
+				setLoading(false);
+
+				toast.success('Account created successfully');
+
+				router.push('/');
+
+				setTimeout(() => {
+					if (formData.role === 'FARMER') {
+						welcomeFarmerModal.onOpen();
+					}
+				}, 2000);
 			}
 		} catch (error) {
 			setLoading(false);
@@ -257,14 +220,14 @@ const SignUpPage = () => {
 									placeHolder='Business Name'
 									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 								/>
-								<FormTextInput
+								{/* <FormTextInput
 									name='businessSlug'
 									padding='py-4 px-4'
 									value={formData.businessSlug}
 									handleChange={handleChange}
 									placeHolder='Business Domain Handle (https://animaff.com/sellers/slug)'
 									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-								/>
+								/> */}
 								<FormTextInput
 									name='businessAddress'
 									padding='py-4 px-4'
@@ -274,7 +237,7 @@ const SignUpPage = () => {
 									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 								/>
 
-								<div className='w-full'>
+								{/* <div className='w-full'>
 									<select
 										name='businessState'
 										className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
@@ -301,11 +264,11 @@ const SignUpPage = () => {
 									handleChange={handleChange}
 									placeHolder='Los Angeles'
 									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-								/>
+								/> */}
 							</>
 						)}
 
-						{formData.role === 'CUSTOMER' && (
+						{/* {formData.role === 'CUSTOMER' && (
 							<div>
 								<select
 									name='location'
@@ -324,15 +287,15 @@ const SignUpPage = () => {
 									))}
 								</select>
 							</div>
-						)}
+						)} */}
 
 						<FormTextInput
 							name='zipPostalCode'
 							type='number'
 							padding='py-4 px-4'
+							placeHolder='00601'
 							value={formData.zipPostalCode}
 							handleChange={handleChange}
-							placeHolder='Zip/Postal Code'
 							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 						/>
 

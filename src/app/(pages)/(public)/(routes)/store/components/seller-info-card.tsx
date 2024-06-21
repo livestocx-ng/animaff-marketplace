@@ -56,7 +56,7 @@ const SellerInfoCard = ({vendor}: {vendor: Vendor}) => {
 				</div>
 
 				<div className='w-full flex flex-row-reverse sm:flex-col justify-between sm:justify-normal sm:space-x-0 sm:space-y-2 mt-2'>
-					<Link href={`/sellers/${formatVendorSlug(vendor)}`}>
+					<Link href={`/store/${formatVendorSlug(vendor)}`}>
 						<Button
 							type='button'
 							variant={'default'}

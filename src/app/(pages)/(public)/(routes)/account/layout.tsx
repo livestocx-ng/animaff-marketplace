@@ -19,7 +19,7 @@ import DeleteProductModal from '@/components/modals/product/delete-product-modal
 import ShareNewProductModal from '@/components/modals/product/share-new-product-modal';
 import CreatePromotionModal from '@/components/modals/promotions/create-promotion-modal';
 import ProductUploadSubscriptionModal from '@/components/modals/premium/product-upload-subscription-modal';
-import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-modal';
+import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-payment-modal';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;
@@ -117,6 +117,7 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 						transactionStatus={transactionStatus!}
 					/>
 				)}
+
 				{children}
 			</div>
 		);

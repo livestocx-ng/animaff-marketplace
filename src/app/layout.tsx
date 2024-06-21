@@ -23,9 +23,6 @@ export const metadata: Metadata = {
 	title: 'Animaff - Best deals, Everything Animals',
 	description: 'Best deals, Everything Animals',
 	keywords: ['Pets', 'Livestock', 'Animals', 'Meat'],
-	other: {
-		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
-	},
 	openGraph: {
 		images: [
 			{

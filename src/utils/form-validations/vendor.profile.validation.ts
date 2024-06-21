@@ -1,7 +1,7 @@
 interface UpdateVendorProfileDto {
 	name: string;
-	state: string;
-	city: string;
+	// state: string;
+	// city: string;
 	address: string;
 	avatar: File | null;
 	avatarUrl: string;
@@ -28,13 +28,13 @@ export function ValidateUpdateVendorProfileFormData(
 		return (message = 'Vendor name is required.');
 	}
 
-	if (!formData.state) {
-		return (message = 'Vendor state is required.');
-	}
+	// if (!formData.state) {
+	// 	return (message = 'Vendor state is required.');
+	// }
 
-	if (!formData.city) {
-		return (message = 'Vendor city is required.');
-	}
+	// if (!formData.city) {
+	// 	return (message = 'Vendor city is required.');
+	// }
 
 	if (!formData.address) {
 		return (message = 'Vendor address is required.');
@@ -51,7 +51,7 @@ export function ValidateUpdateVendorProfileFormData(
 		return (message = 'Zip/postal code is required.');
 	}
 	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
-		return (message = 'Zip/postal code must be at least 5 digits.');
+		return (message = 'Zip code must be at least 5 digits.');
 	}
 
 	if (!formData.phoneNumber) {

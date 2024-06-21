@@ -34,7 +34,7 @@ const Footer = () => {
 	const {updateCurrentAccountTab} = useGlobalStore();
 
 	return (
-		<div className='pt-10 md:pt-20 w-full bg-main flex flex-col px-5 sm:px-10'>
+		<div className='pt-5 md:pt-10 w-full bg-main flex flex-col px-5 sm:px-10'>
 			<div className='flex flex-row flex-wrap items-start justify-between w-full'>
 				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<Image
@@ -42,8 +42,8 @@ const Footer = () => {
 						width={60}
 						height={60}
 						className=''
-						unoptimized={true}
 						src={'/logo.svg'}
+						unoptimized={true}
 					/>
 
 					<h1 className='text-white text-xs'>Livestocx Limited</h1>
@@ -107,7 +107,7 @@ const Footer = () => {
 					))}
 				</div>
 
-				<div className='flex flex-col items-center justify-center space-y-5 mt-10'>
+				<div className='flex flex-col justify-start md:items-center md:justify-center space-y-5 mt-5 md:mt-10'>
 					<div className='flex items-center space-x-10 sm:space-x-3'>
 						<Link
 							target='_blank'
@@ -187,7 +187,7 @@ const Footer = () => {
 				</div>
 			</div>
 
-			<div className='border-t border-t-[#ffffff80] w-full mt-20 py-3 text-center text-[#ffffff80] text-xs'>
+			<div className='border-t border-t-[#ffffff80] w-full mt-10 md:mt-20 py-3 text-center text-[#ffffff80] text-xs'>
 				Livestocx &copy; {new Date().getFullYear()}. All Rights Reserved
 			</div>
 		</div>

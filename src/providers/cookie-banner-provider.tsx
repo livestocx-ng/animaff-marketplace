@@ -13,12 +13,12 @@ export default function CookieBannerProvider() {
 	>(undefined);
 
 	useEffect(() => {
-		const storedCookieConsent = getLocalStorage('livestocx_cookie_consent');
+		const storedCookieConsent = getLocalStorage('animaff_cookie_consent');
 
 		// console.log(storedCookieConsent);
 
 		setCookieConsent(storedCookieConsent);
-		setLocalStorage('livestocx_cookie_consent', storedCookieConsent);
+		setLocalStorage('animaff_cookie_consent', storedCookieConsent);
 	}, []);
 
 	useEffect(() => {
@@ -26,15 +26,11 @@ export default function CookieBannerProvider() {
 
 		window.gtag('consent', 'update', {
 			analytics_storage: 'granted',
-			// analytics_storage: newValue,
 		});
 
 		if (cookieConsent === true || cookieConsent === false) {
-			setLocalStorage('livestocx_cookie_consent', cookieConsent);
+			setLocalStorage('animaff_cookie_consent', cookieConsent);
 		}
-
-		//For Testing
-		// console.log('Cookie Consent: ', cookieConsent);
 	}, [cookieConsent]);
 
 	return (
@@ -62,9 +58,6 @@ export default function CookieBannerProvider() {
 								className='object-fill'
 							/>
 							<p className='text-sm text-justify'>
-								{/* Our website use cookies. By continuing navigating, we
-						assume your permission to deploy cookies as detailed in
-						our Privacy Policy. */}
 								At Livestocx, we hold your privacy in the
 								highest regard. Our website, by default,
 								utilizes Google Analytics along with strictly

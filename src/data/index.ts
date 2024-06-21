@@ -1,10 +1,10 @@
 import {
 	NavLink,
+	Feature,
+	FaqOption,
 	TeamMember,
 	FilterOption,
 	FooterNavLink,
-	Feature,
-	FaqOption,
 } from '@/types/index.types';
 import {Testimonial} from '@/types/types';
 
@@ -18,8 +18,8 @@ export const NavLinks: NavLink[] = [
 		url: '/enterprise',
 	},
 	{
-		title: 'Sellers',
-		url: '/sellers',
+		title: 'Stores',
+		url: '/store',
 	},
 	{
 		title: 'About Us',

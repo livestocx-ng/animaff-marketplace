@@ -1,5 +1,4 @@
 'use client';
-import Head from 'next/head';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
@@ -22,8 +21,6 @@ interface ProductPageParams {
 }
 
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
-
-const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
 const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const router = useRouter();
@@ -132,7 +129,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 			if (loading) return;
 
-			console.log('[PRODUCT-USER] :: ', product?.user);
+			// console.log('[PRODUCT-USER] :: ', product?.user);
 
 			if (user?.id === product?.user.toString()) return;
 

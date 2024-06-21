@@ -22,11 +22,11 @@ const WelcomeFarmerModal = () => {
 				</div>
 
 				<div className='space-y-3 my-5'>
-					<p className='text-base'>
+					<p className='text-xs'>
 						We're thrilled to have you join Livestocx, the ultimate
 						platform for farmers like you!
 					</p>
-					<p className='text-base leading-6'>
+					<p className='text-xs leading-6'>
 						At Livestocx, we understand the importance of your hard
 						work and dedication to farming. As a valued member, you
 						have the power to showcase and share your exceptional

@@ -10,9 +10,13 @@ import {
 	useUpdateSearchLocationModalStore,
 	useUpgradeToPremiumAccessStore,
 	useUpdateWelcomeFarmerModalStore,
+	usePremiumSubscriptionCheckoutModalStore,
+	useVerifyProductUploadSubscriptionPaymentModalStore,
+	useVerifyPremiumSubscriptionPaymentModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
+import {useSearchParams} from 'next/navigation';
 import Footer from '@/components/navigation/footer';
 import Navbar from '@/components/navigation/main-nav-bar';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
@@ -23,6 +27,8 @@ import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premiu
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
+import VerifyPremiumSubscriptionPaymentModal from '@/components/modals/premium/verify-premium-subscription-payment-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -30,6 +36,10 @@ interface PagesLayoutProps {
 
 const PagesLayout = ({children}: PagesLayoutProps) => {
 	const {user} = useUserHook();
+	const queryParams = useSearchParams();
+	const paymentFor = queryParams.get('paymentFor');
+	const transactionRef = queryParams.get('transactionRef');
+	const transactionStatus = queryParams.get('transactionStatus');
 
 	const {
 		updatePromotionPlans,
@@ -49,6 +59,8 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
+	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
+	const verifyPremiumSubscriptionPaymentModal = useVerifyPremiumSubscriptionPaymentModalStore();
 
 	const initializeDownloadAppModal = () => {
 		setTimeout(() => {
@@ -161,8 +173,6 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			updateProductUploadSubscriptionPlans(
 				userProductUploadSubscriptionRequest.data.data
 			);
-
-			console.log(userProductUploadSubscriptionRequest);
 		} catch (error) {
 			const _error = error as AxiosError;
 
@@ -189,6 +199,19 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		fetchSubscriptionPlans();
 	}, [user]);
 
+
+	useEffect(() => {
+		if (
+			paymentFor === 'premium_subscription' &&
+			transactionRef !== '' &&
+			transactionStatus !== ''
+		) {
+			if (verifyPremiumSubscriptionPaymentModal.isOpen) return;
+
+			verifyPremiumSubscriptionPaymentModal.onOpen();
+		}
+	}, [paymentFor]);
+
 	return (
 		<div className='relative'>
 			{shareProductModal.isOpen && <ShareProductModal />}
@@ -198,7 +221,17 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			{readNotificationModal.isOpen && <NotificationModal />}
 			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
 			{updateSearchLocationModal.isOpen && <UpdateSearchLocationModal />}
-			{updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />}
+			{premiumSubscriptionCheckoutModal.isOpen && (
+				<PremiumSubscriptionCheckoutModal />
+			)}
+			{verifyPremiumSubscriptionPaymentModal.isOpen && (
+				<VerifyPremiumSubscriptionPaymentModal
+					transactionRef={transactionRef!}
+					transactionStatus={transactionStatus!}
+				/>
+			)}
+
+			{/* {updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />} */}
 
 			<Navbar />
 			{children}
