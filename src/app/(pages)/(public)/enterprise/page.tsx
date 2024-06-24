@@ -38,13 +38,13 @@ const EnterprisePage = () => {
 
 	return (
 		<main className='relative'>
-			<section className='w-full bg-gradient-to-b from-green-800 to-white flex flex-col md:flex-row items-center justify-between px-4 md:px-8 pt-20'>
+			<section className='w-full bg-gradient-to-b from-green-800 to-white flex flex-col md:flex-row items-center justify-center md:justify-between px-4 md:px-8 pt-20'>
 				<div className='flex flex-col space-y-4 w-full md:w-[45%]'>
 					<h1 className='text-xl md:text-5xl text-white font-semibold text-center md:text-left'>
 						Animaff for Enterprises
 					</h1>
 
-					<p className='text-lg text-white font-medium text-center md:text-left'>
+					<p className='text-sm md:text-lg text-white font-medium text-center md:text-left'>
 						Expand your business reach. Sell to thousands on our
 						Marketplace and showcase your products with our custom
 						website and catalog built for you.
@@ -65,18 +65,18 @@ const EnterprisePage = () => {
 					</Button>
 				</div>
 
-				<div className='h-[400px] w-full md:w-[50%] relative bg-orange-20 mt-10 md:mt-0'>
+				<div className='h-[400px] w-full md:w-[50%] relative bg-orange-20 mt-5 md:mt-0'>
 					<Image
 						alt=''
 						fill
-						className='object-cover rounded-sm'
+						className='object-contai object-fill md:object-cover rounded-sm'
 						src={'/enterprise/image__header__1.png'}
 					/>
 				</div>
 			</section>
 
 			<div className='space-y-10 my-14'>
-				<h1 className='text-5xl font-semibold text-center'>
+				<h1 className='text-lg md:text-5xl font-semibold text-center'>
 					What you get
 				</h1>
 				<div className='flex flex-wrap items-start justify-between w-full px-4 md:px-8'>
@@ -89,7 +89,7 @@ const EnterprisePage = () => {
 						/>
 					</div>
 					<div className='w-full md:w-[50%] space-y-3'>
-						<p className='text-sm md:text-xl leading-[14px]'>
+						<p className='text-sm md:text-xl leading-[26px]'>
 							Our enterprise platform features a custom online
 							store, marketplace listings, sales management and
 							analytics, weekly product promotions, business logo
@@ -101,7 +101,7 @@ const EnterprisePage = () => {
 			</div>
 
 			<div ref={subscriptionPlansRef} className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'>
-				<h1 className='font-medium text-4xl text-center'>Comparing Animaff to owning a regular website/store</h1>
+				<h1 className='font-medium text-lg md:text-4xl text-center'>Comparing Animaff to owning a regular website/store</h1>
 				<DataTable
 					hasPagination={false}
 					borderRadius='rounded-b'
