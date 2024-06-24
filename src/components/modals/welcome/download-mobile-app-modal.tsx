@@ -1,29 +1,41 @@
 'use client';
-import Link from 'next/link';
-import {X} from 'lucide-react';
-import Image from 'next/image';
-import {Button} from '@/components/ui/button';
+import {useEffect} from 'react';
+import {AlertCircle, X} from 'lucide-react';
 import {useDownloadAppStore} from '@/hooks/use-global-store';
 
 const DownloadMobileAppModal = () => {
 	const {onClose} = useDownloadAppStore();
 
+	useEffect(() => {
+		setTimeout(() => {
+			onClose();
+		}, 16000);
+	}, []);
+
 	return (
 		<div className='fixed bottom-0 flex flex-col items-center justify-center w-full bg-[#ffffff20] backdrop-blur-sm z-10'>
-			<div className='flex flex-col w-[90%] md:w-[30%] bg-white border shadow-sm shadow-slate-200 px-4 my-2 sm:my-5 rounded-lg overflow-y-auto scrollbar__1'>
-				<div className='flex items-center justify-between text-xs sm:text-sm font-medium'>
-					<p>Download our mobile app</p>
+			<div className='flex flex-col w-[90%] md:w-[30%] bg-white border border-slate-400 shadow-sm shadow-slate-200 px-4 my-2 sm:my-5 rounded-lg overflow-y-auto scrollbar__1'>
+				<div className='flex items-center justify-between text-xs p-2 space-x-5'>
+					<AlertCircle size={80} className='text-orange-500' />
+					<p>
+						Please note that this is a demo version of our website.
+						We will be going live soon, and we need your help to
+						make it perfect. Feel free to test the features and
+						share any concerns or suggestions you might have. Your
+						feedback is invaluable to us.
+					</p>
+					{/* <p>Download our mobile app</p> */}
 
-					<Button
+					{/* <Button
 						type='button'
 						onClick={() => onClose()}
 						className='bg-white hover:bg-white'
 					>
 						<X className='text-red-500 h-4 w-4' />
-					</Button>
+					</Button> */}
 				</div>
 
-				<div className='py-4 flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3'>
+				{/* <div className='py-4 flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-3'>
 					<Link
 						className='animate-pulse'
 						target='_blank'
@@ -40,7 +52,7 @@ const DownloadMobileAppModal = () => {
 							src={'/icon__playstore__2.svg'}
 						/>
 					</Link>
-					{/* <Link
+					<Link
 						className=''
 						target='_blank'
 						href={
@@ -55,18 +67,7 @@ const DownloadMobileAppModal = () => {
 							className='object-cover'
 							src={'/icon__playstore__2.svg'}
 						/>
-					</Link> */}
-				</div>
-
-				{/* <div className='mb-4 flex mx-auto justify-center h-[250px] w-[250px] relative border border-main rounded-lg shadow-lg shadow-teal-100'>
-					<Image
-						// width={150}
-						// height={200}
-						fill
-						alt=''
-						src={'/gifs/mobile-app.jpg'}
-						className='h-full w-full object-contain rounded-lg'
-					/>
+					</Link>
 				</div> */}
 			</div>
 		</div>

@@ -17,20 +17,20 @@ const WelcomeFarmerModal = () => {
 			<div className='bg-white py-6 px-5 w-[90%] md:w-[50%] transition-all duration-700 ease-in-out md:translate-x-3'>
 				<div className='flex items-center justify-between'>
 					<h1 className='text-xl font-medium'>
-						Welcome to Livestocx!
+						Welcome to Animaff!
 					</h1>
 				</div>
 
 				<div className='space-y-3 my-5'>
 					<p className='text-xs'>
-						We're thrilled to have you join Livestocx, the ultimate
-						platform for farmers like you!
+						We're thrilled to have you join Animaff, the ultimate
+						platform for farmers and pet owners like you!
 					</p>
 					<p className='text-xs leading-6'>
-						At Livestocx, we understand the importance of your hard
+						At Animaff, we understand the importance of your hard
 						work and dedication to farming. As a valued member, you
 						have the power to showcase and share your exceptional
-						livestock products with the world.
+						animals with the world.
 					</p>
 				</div>
 

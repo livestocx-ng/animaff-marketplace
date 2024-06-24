@@ -81,7 +81,7 @@ const MainNavbar = () => {
 	return (
 		<div className='relative'>
 			<nav
-				className={`w-full py-2 px-8 hidden fixed z-10 lg:flex items-center justify-between ${
+				className={`w-full py-4 px-8 hidden fixed z-10 lg:flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
 				}`}
 			>
@@ -89,8 +89,8 @@ const MainNavbar = () => {
 					<Link href={'/'}>
 						<Image
 							alt='logo'
-							width={35}
-							height={35}
+							width={25}
+							height={25}
 							className=''
 							unoptimized={true}
 							src={'/logo.svg'}
@@ -703,8 +703,8 @@ const MainNavbar = () => {
 					<Link href={'/'} onClick={toggleMenu}>
 						<Image
 							alt='logo'
-							width={50}
-							height={50}
+							width={30}
+							height={30}
 							className=''
 							unoptimized={true}
 							src={'/logo.svg'}

@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import {AccountNavLinks, HelpNavLinks, NavLinks, OtherNavLinks} from '@/data';
-import {Facebook, Instagram, Linkedin} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {AccountNavLinks, HelpNavLinks, OtherNavLinks} from '@/data';
 
 interface IconLinkProps {
 	href: string;
@@ -12,21 +11,6 @@ interface IconLinkProps {
 	width: number;
 	height: number;
 }
-
-const IconLink = ({href, icon, width, height}: IconLinkProps) => {
-	return (
-		<Link href={href} className=''>
-			<Image
-				alt={href}
-				src={icon}
-				width={width}
-				height={height}
-				unoptimized={true}
-				className='object-cover'
-			/>
-		</Link>
-	);
-};
 
 const Footer = () => {
 	const router = useRouter();
@@ -39,20 +23,16 @@ const Footer = () => {
 				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<Image
 						alt='logo'
-						width={60}
-						height={60}
+						width={30}
+						height={30}
 						className=''
 						src={'/logo.svg'}
 						unoptimized={true}
 					/>
 
-					<h1 className='text-white text-xs'>Livestocx Limited</h1>
+					<h1 className='text-white text-xs'>Animaff</h1>
 
 					<div className='flex flex-wrap items-center'>
-						<p className='bg-black text-white text-xs'>
-							+234 806 289 9590
-						</p>
-						&nbsp;
 						<p className='bg-black text-white text-xs'>
 							livestocxltd@gmail.com
 						</p>
@@ -189,7 +169,7 @@ const Footer = () => {
 			</div>
 
 			<div className='border-t border-t-[#ffffff80] w-full mt-10 md:mt-20 py-3 text-center text-[#ffffff80] text-xs'>
-				Livestocx &copy; {new Date().getFullYear()}. All Rights Reserved
+				Animaff &copy; {new Date().getFullYear()}. All Rights Reserved
 			</div>
 		</div>
 	);
