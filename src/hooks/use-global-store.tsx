@@ -20,8 +20,8 @@ import {
 	ProductUploadSubscription,
 	ProductUploadSubscriptionPlan,
 } from '@/types/types';
-import { Socket } from 'socket.io-client';
 import {create} from 'zustand';
+import { Socket } from 'socket.io-client';
 
 interface GlobalStore {
 	socket: Socket | null;

@@ -331,3 +331,9 @@ export interface ProductUploadSubscriptionPlan {
 	bonus_days: number;
 	position: number;
 }
+
+export interface EnterprisePlanComparison {
+	feature: string;
+	platform: string;
+	customBusinessWebsite: string;
+}

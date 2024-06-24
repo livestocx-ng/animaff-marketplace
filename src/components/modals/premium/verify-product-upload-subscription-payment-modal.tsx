@@ -39,7 +39,7 @@ const VerifyProductUploadSubscriptionPaymentModal = ({
 
 	useEffect(() => {
 		initializeVerification();
-	}, []);
+	}, [user]);
 
 	const handleCreateProductUploadSubscription = async (reference: string) => {
 		try {
@@ -90,20 +90,24 @@ const VerifyProductUploadSubscriptionPaymentModal = ({
 
 				toast.success(`Product upload subscription successful!`, {
 					duration: 3500,
+					className: 'text-sm',
 				});
 
 				return router.push('/account');
 			} else {
 				setIsVerifyTransactionPending(false);
 
-				return toast.success(`Payment unverified!`, {duration: 3500});
+				return toast.success(`Payment unverified!`, {
+					duration: 3500,
+					className: 'text-sm',
+				});
 			}
 		} catch (error) {
 			setIsVerifyTransactionPending(false);
 
 			const _error = error as AxiosError;
 
-			console.log('[PROMOTION-PAYMENT-ERROR]', _error);
+			// console.log('[PROMOTION-PAYMENT-ERROR]', _error);
 
 			// toast.error('An error occurred.');
 		}

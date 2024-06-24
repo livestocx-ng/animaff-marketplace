@@ -19,7 +19,6 @@ import DeleteProductModal from '@/components/modals/product/delete-product-modal
 import ShareNewProductModal from '@/components/modals/product/share-new-product-modal';
 import CreatePromotionModal from '@/components/modals/promotions/create-promotion-modal';
 import ProductUploadSubscriptionModal from '@/components/modals/premium/product-upload-subscription-modal';
-import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-payment-modal';
 
 interface AccountLayoutProps {
 	children: React.ReactNode;
@@ -27,9 +26,6 @@ interface AccountLayoutProps {
 
 export default function AccountLayout({children}: AccountLayoutProps) {
 	const queryParams = useSearchParams();
-	const paymentFor = queryParams.get('paymentFor');
-	const transactionRef = queryParams.get('transactionRef');
-	const transactionStatus = queryParams.get('transactionStatus');
 
 	const {user, error} = useUserHook();
 	const {updateChatConversations} = useGlobalStore();
@@ -87,18 +83,6 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 		fetchChatConversations();
 	}, [user]);
 
-	useEffect(() => {
-		if (
-			paymentFor === 'product_upload' &&
-			transactionRef !== '' &&
-			transactionStatus !== ''
-		) {
-			if (verifyProductUploadPaymentModal.isOpen) return;
-
-			verifyProductUploadPaymentModal.onOpen();
-		}
-	}, [paymentFor]);
-
 	if (user) {
 		return (
 			<div className='relative'>
@@ -110,12 +94,6 @@ export default function AccountLayout({children}: AccountLayoutProps) {
 				{isShareNewProductModalOpen && <ShareNewProductModal />}
 				{isProductUploadSubscriptionModalOpen && (
 					<ProductUploadSubscriptionModal />
-				)}
-				{verifyProductUploadPaymentModal.isOpen && (
-					<VerifyProductUploadSubscriptionPaymentModal
-						transactionRef={transactionRef!}
-						transactionStatus={transactionStatus!}
-					/>
 				)}
 
 				{children}

@@ -29,6 +29,7 @@ import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-pro
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
 import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
 import VerifyPremiumSubscriptionPaymentModal from '@/components/modals/premium/verify-premium-subscription-payment-modal';
+import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-payment-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -59,8 +60,12 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
-	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
-	const verifyPremiumSubscriptionPaymentModal = useVerifyPremiumSubscriptionPaymentModalStore();
+	const premiumSubscriptionCheckoutModal =
+		usePremiumSubscriptionCheckoutModalStore();
+	const verifyPremiumSubscriptionPaymentModal =
+		useVerifyPremiumSubscriptionPaymentModalStore();
+	const verifyProductUploadPaymentModal =
+		useVerifyProductUploadSubscriptionPaymentModalStore();
 
 	const initializeDownloadAppModal = () => {
 		setTimeout(() => {
@@ -199,8 +204,16 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		fetchSubscriptionPlans();
 	}, [user]);
 
-
 	useEffect(() => {
+		if (
+			paymentFor === 'product_upload' &&
+			transactionRef !== '' &&
+			transactionStatus !== ''
+		) {
+			if (verifyProductUploadPaymentModal.isOpen) return;
+
+			verifyProductUploadPaymentModal.onOpen();
+		}
 		if (
 			paymentFor === 'premium_subscription' &&
 			transactionRef !== '' &&
@@ -226,6 +239,12 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			)}
 			{verifyPremiumSubscriptionPaymentModal.isOpen && (
 				<VerifyPremiumSubscriptionPaymentModal
+					transactionRef={transactionRef!}
+					transactionStatus={transactionStatus!}
+				/>
+			)}
+			{verifyProductUploadPaymentModal.isOpen && (
+				<VerifyProductUploadSubscriptionPaymentModal
 					transactionRef={transactionRef!}
 					transactionStatus={transactionStatus!}
 				/>

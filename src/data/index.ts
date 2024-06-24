@@ -6,7 +6,7 @@ import {
 	FilterOption,
 	FooterNavLink,
 } from '@/types/index.types';
-import {Testimonial} from '@/types/types';
+import {EnterprisePlanComparison, Testimonial} from '@/types/types';
 
 export const NavLinks: NavLink[] = [
 	{
@@ -340,6 +340,67 @@ export const FaqItems: FaqOption[] = [
 		title: 'Do you have a mobile app I can download on my phone?',
 		description:
 			'We are currently developing our mobile app that you can download on your phone. In the meantime, you should be able to do everything through our site: www.livestocx.com',
+	},
+];
+
+export const enterprisePlanComparisons: EnterprisePlanComparison[] = [
+	{
+		feature: 'Initial Cost',
+		customBusinessWebsite: 'High (design, development, hosting, domain) $3,000 - $10,000 initial + $100 - $300/month maintenance',
+		platform: 'Low (starting at $21/month)',
+	},
+	{
+		feature: 'Maintenance Cost',
+		customBusinessWebsite: 'High (ongoing maintenance, updates, hosting)',
+		platform: 'Included in subscription',
+	},
+	{
+		feature: 'Time to Launch',
+		customBusinessWebsite: 'Long (weeks to months for development)',
+		platform: 'Short (immediate setup upon subscription)',
+	},
+	{
+		feature: 'Technical Skills Required',
+		customBusinessWebsite: 'High (coding, design, server management)',
+		platform: 'None (user-friendly interface)',
+	},
+	{
+		feature: 'Product Uploads',
+		customBusinessWebsite: 'Additional setup and costs',
+		platform: 'Unlimited uploads for $5/month',
+	},
+	{
+		feature: 'Sales Management Tools',
+		customBusinessWebsite: 'Additional cost and integration needed',
+		platform: 'Included',
+	},
+	{
+		feature: 'Customer Reach',
+		customBusinessWebsite: 'Limited (depends on SEO, marketing efforts)',
+		platform: 'High (marketplace visibility)',
+	},
+	{
+		feature: 'Promotion and Marketing',
+		customBusinessWebsite:
+			'Requires separate strategy and additional costs',
+		platform: 'Included (weekly product promotions)',
+	},
+	{
+		feature: 'Analytics and Insights',
+		customBusinessWebsite: 'Requires separate setup and additional tools',
+		platform: 'Included',
+	},
+	{
+		feature: 'Security and Updates',
+		customBusinessWebsite:
+			'Responsibility of the business owner (time and cost-intensive)',
+		platform:
+			'Handled by Animaff (regular updates and security management)',
+	},
+	{
+		feature: 'Customer Support',
+		customBusinessWebsite: 'Varies, generally limited to hosting provider',
+		platform: 'Included (platform support and assistance)',
 	},
 ];
 

@@ -36,7 +36,7 @@ const CustomerTabs: Tab[] = [
 const FarmerTabs: Tab[] = [
 	'Account',
 	'Products',
-	'Promotions',
+	// 'Promotions',
 	'Messages',
 	'Notifications',
 	'Settings',
@@ -197,14 +197,14 @@ const AccountSideBar = ({}: AccountSideBarProps) => {
 									}`}
 								/>
 							)}
-							{tab === 'Promotions' && (
+							{/* {tab === 'Promotions' && (
 								<LineChart
 									className={`h-6 w-6 ${
 										currentAccountTab == tab &&
 										'text-green-600'
 									}`}
 								/>
-							)}
+							)} */}
 							{tab === 'Messages' && (
 								<Mails
 									className={`h-6 w-6 ${

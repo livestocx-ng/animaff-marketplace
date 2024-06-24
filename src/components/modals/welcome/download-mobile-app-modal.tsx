@@ -9,20 +9,20 @@ const DownloadMobileAppModal = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			onClose();
-		}, 16000);
+		}, 20000);
 	}, []);
 
 	return (
 		<div className='fixed bottom-0 flex flex-col items-center justify-center w-full bg-[#ffffff20] backdrop-blur-sm z-10'>
 			<div className='flex flex-col w-[90%] md:w-[30%] bg-white border border-slate-400 shadow-sm shadow-slate-200 px-4 my-2 sm:my-5 rounded-lg overflow-y-auto scrollbar__1'>
-				<div className='flex items-center justify-between text-xs p-2 space-x-5'>
-					<AlertCircle size={80} className='text-orange-500' />
-					<p>
-						Please note that this is a demo version of our website.
-						We will be going live soon, and we need your help to
-						make it perfect. Feel free to test the features and
-						share any concerns or suggestions you might have. Your
-						feedback is invaluable to us.
+				<div className='flex items-center justify-between text-sm p-2 space-x-5'>
+					<AlertCircle
+						size={60}
+						className='text-orange-500  animate-pulse'
+					/>
+					<p className='font-medium'>
+						New platform! Still in development. Share with your
+						friends too!
 					</p>
 					{/* <p>Download our mobile app</p> */}
 

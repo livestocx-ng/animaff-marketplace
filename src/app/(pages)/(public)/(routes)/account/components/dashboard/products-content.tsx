@@ -5,9 +5,9 @@ import {
 	useProductUploadSubscriptionModalStore,
 } from '@/hooks/use-global-store';
 import {useEffect} from 'react';
-import {Plus, ZapIcon} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
+import {Plus, ZapIcon} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {columns} from './tables/products-column';
 import {DataTable} from '@/components/ui/data-table';

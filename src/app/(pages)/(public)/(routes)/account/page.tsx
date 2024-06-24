@@ -47,17 +47,10 @@ const AccountPage = () => {
 
 					{currentAccountTab === 'Product' && <ProductContent />}
 
-					{currentAccountTab === 'Desired Items' && (
-						<DesiredItemsContent />
-					)}
 
-					{currentAccountTab === 'Desired Item' && (
-						<DesiredItemContent />
-					)}
-
-					{currentAccountTab === 'Promotions' && (
+					{/* {currentAccountTab === 'Promotions' && (
 						<PromotionsContent />
-					)}
+					)} */}
 
 					{currentAccountTab === 'Messages' && <MessagesContent />}
 
@@ -66,12 +59,6 @@ const AccountPage = () => {
 					)}
 
 					{currentAccountTab === 'Settings' && <SettingsContent />}
-
-					{/* {currentAccountTab === 'Order History' && <OrderContent />}
-
-					{currentAccountTab === 'Wishlist' && <WishListContent />}
-
-					{currentAccountTab === 'Shopping Cart' && <CartContent />} */}
 				</div>
 			</div>
 		</div>
