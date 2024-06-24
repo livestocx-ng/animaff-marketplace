@@ -170,9 +170,10 @@ const Footer = () => {
 						<Link
 							className=''
 							target='_blank'
-							href={
-								'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
-							}
+							href={'#'}
+							// href={
+							// 	'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
+							// }
 						>
 							<Image
 								alt={''}

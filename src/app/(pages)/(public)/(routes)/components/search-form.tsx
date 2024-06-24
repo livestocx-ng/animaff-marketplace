@@ -224,7 +224,7 @@ const SearchForm = () => {
 			{!pathName.includes('sellers') &&
 				!pathName.includes('marketplace') && (
 					<div className='flex items-center space-x-3 pb-2 md:pb-0'>
-						<Link
+						{/* <Link
 							className=''
 							target='_blank'
 							href={
@@ -239,7 +239,7 @@ const SearchForm = () => {
 								className='object-contain'
 								src={'/icon__playstore__2.svg'}
 							/>
-						</Link>
+						</Link> */}
 
 						<p
 							onClick={() => updateSearchLocationModal.onOpen()}

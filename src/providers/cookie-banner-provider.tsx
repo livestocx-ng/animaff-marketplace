@@ -15,8 +15,6 @@ export default function CookieBannerProvider() {
 	useEffect(() => {
 		const storedCookieConsent = getLocalStorage('animaff_cookie_consent');
 
-		// console.log(storedCookieConsent);
-
 		setCookieConsent(storedCookieConsent);
 		setLocalStorage('animaff_cookie_consent', storedCookieConsent);
 	}, []);
@@ -58,12 +56,12 @@ export default function CookieBannerProvider() {
 								className='object-fill'
 							/>
 							<p className='text-sm text-justify'>
-								At Livestocx, we hold your privacy in the
-								highest regard. Our website, by default,
-								utilizes Google Analytics along with strictly
-								necessary and functional cookies to ensure
-								secure operation and enhance your experience
-								with our content and services. <br />
+								At Animaff, we hold your privacy in the highest
+								regard. Our website, by default, utilizes Google
+								Analytics along with strictly necessary and
+								functional cookies to ensure secure operation
+								and enhance your experience with our content and
+								services. <br />
 								By selecting "Allow" you are giving consent to
 								activate performance, marketing, and analysis
 								cookies, including those from third-party
