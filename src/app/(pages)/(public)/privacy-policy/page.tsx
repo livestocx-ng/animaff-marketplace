@@ -342,6 +342,33 @@ const PrivacyPolicyPage = () => {
 					</li>
 				</ol>
 
+				<div className='text-sm font-semibold'>
+					13. Livestock Agritech Solutions LTD complies with the
+					Google API Service: User Data Policy regarding the access,
+					use, storage, and sharing of Google user data. This
+					includes:{' '}
+				</div>
+				<ol className='space-y-5 px-4 list-none'>
+					<li className='text-sm leading-7'>
+						13.1 Access and Use: Our application accesses Google
+						user data solely for the purpose of providing our
+						services as described in this Privacy Policy. This
+						includes authentication and data synchronization.
+					</li>
+					<li className='text-sm leading-7'>
+						13.2 Storage: We store Google user data securely using
+						industry-standard encryption methods. We retain this
+						data only for as long as necessary to provide our
+						services or as required by law.{' '}
+					</li>
+					<li className='text-sm leading-7'>
+						13.3 Sharing: We do not share Google user data with
+						third parties except as necessary to provide our
+						services or comply with legal obligations, as detailed
+						in Section 6 of this Policy.
+					</li>
+				</ol>
+
 				<p className='text-sm leading-7'>
 					Please review this Privacy Policy periodically for any
 					updates or changes. By continuing to use our Website and/or
