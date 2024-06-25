@@ -13,7 +13,7 @@ const Footer = () => {
 	return (
 		<div className='pt-5 md:pt-10 w-full bg-main flex flex-col px-5 sm:px-10'>
 			<div className='flex flex-row flex-wrap items-start justify-between w-full'>
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-10 sm:mb-0 flex flex-col space-y-5 w-full md:w-fit'>
 					<Image
 						alt='logo'
 						width={30}
@@ -32,7 +32,7 @@ const Footer = () => {
 					</div>
 				</div>
 
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-5 md:mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<h1 className='text-white text-sm'>My Account</h1>
 
 					{AccountNavLinks.map((link) => (
@@ -52,7 +52,7 @@ const Footer = () => {
 					))}
 				</div>
 
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-5 md:mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<h1 className='text-white text-sm'>Helps</h1>
 
 					{HelpNavLinks.map((link) => (
@@ -66,7 +66,7 @@ const Footer = () => {
 					))}
 				</div>
 
-				<div className='mb-10 sm:mb-0 flex flex-col space-y-5'>
+				<div className='mb-5 md:mb-10 sm:mb-0 flex flex-col space-y-5'>
 					<h1 className='text-white text-sm'>Other</h1>
 
 					{OtherNavLinks.map((link) => (
@@ -161,7 +161,7 @@ const Footer = () => {
 				</div>
 			</div>
 
-			<div className='border-t border-t-[#ffffff80] w-full mt-10 md:mt-10 py-3 text-center text-[#ffffff80] text-xs'>
+			<div className='border-t border-t-[#ffffff80] w-full mt-5 md:mt-10 py-3 text-center text-[#ffffff80] text-xs'>
 				Powered by Livestocx Inc &copy; {new Date().getFullYear()}. All Rights Reserved
 			</div>
 		</div>

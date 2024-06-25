@@ -69,7 +69,7 @@ const EnterprisePage = () => {
 					<Image
 						alt=''
 						fill
-						className='object-contai object-fill md:object-cover rounded-sm'
+						className='object-fill md:object-cover rounded-sm'
 						src={'/enterprise/image__header__1.png'}
 					/>
 				</div>
@@ -89,7 +89,7 @@ const EnterprisePage = () => {
 						/>
 					</div>
 					<div className='w-full md:w-[50%] space-y-3'>
-						<p className='text-sm md:text-xl leading-[26px]'>
+						<p className='text-sm md:text-xl leading-8'>
 							Our enterprise platform features a custom online
 							store, marketplace listings, sales management and
 							analytics, weekly product promotions, business logo
@@ -100,8 +100,13 @@ const EnterprisePage = () => {
 				</div>
 			</div>
 
-			<div ref={subscriptionPlansRef} className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'>
-				<h1 className='font-medium text-lg md:text-4xl text-center'>Comparing Animaff to owning a regular website/store</h1>
+			<div
+				ref={subscriptionPlansRef}
+				className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'
+			>
+				<h1 className='font-medium text-lg md:text-4xl text-center'>
+					Comparing Animaff to owning a regular website/store
+				</h1>
 				<DataTable
 					hasPagination={false}
 					borderRadius='rounded-b'
@@ -110,7 +115,7 @@ const EnterprisePage = () => {
 				/>
 			</div>
 
-			<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0 mb-20'>
+			<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0'>
 				{premiumSubscriptionPlans?.map((plan, index) => (
 					<div
 						key={plan.id}
@@ -207,6 +212,22 @@ const EnterprisePage = () => {
 						</div> */}
 					</div>
 				))}
+			</div>
+
+			<div className='w-full py-5 px-4 md:px-[160px] my-10 flex flex-col space-y-5'>
+				<h1 className='font-medium text-lg md:text-4xl text-center'>
+					Animaff Plugin
+				</h1>
+
+				<p className='leading-8'>
+					You can now seamlessly integrate your Animaff catalog or
+					products into your existing website, similar to how Calendly
+					and Typeform work. This powerful feature allows you to
+					display your products directly on your site, enhancing your
+					online presence and engaging customers without requiring
+					them to leave your platform. Email us for more information
+					at support@livestocx.com
+				</p>
 			</div>
 		</main>
 	);
