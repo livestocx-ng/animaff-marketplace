@@ -36,7 +36,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
 			axios.get(
-				`https://livestocx.com/marketplace/products/${formatProductSlug(
+				`https://animaff.com/marketplace/products/${formatProductSlug(
 					row.original
 				)}`
 			);
@@ -165,7 +165,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 		cell: ({row}) => (
 			<div className='flex space-x-2'>
 				<WhatsappShareButton
-					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+					url={`https://animaff.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
@@ -173,7 +173,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					<WhatsappIcon size={25} round />
 				</WhatsappShareButton>
 				<FacebookShareButton
-					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+					url={`https://animaff.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
@@ -181,7 +181,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					<FacebookIcon size={25} round />
 				</FacebookShareButton>
 				<TwitterShareButton
-					url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+					url={`https://animaff.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
 					title={`Check out my ${row.original.name} on livestocx: `}
@@ -193,7 +193,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					onCopy={(text: string, result: boolean) => {
 						toast.success('Copied to clipboard');
 					}}
-					text={`https://livestocx.com/marketplace/products/${formatProductSlug(
+					text={`https://animaff.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
 				>

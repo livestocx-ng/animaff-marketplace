@@ -22,7 +22,7 @@ const ShareProductModal = () => {
 
 	useEffect(() => {
 		axios.get(
-			`https://livestocx.com/marketplace/products/${formatProductSlug(
+			`https://animaff.com/marketplace/products/${formatProductSlug(
 				payload!
 			)}`
 		);
@@ -68,7 +68,7 @@ const ShareProductModal = () => {
 						<div className='flex space-x-2'>
 							<WhatsappShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 							>
@@ -76,7 +76,7 @@ const ShareProductModal = () => {
 							</WhatsappShareButton>
 							<FacebookShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 							>
@@ -84,7 +84,7 @@ const ShareProductModal = () => {
 							</FacebookShareButton>
 							<TwitterShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 							>
@@ -92,7 +92,7 @@ const ShareProductModal = () => {
 							</TwitterShareButton>
 
 							<CopyToClipboard
-								text={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								text={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 								onCopy={(text: string, result: boolean) => {

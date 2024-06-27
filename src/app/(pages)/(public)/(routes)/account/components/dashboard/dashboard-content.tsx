@@ -192,7 +192,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 							<div className='flex space-x-2'>
 								<WhatsappShareButton
-									url={`https://livestocx.com/sellers/${formatVendorSlug(
+									url={`https://animaff.com/sellers/${formatVendorSlug(
 										vendor!
 									)}`}
 									title='Check out my seller profile on Livestocx: '
@@ -200,7 +200,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									<WhatsappIcon size={25} round />
 								</WhatsappShareButton>
 								<FacebookShareButton
-									url={`https://livestocx.com/sellers/${formatVendorSlug(
+									url={`https://animaff.com/sellers/${formatVendorSlug(
 										vendor!
 									)}`}
 									title='Check out my seller profile on Livestocx: '
@@ -208,7 +208,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									<FacebookIcon size={25} round />
 								</FacebookShareButton>
 								<TwitterShareButton
-									url={`https://livestocx.com/sellers/${formatVendorSlug(
+									url={`https://animaff.com/sellers/${formatVendorSlug(
 										vendor!
 									)}`}
 									title='Check out my seller profile on Livestocx: '
@@ -220,7 +220,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									onCopy={(text: string, result: boolean) => {
 										toast.success('Copied to clipboard');
 									}}
-									text={`https://livestocx.com/sellers/${formatVendorSlug(
+									text={`https://animaff.com/sellers/${formatVendorSlug(
 										vendor!
 									)}`}
 								>

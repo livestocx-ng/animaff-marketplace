@@ -93,19 +93,19 @@ const ProductContent = ({}: ProductContentProps) => {
 							<h1 className='font-medium text-sm'>Share on:</h1>
 							<div className='flex space-x-2'>
 								<WhatsappShareButton
-									url={`https://livestocx.com/marketplace/products/${product?.productId.toLowerCase()}`}
+									url={`https://animaff.com/marketplace/products/${product?.productId.toLowerCase()}`}
 									title={`Check out my ${product?.name} on livestocx: `}
 								>
 									<WhatsappIcon size={30} round />
 								</WhatsappShareButton>
 								<FacebookShareButton
-									url={`https://livestocx.com/marketplace/products/${product?.productId.toLowerCase()}`}
+									url={`https://animaff.com/marketplace/products/${product?.productId.toLowerCase()}`}
 									title={`Check out my ${product?.name} on livestocx: `}
 								>
 									<FacebookIcon size={30} round />
 								</FacebookShareButton>
 								<TwitterShareButton
-									url={`https://livestocx.com/marketplace/products/${product?.productId.toLowerCase()}`}
+									url={`https://animaff.com/marketplace/products/${product?.productId.toLowerCase()}`}
 									title={`Check out my ${product?.name} on livestocx: `}
 								>
 									<TwitterIcon size={30} round />

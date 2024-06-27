@@ -9,7 +9,7 @@ import {
 } from 'react-share';
 import axios from 'axios';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
@@ -22,7 +22,7 @@ const ShareNewProductModal = () => {
 
 	useEffect(() => {
 		axios.get(
-			`https://livestocx.com/marketplace/products/${formatProductSlug(
+			`https://animaff.com/marketplace/products/${formatProductSlug(
 				payload!
 			)}`
 		);
@@ -68,7 +68,7 @@ const ShareNewProductModal = () => {
 						<div className='flex space-x-2'>
 							<WhatsappShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 							>
@@ -76,7 +76,7 @@ const ShareNewProductModal = () => {
 							</WhatsappShareButton>
 							<FacebookShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 							>
@@ -84,7 +84,7 @@ const ShareNewProductModal = () => {
 							</FacebookShareButton>
 							<TwitterShareButton
 								title={`Check out my ${payload.name} on livestocx: `}
-								url={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 							>
@@ -92,7 +92,7 @@ const ShareNewProductModal = () => {
 							</TwitterShareButton>
 
 							<CopyToClipboard
-								text={`https://livestocx.com/marketplace/products/${formatProductSlug(
+								text={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
 								onCopy={(text: string, result: boolean) => {
