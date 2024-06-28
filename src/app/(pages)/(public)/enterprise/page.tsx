@@ -44,7 +44,7 @@ const EnterprisePage = () => {
 						Animaff for Enterprises
 					</h1>
 
-					<p className='text-sm md:text-lg text-white font-medium text-center md:text-left'>
+					<p className='text-sm md:text-lg text-white font-medium text-center md:text-left leading-8'>
 						Expand your business reach. Sell to thousands on our
 						Marketplace and showcase your products with our custom
 						website and catalog built for you.
@@ -65,7 +65,7 @@ const EnterprisePage = () => {
 					</Button>
 				</div>
 
-				<div className='h-[400px] w-full md:w-[50%] relative bg-orange-20 mt-5 md:mt-0'>
+				<div className='h-[250px] w-full md:w-[50%] md:h-[400px] relative bg-orange-20 mt-5 md:mt-0'>
 					<Image
 						alt=''
 						fill

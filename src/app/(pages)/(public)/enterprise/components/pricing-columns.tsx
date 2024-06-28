@@ -32,7 +32,7 @@ export const EnterprisePlansComparisonsColumns: ColumnDef<EnterprisePlanComparis
 						<span>
 							<X size={14} className='text-red-400'/>
 						</span>{' '}
-						<p> {row.original.customBusinessWebsite}</p>
+						<p className='hidden sm:block'> {row.original.customBusinessWebsite}</p>
 					</div>
 				);
 			},
@@ -46,7 +46,7 @@ export const EnterprisePlansComparisonsColumns: ColumnDef<EnterprisePlanComparis
 						<span>
 							<Check size={16} className='text-green-600' />
 						</span>{' '}
-						<p>{row.original.platform}</p>
+						<p className='hidden sm:block'>{row.original.platform}</p>
 					</div>
 				);
 			},
