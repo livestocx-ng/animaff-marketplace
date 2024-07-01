@@ -64,7 +64,7 @@ const SellerProfilePage = ({params}: SellerProfilePageProps) => {
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile/products?slug=${params.sellerSlug}&page=${currentPage}`
 			);
 
-			console.log('[DATA] ::  ', data);
+			// console.log('[DATA] ::  ', data);
 
 			updateSellerProducts(data.data.products);
 			updateSellerPagination(data.data.totalPages, data.data.hasNext);

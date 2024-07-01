@@ -149,6 +149,7 @@ export interface ProductInfo {
 	email: string;
 	phoneNumber: string;
 	avgRating: number;
+	vendor?: Vendor;
 	moreProducts: Product[];
 	reviews: ProductInfoReview[];
 	ratings: ProductInfoRating[];

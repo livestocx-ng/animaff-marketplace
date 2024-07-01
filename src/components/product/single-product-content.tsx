@@ -48,6 +48,8 @@ import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
+import Link from 'next/link';
+import { formatVendorSlug } from '@/utils/slug.formatter';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
@@ -229,14 +231,22 @@ const SingleProductContent = ({
 							)}
 						</div>
 
-						<div className='flex items-center space-x-3 py-3'>
+						<Link
+							href={
+								productInfo?.vendor?.slug.length! > 0
+									? `/store/${formatVendorSlug(
+											productInfo?.vendor!
+									  )}`
+									: '#'
+							}
+							className='flex items-center space-x-3 py-3 cursor-pointer'
+						>
 							<Image
 								width={40}
 								height={40}
 								unoptimized={true}
 								alt={productInfo?.name!}
 								src={productInfo?.avatar ?? '/icon__user.svg'}
-								// src={'/icon__user.svg'}
 								className='rounded-full border object-fill'
 							/>
 
@@ -244,11 +254,9 @@ const SingleProductContent = ({
 								<p className='text-xs font-medium'>
 									{productInfo?.name! ?? ''}
 								</p>
-								{/* <p className='text-[10px] px-2 py-1 text-center bg-gray-200 rounded-md'>
-									{productInfo?.name && 'Replies in 2 days'}
-								</p> */}
 							</div>
-						</div>
+						</Link>
+
 
 						<div className='flex flex-wrap items-center mt-3 gap-5 justify-between'>
 							<Button

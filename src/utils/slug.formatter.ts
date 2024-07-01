@@ -16,13 +16,13 @@ export function formatProductSlug(product: Product): string {
 }
 
 export function formatVendorSlug(vendor: Vendor): string {
-	const slug = vendor?.slug.replace(/,/g, '');
+	// const slug = vendor?.slug.replace(/,/g, '');
 
 	// const formattedVendorNameWithOutCommas = formattedVendorName.replace(/\s+/g, '-').toLowerCase();
 
 	// const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!.toLowerCase()}`;
 
-	return slug.toLowerCase();
+	return vendor?.slug.toLowerCase();
 }
 
 export function getProductIdFromSlug(slug: string): string {
