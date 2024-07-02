@@ -350,22 +350,65 @@ const PrivacyPolicyPage = () => {
 				</div>
 				<ol className='space-y-5 px-4 list-none'>
 					<li className='text-sm leading-7'>
-						13.1 Access and Use: Our application accesses Google
-						user data solely for the purpose of providing our
-						services as described in this Privacy Policy. This
-						includes authentication and data synchronization.
+						13.1 Information Collection and Use: When you use our
+						application through Google OAuth, we collect the
+						following information from your Google account, with
+						your explicit consent:
+						<ul className='space-y-2 px-4 list-noe'>
+							<li className='text-sm leading-7'>
+								1. Basic Profile Information: Name, email address,
+								and profile picture.
+							</li>
+							<li className='text-sm leading-7'>
+								2. Additional Information: Any other data points
+								authorized by you during the OAuth consent
+								process.
+							</li>
+						</ul>
 					</li>
 					<li className='text-sm leading-7'>
-						13.2 Storage: We store Google user data securely using
-						industry-standard encryption methods. We retain this
-						data only for as long as necessary to provide our
-						services or as required by law.{' '}
+						13.2 Purpose of Data Collection: We use the collected
+						information to:
+						<ol className='space-y-2 px-4 list-none'>
+							<li className='text-sm leading-7'>
+								1. Authenticate and identify users.
+							</li>
+							<li className='text-sm leading-7'>
+								2. Provide personalized services and features.
+							</li>
+							<li className='text-sm leading-7'>
+								3. Improve our application's performance and user
+								experience.
+							</li>
+						</ol>
 					</li>
 					<li className='text-sm leading-7'>
-						13.3 Sharing: We do not share Google user data with
-						third parties except as necessary to provide our
-						services or comply with legal obligations, as detailed
-						in Section 6 of this Policy.
+						13.3 Data Sharing and Disclosure We do not share your
+						Google account information with third parties, except:
+						<ol className='space-y-2 px-4 list-none'>
+							<li className='text-sm leading-7'>
+								1. As necessary to comply with legal obligations.
+							</li>
+							<li className='text-sm leading-7'>
+								2. To protect the security and integrity of our
+								services.
+							</li>
+						</ol>
+					</li>
+					<li className='text-sm leading-7'>
+						13.4 Data Security We implement industry-standard
+						security measures to protect your data against
+						unauthorized access, alteration, disclosure, or
+						destruction. This includes encryption, access controls,
+						and regular security audits.
+					</li>
+					<li className='text-sm leading-7'>
+						13.5 User Rights You have the right to:
+						<ol className='space-y-2 px-4 list-none'>
+							<li className='text-sm leading-7'>
+								1. Access, update, or delete your information.
+							</li>
+						</ol>
 					</li>
 				</ol>
 
