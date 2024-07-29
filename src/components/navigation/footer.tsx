@@ -1,6 +1,6 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-
 import {useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {AccountNavLinks, HelpNavLinks, OtherNavLinks} from '@/data';
@@ -25,8 +25,14 @@ const Footer = () => {
 
 					<h1 className='text-white text-xs'>Animaff</h1>
 
-					<div className='flex flex-wrap items-center'>
-						<p className='bg-black text-white text-xs'>
+					<div className='flex flex-col items-start space-y-2'>
+						<p className='text-white text-xs'>
+							1680 East Barstow Avenue, <br /> Fresno California, United States
+						</p>
+						<p className='text-white text-xs'>+1(559)6683783</p>
+						<p className='text-white text-xs'>+23432549273</p>
+						
+						<p className='text-white text-xs'>
 							livestocxltd@gmail.com
 						</p>
 					</div>
@@ -129,7 +135,7 @@ const Footer = () => {
 							/>
 						</Link>
 					</div>
-					<div className='flex items-center space-x-3'>
+					{/* <div className='flex items-center space-x-3'>
 						<Link href={'#'} className=''>
 							<Image
 								alt={''}
@@ -157,12 +163,13 @@ const Footer = () => {
 								src={'/icon__playstore__2.svg'}
 							/>
 						</Link>
-					</div>
+					</div> */}
 				</div>
 			</div>
 
-			<div className='border-t border-t-[#ffffff80] w-full mt-5 md:mt-10 py-3 text-center text-[#ffffff80] text-xs'>
-				Powered by Livestocx Inc &copy; {new Date().getFullYear()}. All Rights Reserved
+			<div className='border-t border-t-[#ffffff80] w-full mt-5 md:mt-0 py-3 text-center text-[#ffffff80] text-xs'>
+				Powered by Livestocx Inc &copy; {new Date().getFullYear()}. All
+				Rights Reserved
 			</div>
 		</div>
 	);

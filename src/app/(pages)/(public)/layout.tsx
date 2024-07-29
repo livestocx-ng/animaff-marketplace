@@ -229,7 +229,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		<div className='relative'>
 			{shareProductModal.isOpen && <ShareProductModal />}
 			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
-			{downloadAppModal.isOpen && <DownloadMobileAppModal />}
+			{/* {downloadAppModal.isOpen && <DownloadMobileAppModal />} */}
 			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
 			{readNotificationModal.isOpen && <NotificationModal />}
 			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
