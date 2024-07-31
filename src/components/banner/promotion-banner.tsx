@@ -1,14 +1,34 @@
-import React from 'react';
+'use client';
 import {Rocket} from 'lucide-react';
 import {motion} from 'framer-motion';
 import {useRouter} from 'next/navigation';
+import React, {useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import {PremiumSubscriptionPlan} from '@/types/types';
 
 const PromotionBanner = () => {
 	const router = useRouter();
 
 	const {premiumSubscriptionPlans} = useGlobalStore();
+
+	const [plan, setPlan] = useState<PremiumSubscriptionPlan | null>(null);
+
+	const filterPremiumSubscriptionPlans = () => {
+		const plan = premiumSubscriptionPlans?.filter(
+			(plan) => plan.position === 3
+		)[0];
+
+		if (plan) {
+			setPlan(plan);
+		}
+
+		console.log('[PLAN] :: ', plan);
+	};
+
+	useEffect(() => {
+		filterPremiumSubscriptionPlans();
+	}, [premiumSubscriptionPlans.length]);
 
 	return (
 		<motion.div
@@ -39,9 +59,11 @@ const PromotionBanner = () => {
 				Want to sell very fast? Get your Animaff online store for{' '}
 				{premiumSubscriptionPlans?.length > 0
 					? `${
-							PriceFormatter(
-								premiumSubscriptionPlans[0]?.price
-							).split('.00')[0]
+							plan
+								? PriceFormatter(plan?.price).split('.00')[0]
+								: PriceFormatter(
+										premiumSubscriptionPlans[0]?.price
+								  ).split('.00')[0]
 					  }/year.`
 					: `${PriceFormatter(21).split('.00')[0]}`}
 			</p>
