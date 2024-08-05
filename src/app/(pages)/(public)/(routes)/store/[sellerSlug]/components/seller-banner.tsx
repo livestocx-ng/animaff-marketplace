@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {MessageCircle, Phone} from 'lucide-react';
 import {useGlobalStore} from '@/hooks/use-global-store';
@@ -10,6 +10,7 @@ import {formatVendorSlug} from '@/utils/slug.formatter';
 
 const SellerBanner = () => {
 	const router = useRouter();
+	const pathName = usePathname();
 
 	const {
 		user,
@@ -35,26 +36,23 @@ const SellerBanner = () => {
 				<h1 className='text-sm sm:text-xl font-semibold'>
 					{vendorProfile?.name}
 				</h1>
-				<p className='text-xs sm:text-sm'>{vendorProfile?.city} {vendorProfile?.state}</p>
-				{/* <p>
-						Email:{' '}
-						<span className='text-orange-500'>{vendorProfile?.email}</span>
-					</p>
-					<p>
-						Contact:{' '}
-						<span className='text-orange-500'>
-							{vendorProfile?.phoneNumber}
-						</span>
-					</p> */}
+				<p className='text-xs sm:text-sm'>
+					{vendorProfile?.city} {vendorProfile?.state}
+				</p>
 				<div className='hidden sm:flex flex-col sm:flex-row sm:space-x-5'>
 					<Button
 						type='button'
 						variant={'outline'}
 						onClick={async () => {
 							try {
-								if (!user) return router.push('/signin');
+								if (!user)
+									return router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
 
-								if (user?.id == vendorProfile?.user) {
+								if (user?.id === vendorProfile?.user) {
 									return;
 								}
 
@@ -81,13 +79,29 @@ const SellerBanner = () => {
 						className='flex items-center space-x-2 border border-main text-xs rounded-full py-3 w-full sm:w-[150px]'
 					>
 						<MessageCircle size={18} />
-						<p> Chat Seller</p>
+						<p>Chat Seller</p>
 					</Button>
 					<Button
 						type='button'
 						variant={'default'}
 						onClick={async () => {
 							try {
+								if (!user)
+									return router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+
+								axios.get(
+									`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=0`,
+									{
+										headers: {
+											Authorization: user?.accessToken,
+										},
+									}
+								);
+
 								const link = document.createElement('a');
 								link.href = `tel:${vendorProfile?.phoneNumber}`;
 								link.target = '_blank';
@@ -100,7 +114,7 @@ const SellerBanner = () => {
 						className='flex items-center space-x-3 border border-main text-xs rounded-full py-3 w-full sm:w-[150px]'
 					>
 						<Phone size={18} />
-						<p> Call Seller</p>
+						<p>Call Seller</p>
 					</Button>
 				</div>
 			</div>
@@ -111,9 +125,12 @@ const SellerBanner = () => {
 					variant={'outline'}
 					onClick={async () => {
 						try {
-							if (!user) return router.push('/signin');
+							if (!user)
+								return router.push(
+									`/signin?redirect_to=${pathName.slice(1)}`
+								);
 
-							if (user?.id == vendorProfile?.user) {
+							if (user?.id === vendorProfile?.user) {
 								return;
 							}
 
@@ -147,6 +164,20 @@ const SellerBanner = () => {
 					variant={'default'}
 					onClick={async () => {
 						try {
+							if (!user)
+								return router.push(
+									`/signin?redirect_to=${pathName.slice(1)}`
+								);
+
+							axios.get(
+								`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=0`,
+								{
+									headers: {
+										Authorization: user?.accessToken,
+									},
+								}
+							);
+
 							const link = document.createElement('a');
 							link.href = `tel:${vendorProfile?.phoneNumber}`;
 							link.target = '_blank';
@@ -159,7 +190,7 @@ const SellerBanner = () => {
 					className='flex items-center space-x-3 border border-main text-xs rounded-full py-3 w-full sm:w-[150px]'
 				>
 					<Phone size={18} />
-					<p> Call Seller</p>
+					<p>Call Seller</p>
 				</Button>
 			</div>
 		</div>

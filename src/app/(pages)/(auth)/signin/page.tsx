@@ -75,11 +75,12 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			// // console.log('[SIGNIN-PAYLOAD] :: ', formData);
+			
+			// console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post('/api/auth/signin', formData);
 
-			// // console.log('[DATA] :: ', data);
+			// console.log('[DATA] :: ', data);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -87,33 +88,35 @@ const SignInPage = () => {
 				toast.error('Invalid credentials');
 			} else {
 				setLoading(false);
+				
 				updateUser(data);
 
+				
+				const response = await axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
+					{
+						headers: {
+							Authorization: data?.accessToken,
+						},
+					}
+				);
+				
+				updateChatConversations(response.data.data.conversations);
+				
 				toast.success('Success');
 
-				if (searchParams.get('redirect_to')) {
+				if (searchParams.get('redirect_to')!) {
 					return router.push(
 						`/${
 							searchParams
 								.get('redirect_to')!
-								.includes('business')
-								? 'business?subscription_now=true'
+								.includes('enterprise')
+								? 'enterprise?subscription_now=true'
 								: searchParams.get('redirect_to')!
 						}`
 					);
 				} else {
 					router.push('/');
-
-					const response = await axios.get(
-						`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
-						{
-							headers: {
-								Authorization: data?.accessToken,
-							},
-						}
-					);
-
-					updateChatConversations(response.data.data.conversations);
 				}
 			}
 		} catch (error) {
@@ -213,10 +216,6 @@ const SignInPage = () => {
 										: `/${searchParams.get(
 												'redirect_to'
 										  )!}`;
-
-									document.cookie = `${ANIMAFF_AUTH_REDIRECT}=${redirectUrl}; Max-Age=${COOKIE_MAX_AGE}; Path=/; SameSite=Strict; Secure=${
-										process.env.NODE_ENV === 'production'
-									}`;
 
 									signIn('google', {
 										callbackUrl: redirectUrl,
