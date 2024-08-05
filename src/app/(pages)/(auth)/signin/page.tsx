@@ -75,7 +75,7 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
-			
+
 			// console.log('[SIGNIN-PAYLOAD] :: ', formData);
 
 			const {data} = await axios.post('/api/auth/signin', formData);
@@ -88,10 +88,9 @@ const SignInPage = () => {
 				toast.error('Invalid credentials');
 			} else {
 				setLoading(false);
-				
+
 				updateUser(data);
 
-				
 				const response = await axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/chat/conversations?page=1`,
 					{
@@ -100,12 +99,12 @@ const SignInPage = () => {
 						},
 					}
 				);
-				
+
 				updateChatConversations(response.data.data.conversations);
-				
+
 				toast.success('Success');
 
-				if (searchParams.get('redirect_to')!) {
+				if (searchParams.has('redirect_to')!) {
 					return router.push(
 						`/${
 							searchParams
@@ -209,13 +208,17 @@ const SignInPage = () => {
 								type='button'
 								variant={'outline'}
 								onClick={() => {
-									const redirectUrl = searchParams
-										.get('redirect_to')!
-										.includes('enterprise')
-										? '/enterprise?subscription_now=true'
-										: `/${searchParams.get(
-												'redirect_to'
-										  )!}`;
+									const redirectUrl = searchParams.has(
+										'redirect_to'
+									)
+										? searchParams
+												.get('redirect_to')!
+												.includes('enterprise')
+											? '/enterprise?subscription_now=true'
+											: `/${searchParams.get(
+													'redirect_to'
+											  )!}`
+										: '/';
 
 									signIn('google', {
 										callbackUrl: redirectUrl,
