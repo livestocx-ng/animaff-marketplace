@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import {Features, TeamMembers} from '@/data';
-import YoutubeVideoPlayer from '@/components/media/youtube-video-player';
 import {Fragment} from 'react';
 import MainNavbar from '@/components/navigation/main-nav-bar';
 import Footer from '@/components/navigation/footer';
