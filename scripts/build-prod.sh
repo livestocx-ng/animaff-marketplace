@@ -30,7 +30,7 @@ echo "[MERGE-SUCCESS]"
 
 
 echo "[PUSHING-CHANGES-TO-ORIGIN-MAIN]"
-git push
+git push origin main
 echo "[PUSH-SUCCESS]"
 
 
