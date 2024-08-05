@@ -5,7 +5,7 @@ const nextConfig = {
         missingSuspenseWithCSRBailout: false,
     },
     images: {
-        domains: ["livestocx-media.s3.amazonaws.com", "livestocx-test-media.s3.amazonaws.com", "youtube.com"]
+        domains: ["animaff-media.s3.amazonaws.com", "animaff-test-media.s3.amazonaws.com", "youtube.com"]
     }
 }
 

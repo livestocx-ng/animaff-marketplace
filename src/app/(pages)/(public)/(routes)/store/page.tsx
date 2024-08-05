@@ -3,11 +3,11 @@ import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import React, {useEffect, useState} from 'react';
-import SearchForm from '../components/search-form';
 import HomeSellers from './components/home-sellers';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
 import LoadingAnimation from '../../../../../../public/animations/loading__animation__1.json';
+import SearchForm from '@/components/home/search-form';
 
 const SellersPage = () => {
 	const userStore = useUserHook();

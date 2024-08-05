@@ -56,7 +56,7 @@ export interface Vendor {
 	slug: string;
 	phoneNumber: string;
 	zipPostalCode: string;
-	isAccountDisabled: string;
+	isAccountDisabled: boolean;
 	isUpdated: boolean;
 }
 

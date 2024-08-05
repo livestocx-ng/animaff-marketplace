@@ -4,8 +4,8 @@ import {usePathname} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {Dispatch, Fragment, SetStateAction, useState} from 'react';
-import ProductCard from '../../../../../components/cards/product-card';
 import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
+import ProductCard from '../cards/product-card';
 
 interface Tab {
 	id: number;

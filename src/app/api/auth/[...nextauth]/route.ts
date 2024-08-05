@@ -52,15 +52,15 @@ const handler = NextAuth({
 						secure: process.env.NODE_ENV === 'production',
 					});
 
-					return Promise.resolve('/');
+					return true;
 				} catch (error) {
 					// console.error('[GOOGLE-SIGIN-API-ERROR]', error);
 				}
 			}
-
-			// return profile?.email && profile?.email.endsWith("@example.com")
-
 			return true; // Do different verification for other providers that don't have `email`
+		},
+		async redirect({url, baseUrl}) {
+			return url || baseUrl;
 		},
 	},
 });

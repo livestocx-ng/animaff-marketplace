@@ -20,8 +20,9 @@ const MediaIdGenerator = (len: number) => {
 };
 
 export async function generateOGImageFromURL(
+	width: number,
+	height: number,
 	imageURL: string,
-	productSlug: string
 ): Promise<string> {
 	try {
 		const response = await axios.get(imageURL, {
@@ -30,7 +31,7 @@ export async function generateOGImageFromURL(
 		const imageData = Buffer.from(response.data, 'binary');
 
 		const resizedImage = await Jimp.read(imageData);
-		resizedImage.resize(300, 200).cover(300, 200);
+		resizedImage.resize(width, height).cover(width, height);
 
 		const imageBuffer: Buffer = await resizedImage.getBufferAsync(
 			Jimp.MIME_PNG

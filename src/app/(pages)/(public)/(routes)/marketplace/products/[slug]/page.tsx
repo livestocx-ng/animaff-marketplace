@@ -4,11 +4,13 @@ import {
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
-import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
 import {Fragment, useEffect, useState} from 'react';
+import Footer from '@/components/navigation/footer';
+import {usePathname, useRouter} from 'next/navigation';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
+import MainNavbar from '@/components/navigation/main-nav-bar';
+import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 import SingleProductContent from '@/components/product/single-product-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
@@ -24,6 +26,7 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
 const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const router = useRouter();
+	const pathName = usePathname();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
@@ -32,7 +35,6 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 	const {
 		user,
 		product,
-		products,
 		updatePayload,
 		productInfo,
 		updateProductInfo,
@@ -46,6 +48,8 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 	const fetchProduct = async () => {
 		try {
+			setLoading(true);
+
 			const [_product, _productInfo] = await Promise.all([
 				axios.get(
 					`${
@@ -59,21 +63,20 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 				),
 			]);
 
-			// console.log('[DATA] ::  ', _product.data.data);
-			// console.log('[DATA] ::  ', data);
-
 			updatePayload(_product.data.data);
 			updateProductInfo(_productInfo.data.data);
-		} catch (error) {
-			const _error = error as AxiosError;
 
-			// console.log('[FETCH-PRODUCT-ERROR] :: ', _error);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+
+			const _error = error as AxiosError;
 		}
 	};
 
 	const viewProduct = async () => {
 		try {
-			const {data} = await axios.get(
+			axios.get(
 				`${
 					process.env.NEXT_PUBLIC_API_URL
 				}/user/products/product/${getProductIdFromSlug(slug)}/view`,
@@ -83,12 +86,8 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					},
 				}
 			);
-
-			console.log('[VIEW-PRODUCT-DATA] ::  ', data);
 		} catch (error) {
 			const _error = error as AxiosError;
-
-			console.log('[VIEW-PRODUCT-ERROR] :: ', _error);
 		}
 	};
 
@@ -116,20 +115,42 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 
 			updatePayload(data.data);
 		} catch (error) {
-			// setLoading(false);
 			const _error = error as AxiosError;
-
-			console.log('[ERROR] :: ', _error);
 		}
 	};
 
-	const handleAddToDesiredProducts = async () => {
+	const handleAddUserToCallSeller = async () => {
 		try {
-			if (!user) return;
+			if (!user)
+				return router.push(`/signin?redirect_to=${pathName.slice(1)}`);
+
+			axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			const telLink = document.createElement('a');
+
+			telLink.href = `tel:${productInfo?.phoneNumber}`;
+
+			telLink.target = '_blank';
+
+			telLink.click();
+		} catch (error) {
+			const _error = error as AxiosError;
+		}
+	};
+
+	const handleMessageSeller = async () => {
+		try {
+			if (!user)
+				return router.push(`/signin?redirect_to=${pathName?.slice(1)}`);
 
 			if (loading) return;
-
-			// console.log('[PRODUCT-USER] :: ', product?.user);
 
 			if (user?.id === product?.user.toString()) return;
 
@@ -158,78 +179,56 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 			updateCurrentAccountTab('Messages');
 
 			updateShowChatConversation(true);
-
-			// const {data} = await axios.post(
-			// 	`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-desired-product?productId=${product?.productId}`,
-			// 	{},
-			// 	{
-			// 		headers: {
-			// 			Authorization: user?.accessToken,
-			// 		},
-			// 	}
-			// );
-
-			// if (data.data === false) {
-			// 	return toast.success('Product already added to desired items');
-			// } else {
-			// 	return toast.success('Product added to desired items');
-			// }
 		} catch (error) {
-			// setLoading(false);
 			const _error = error as AxiosError;
-
-			// console.log('[ERROR] :: ', _error);
 		}
 	};
 
 	return (
-		<main className='w-full relative'>
-			{isProductMediaModalOpen && <ProductMediaModal />}
+		<Fragment>
+			<MainNavbar />
+			<main className='w-full relative'>
+				{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
-					{product?.name}
-				</h1>
+				<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
+					<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
+						{product?.name}
+					</h1>
+				</section>
 
-				{/* <SearchForm /> */}
-			</section>
-
-			{loading && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={LoadingAnimation}
-						/>
+				{loading && (
+					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+						<LoadingAnimationOne />
 					</div>
-				</div>
-			)}
+				)}
 
-			{!loading && !product && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
-					<div className='h-[200px] w-1/2 mx-auto bg-white'>
-						<Lottie
-							loop={true}
-							className='h-full'
-							animationData={EmptyAnimation}
-						/>
+				{!loading && !product && (
+					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+						<div className='h-[200px] w-1/2 mx-auto bg-white'>
+							<Lottie
+								loop={true}
+								className='h-full'
+								animationData={EmptyAnimation}
+							/>
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{!loading && product && (
-				<SingleProductContent
-					loading={loading}
-					product={product}
-					currentTab={currentTab}
-					productInfo={productInfo}
-					setCurrentTab={setCurrentTab}
-					handleLikeUnlikeProduct={handleLikeUnlikeProduct}
-					handleAddToDesiredProducts={handleAddToDesiredProducts}
-				/>
-			)}
-		</main>
+				{!loading && product && (
+					<SingleProductContent
+						loading={loading}
+						product={product}
+						currentTab={currentTab}
+						productInfo={productInfo}
+						setCurrentTab={setCurrentTab}
+						handleMessageSeller={handleMessageSeller}
+						handleLikeUnlikeProduct={handleLikeUnlikeProduct}
+						handleAddUserToCallSeller={handleAddUserToCallSeller}
+					/>
+				)}
+			</main>
+			<Footer />
+		</Fragment>
 	);
 };
 

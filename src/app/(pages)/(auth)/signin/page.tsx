@@ -6,12 +6,15 @@ import {toast} from 'react-hot-toast';
 import {signIn} from 'next-auth/react';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
-import {Suspense, useReducer, useState} from 'react';
+import Footer from '@/components/navigation/footer';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
+import MainNavbar from '@/components/navigation/main-nav-bar';
 import FormTextInput from '@/components/input/form-text-input';
+import {COOKIE_MAX_AGE, ANIMAFF_AUTH_REDIRECT} from '@/lib/constants';
 import FormPasswordInput from '@/components/input/form-password-input';
+import {Fragment, Suspense, useEffect, useReducer, useState} from 'react';
 import {ValidateSigninFormData} from '@/utils/form-validations/auth.validation';
 
 type FormData = {
@@ -46,6 +49,12 @@ const SignInPage = () => {
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+
+	useEffect(() => {
+		if (user) {
+			return router.push('/');
+		}
+	}, [user]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
@@ -83,7 +92,15 @@ const SignInPage = () => {
 				toast.success('Success');
 
 				if (searchParams.get('redirect_to')) {
-					return router.push(`/${searchParams.get('redirect_to')}`);
+					return router.push(
+						`/${
+							searchParams
+								.get('redirect_to')!
+								.includes('business')
+								? 'business?subscription_now=true'
+								: searchParams.get('redirect_to')!
+						}`
+					);
 				} else {
 					router.push('/');
 
@@ -109,7 +126,8 @@ const SignInPage = () => {
 	};
 
 	return (
-		<Suspense>
+		<Fragment>
+			<MainNavbar />
 			<div className='w-full'>
 				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
 					<h1 className='text-xl md:text-5xl font-medium text-white'>
@@ -187,7 +205,23 @@ const SignInPage = () => {
 							<Button
 								type='button'
 								variant={'outline'}
-								onClick={() => signIn('google')}
+								onClick={() => {
+									const redirectUrl = searchParams
+										.get('redirect_to')!
+										.includes('enterprise')
+										? '/enterprise?subscription_now=true'
+										: `/${searchParams.get(
+												'redirect_to'
+										  )!}`;
+
+									document.cookie = `${ANIMAFF_AUTH_REDIRECT}=${redirectUrl}; Max-Age=${COOKIE_MAX_AGE}; Path=/; SameSite=Strict; Secure=${
+										process.env.NODE_ENV === 'production'
+									}`;
+
+									signIn('google', {
+										callbackUrl: redirectUrl,
+									});
+								}}
 								className='flex items-center gap-x-4 h-12 justify-center w-full rounded-full py-4'
 							>
 								<Image
@@ -213,7 +247,8 @@ const SignInPage = () => {
 					</form>
 				</div>
 			</div>
-		</Suspense>
+			<Footer />
+		</Fragment>
 	);
 };
 

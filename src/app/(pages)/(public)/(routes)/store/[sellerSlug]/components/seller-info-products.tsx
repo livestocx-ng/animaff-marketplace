@@ -5,6 +5,7 @@ import {Button} from '@/components/ui/button';
 import {Dispatch, SetStateAction} from 'react';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import ProductCard from '@/components/cards/product-card';
+import SellerProductCard from '@/components/cards/seller-product-card';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 
 interface SellerInfoProductsProps {
@@ -38,7 +39,7 @@ const SellerInfoProducts = ({
 			{sellerProducts?.length > 0 && (
 				<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2'>
 					{sellerProducts?.map((product) => (
-						<ProductCard key={product.id} product={product} />
+						<SellerProductCard key={product.id} product={product} />
 					))}
 				</div>
 			)}

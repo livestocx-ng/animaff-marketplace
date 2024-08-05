@@ -1,12 +1,9 @@
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
-	title: 'Animaff - Enterprise',
+	title: 'Animaff - Best deals, Everything Animals',
 	description: 'Best deals, Everything Animals',
-	keywords: ['Animaff', 'Livestock', 'United States', 'Pets', 'Animals', 'Meat'],
-	other: {
-		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
-	},
+	keywords: ['Animaff', 'United States', 'Pets', 'Animals', 'Meat'],
 	openGraph: {
 		title: 'Animaff - Enterprise',
 		description: 'Best deals, Everything Animals',
@@ -82,6 +79,7 @@ export const metadata: Metadata = {
 		],
 	},
 };
-export default function EnterpriseLayout({children}: {children: React.ReactNode}) {
-	return <>{children}</>;
+
+export default function Layout({children}: {children: React.ReactNode}) {
+	return <>{children} </>;
 }

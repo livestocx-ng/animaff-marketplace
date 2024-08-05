@@ -18,6 +18,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import ButtonLoader from '@/components/loader/button-loader';
 import {RecentOrderColumn, columns} from './tables/recent-orders-columns';
 import {Vendor} from '@/types/types';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 
 const RecentOrders: RecentOrderColumn[] = [
 	{
@@ -139,22 +140,6 @@ const DashboardContent = ({}: DashboardContentProps) => {
 		}
 	};
 
-	const formatVendorSlug = (vendor: Vendor): string => {
-		if (vendor) {
-			const formattedProductName = vendor?.name.replace(/,/g, '');
-
-			const formattedVendorNameWithOutCommas = formattedProductName
-				.replace(/\s+/g, '-')
-				.toLowerCase();
-
-			const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!.toLowerCase()}`;
-
-			return slug.toLowerCase();
-		}
-
-		return '';
-	};
-
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5'>
 			<div className='flex flex-col md:flex-row items-center justify-between w-full'>
@@ -192,26 +177,26 @@ const DashboardContent = ({}: DashboardContentProps) => {
 
 							<div className='flex space-x-2'>
 								<WhatsappShareButton
-									url={`https://animaff.com/sellers/${formatVendorSlug(
+									url={`https://animaff.com/store/${formatVendorSlug(
 										vendor!
 									)}`}
-									title='Check out my seller profile on Livestocx: '
+									title='Check out my online store on Animaff: '
 								>
 									<WhatsappIcon size={25} round />
 								</WhatsappShareButton>
 								<FacebookShareButton
-									url={`https://animaff.com/sellers/${formatVendorSlug(
+									url={`https://animaff.com/store/${formatVendorSlug(
 										vendor!
 									)}`}
-									title='Check out my seller profile on Livestocx: '
+									title='Check out my online store on Animaff: '
 								>
 									<FacebookIcon size={25} round />
 								</FacebookShareButton>
 								<TwitterShareButton
-									url={`https://animaff.com/sellers/${formatVendorSlug(
+									url={`https://animaff.com/store/${formatVendorSlug(
 										vendor!
 									)}`}
-									title='Check out my seller profile on Livestocx: '
+									title='Check out my online store on Animaff: '
 								>
 									<TwitterIcon size={25} round />
 								</TwitterShareButton>
@@ -220,7 +205,7 @@ const DashboardContent = ({}: DashboardContentProps) => {
 									onCopy={(text: string, result: boolean) => {
 										toast.success('Copied to clipboard');
 									}}
-									text={`https://animaff.com/sellers/${formatVendorSlug(
+									text={`https://animaff.com/store/${formatVendorSlug(
 										vendor!
 									)}`}
 								>

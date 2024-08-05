@@ -1,14 +1,14 @@
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
-	title: 'Animaff - Enterprise',
+	title: 'Animaff - Reset Password',
 	description: 'Best deals, Everything Animals',
 	keywords: ['Animaff', 'Livestock', 'United States', 'Pets', 'Animals', 'Meat'],
 	other: {
 		'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
 	},
 	openGraph: {
-		title: 'Animaff - Enterprise',
+		title: 'Animaff - Reset Password',
 		description: 'Best deals, Everything Animals',
 		url: 'https://animaff.com',
 		siteName: 'Animaff',
@@ -49,6 +49,7 @@ export const metadata: Metadata = {
 		site: '@animaff',
 		creator: '@animaff',
 		title: 'Animaff',
+
 		description: 'Best deals, Everything Animals',
 		images: [
 			{
@@ -82,6 +83,7 @@ export const metadata: Metadata = {
 		],
 	},
 };
-export default function EnterpriseLayout({children}: {children: React.ReactNode}) {
+
+export default function Layout({children}: {children: React.ReactNode}) {
 	return <>{children}</>;
 }

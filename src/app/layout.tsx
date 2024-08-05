@@ -26,9 +26,9 @@ export const metadata: Metadata = {
 	openGraph: {
 		images: [
 			{
-				url: 'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
+				url: 'https://animaff-media.s3.amazonaws.com/public/animaff-thumbnail-300x200.png',
 				secureUrl:
-					'https://livestocx-media.s3.amazonaws.com/public/livestocx-thumbnail-300x200.png',
+					'https://animaff-media.s3.amazonaws.com/public/animaff-thumbnail-300x200.png',
 				width: 300,
 				height: 200,
 			},

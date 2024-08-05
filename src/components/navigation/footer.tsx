@@ -33,7 +33,7 @@ const Footer = () => {
 						<p className='text-white text-xs'>+23432549273</p>
 						
 						<p className='text-white text-xs'>
-							livestocxltd@gmail.com
+							support@livestocx.com
 						</p>
 					</div>
 				</div>

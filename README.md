@@ -1,6 +1,6 @@
-# livestocx-marketplace
+# animaff-marketplace
 
-Web application for the Livestocx marketplace built with next.js
+Web application for the Animaff marketplace built with next.js
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

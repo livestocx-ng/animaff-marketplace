@@ -15,6 +15,9 @@ import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import DesiredItemsContent from './components/dashboard/desired-items-content';
 import PromotionsContent from './components/dashboard/promotions-content';
 import NotificationsContent from './components/dashboard/notifications-content';
+import MainNavbar from '@/components/navigation/main-nav-bar';
+import {Fragment} from 'react';
+import Footer from '@/components/navigation/footer';
 
 const AccountPage = () => {
 	const {currentAccountTab} = useGlobalStore();
@@ -24,44 +27,55 @@ const AccountPage = () => {
 	);
 
 	return (
-		<div className='w-full relative'>
-			{isProductMediaModalOpen && <ProductMediaModal />}
+		<Fragment>
+			<MainNavbar />
+			<div className='w-full relative'>
+				{isProductMediaModalOpen && <ProductMediaModal />}
 
-			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white'>
-					{currentAccountTab}
-				</h1>
-			</section>
+				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+					<h1 className='text-xl md:text-5xl font-medium text-white'>
+						{currentAccountTab}
+					</h1>
+				</section>
 
-			<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
-				<div className='flex w-full'>
-					<MobileAccountSideBar />
-				</div>
+				<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
+					<div className='flex w-full'>
+						<MobileAccountSideBar />
+					</div>
 
-				<div className='flex items-start justify-between w-full'>
-					<AccountSideBar />
+					<div className='flex items-start justify-between w-full'>
+						<AccountSideBar />
 
-					{currentAccountTab === 'Account' && <DashboardContent />}
+						{currentAccountTab === 'Account' && (
+							<DashboardContent />
+						)}
 
-					{currentAccountTab === 'Products' && <ProductsContent />}
+						{currentAccountTab === 'Products' && (
+							<ProductsContent />
+						)}
 
-					{currentAccountTab === 'Product' && <ProductContent />}
+						{currentAccountTab === 'Product' && <ProductContent />}
 
-
-					{/* {currentAccountTab === 'Promotions' && (
+						{/* {currentAccountTab === 'Promotions' && (
 						<PromotionsContent />
 					)} */}
 
-					{currentAccountTab === 'Messages' && <MessagesContent />}
+						{currentAccountTab === 'Messages' && (
+							<MessagesContent />
+						)}
 
-					{currentAccountTab === 'Notifications' && (
-						<NotificationsContent />
-					)}
+						{currentAccountTab === 'Notifications' && (
+							<NotificationsContent />
+						)}
 
-					{currentAccountTab === 'Settings' && <SettingsContent />}
+						{currentAccountTab === 'Settings' && (
+							<SettingsContent />
+						)}
+					</div>
 				</div>
 			</div>
-		</div>
+			<Footer />
+		</Fragment>
 	);
 };
 

@@ -17,10 +17,10 @@ export const NavLinks: NavLink[] = [
 		title: 'Enterprise',
 		url: '/enterprise',
 	},
-	{
-		title: 'Stores',
-		url: '/store',
-	},
+	// {
+	// 	title: 'Stores',
+	// 	url: '/store',
+	// },
 	{
 		title: 'About Us',
 		url: '/about-us',
@@ -235,6 +235,21 @@ export const FilterOptions: FilterOption[] = [
 		id: 14,
 		title: 'Cat',
 		value: 'CAT',
+	},
+	{
+		id: 15,
+		title: 'Horse',
+		value: 'HORSE',
+	},
+	{
+		id: 16,
+		title: 'Donkey',
+		value: 'DONKEY',
+	},
+	{
+		id: 17,
+		title: 'Duck',
+		value: 'DUCK',
 	},
 ];
 

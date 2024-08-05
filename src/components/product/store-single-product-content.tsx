@@ -1,6 +1,6 @@
 'use client';
 import {
-	TwitterIcon,
+    TwitterIcon,
 	WhatsappIcon,
 	FacebookIcon,
 	TwitterShareButton,
@@ -18,6 +18,7 @@ import {
 	FlagTriangleRight,
 	BarChart3,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
 import {
@@ -26,47 +27,33 @@ import {
 } from '@/hooks/use-global-store';
 import {Badge} from '../ui/badge';
 import {Button} from '../ui/button';
-import {
-	AlertDialog,
-	AlertDialogTitle,
-	AlertDialogCancel,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogContent,
-	AlertDialogTrigger,
-	AlertDialogDescription,
-} from '@/components/ui/alert-dialog';
 import {toast} from 'react-hot-toast';
-import {usePathname} from 'next/navigation';
-import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import React, {Dispatch, SetStateAction} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
-import Link from 'next/link';
-import {formatVendorSlug} from '@/utils/slug.formatter';
 
-interface SingleProductContentProps {
+interface StoreSingleProductContentProps {
 	currentTab: Tab;
 	loading: boolean;
 	product: Product;
 	productInfo: ProductInfo | null;
-	handleMessageSeller: () => void;
 	handleAddUserToCallSeller: () => void;
+	handleMessageSeller: () => void;
 	setCurrentTab: Dispatch<SetStateAction<Tab>>;
 	handleLikeUnlikeProduct: (formData: {value?: boolean}) => void;
 }
 
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 const CurrentTabs: Tab[] = ['Seller Info', 'Review'];
-// const CurrentTabs: Tab[] = ['Seller Info', 'Review', 'More From Seller'];
 
-const SingleProductContent = ({
+const StoreSingleProductContent = ({
 	loading,
 	product,
 	currentTab,
@@ -75,9 +62,7 @@ const SingleProductContent = ({
 	handleMessageSeller,
 	handleLikeUnlikeProduct,
 	handleAddUserToCallSeller,
-}: SingleProductContentProps) => {
-	const pathName = usePathname();
-
+}: StoreSingleProductContentProps) => {
 	const {user, products} = useGlobalStore();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
@@ -162,18 +147,6 @@ const SingleProductContent = ({
 					</div>
 
 					<div className='absolute flex items-center bottom-0 right-0'>
-						{/* {product?.likedUsers?.length! > 0 && (
-							<Button
-								type='button'
-								variant={'outline'}
-								className='bg-slate-800 border-0 text-white hover:bg-slate-800 hover:text-white text-xs py-2 flex items-center space-x-3 rounded-none'
-							>
-								{product?.likedUsers?.length!}{' '}
-								{product?.likedUsers?.length == 1
-									? 'Like'
-									: 'Likes'}
-							</Button>
-						)} */}
 						{user && (
 							<Button
 								type='button'
@@ -281,7 +254,7 @@ const SingleProductContent = ({
 							<Button
 								type='button'
 								variant={'outline'}
-								className='flex items-center space-x-3 border-red-500 text-red-500 hover:text-red-500 text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
+								className='flex items-center space-x-3 border-red-500 text-red-500 text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								<p>Report</p>{' '}
 								<FlagTriangleRight className='h-4 w-4 text-red-500' />
@@ -439,7 +412,7 @@ const SingleProductContent = ({
 							setCurrentTab(item);
 						}}
 						className={cn(
-							`py-4 text-center text-xs md:text-base w-1/3 rounded-t-lg cursor-pointer`,
+							`py-4 text-center text-xs md:text-base w-1/2 rounded-t-lg cursor-pointer`,
 							item === currentTab
 								? 'bg-gradient-to-b from-orange-500 to-orange-50'
 								: 'bg-white'
@@ -456,122 +429,25 @@ const SingleProductContent = ({
 				{currentTab === 'More From Seller' && <MoreFromSellerTab />}
 			</div>
 
-			<div className='flex flex-col space-y-5 w-full px-4 md:px-0'>
-				<div className='w-full bg-slate-200 text-centr py-4 pl-5 font-semibold'>
+			{/* <div className='flex flex-col space-y-5 w-full px-4 md:px-0'>
+				<div className='w-full bg-slate-200 py-4 pl-5 font-semibold'>
 					Related Products
 				</div>
 
 				<div className='flex flex-wrap items-center justify-between w-full gap-y-4 md:gap-6 mt-10'>
-					{/* <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 w-full'> */}
 					{products
 						?.filter((prd) => prd.id !== product?.id)
 						?.slice(0, 10)
 						.map((product) => (
-							<ProductCard key={product.id} product={product} />
-							// if (!pathName.includes('marketplace')) {
-							// 	return (
-							// 	);
-							// }
-							// if (pathName.includes('marketplace')) {
-							// 	return (
-							// 		<MarketPlaceProductCard
-							// 			key={product.id}
-							// 			product={product}
-							// 		/>
-							// 	);
-							// }
-							// if (pathName.includes('sellers')) {
-							// 	return (
-							// 		<SellerProductCard
-							// 			key={product.id}
-							// 			product={product}
-							// 		/>
-							// 	);
-							// }
+							<SellerProductCard
+								key={product.id}
+								product={product}
+							/>
 						))}
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };
 
-export default SingleProductContent;
-
-const ProductContactAlertDialog = ({
-	productInfo,
-}: {
-	productInfo: ProductInfo | null;
-}) => {
-	return (
-		<AlertDialog>
-			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded-full py-2'>
-				Show Contact
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>{productInfo?.name!}</AlertDialogTitle>
-					<AlertDialogDescription className='flex flex-col py-5 text-black'>
-						<div className='relative w-[150px] h-[150px] mx-auto border'>
-							<Image
-								fill
-								alt=''
-								unoptimized={true}
-								src={productInfo?.avatar!}
-								className='object-cover w-full h-full'
-							/>
-						</div>
-						<div className='grid grid-cols-2 gap-y-5 pt-2'>
-							<p className='font-medium text-sm'>Email</p>
-							<p>{productInfo?.email}</p>
-							<p className='font-medium text-sm'>
-								Contact number
-							</p>
-							<p>{productInfo?.phoneNumber}</p>
-						</div>
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Close</AlertDialogCancel>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
-	);
-};
-
-const ContactVendorAlertDialog = ({
-	productInfo,
-}: {
-	productInfo: ProductInfo | null;
-}) => {
-	return (
-		<AlertDialog>
-			<AlertDialogTrigger className='border border-main text-main text-xs h-10 w-[45%] rounded-full py-2'>
-				Chat With Seller
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>Vendor Contact</AlertDialogTitle>
-					<AlertDialogDescription className='flex flex-col items-center justify-center py-5 text-black'>
-						<Button
-							variant={'outline'}
-							onClick={() => {
-								const chatLink = `https://wa.me/+234${productInfo?.phoneNumber}`;
-
-								window.open(chatLink, '_blank');
-							}}
-							className='bg-main border-0 text-white hover:bg-main hover:text-white text-xs h-10 py-4 flex items-center space-x-3 rounded-full'
-						>
-							<Phone className='h-6 w-6' />{' '}
-							<p className='text-sm'>
-								{productInfo?.phoneNumber}
-							</p>
-						</Button>
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Close</AlertDialogCancel>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
-	);
-};
+export default StoreSingleProductContent;

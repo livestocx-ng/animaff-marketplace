@@ -67,7 +67,7 @@ const ShareProductModal = () => {
 						</h1>
 						<div className='flex space-x-2'>
 							<WhatsappShareButton
-								title={`Check out my ${payload.name} on livestocx: `}
+								title={`Check out my ${payload.name} on Animaff: `}
 								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
@@ -75,7 +75,7 @@ const ShareProductModal = () => {
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
-								title={`Check out my ${payload.name} on livestocx: `}
+								title={`Check out my ${payload.name} on Animaff: `}
 								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}
@@ -83,7 +83,7 @@ const ShareProductModal = () => {
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
-								title={`Check out my ${payload.name} on livestocx: `}
+								title={`Check out my ${payload.name} on Animaff: `}
 								url={`https://animaff.com/marketplace/products/${formatProductSlug(
 									payload!
 								)}`}

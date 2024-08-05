@@ -168,7 +168,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					url={`https://animaff.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
-					title={`Check out my ${row.original.name} on livestocx: `}
+					title={`Check out my ${row.original.name} on Animaff: `}
 				>
 					<WhatsappIcon size={25} round />
 				</WhatsappShareButton>
@@ -176,7 +176,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					url={`https://animaff.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
-					title={`Check out my ${row.original.name} on livestocx: `}
+					title={`Check out my ${row.original.name} on Animaff: `}
 				>
 					<FacebookIcon size={25} round />
 				</FacebookShareButton>
@@ -184,7 +184,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 					url={`https://animaff.com/marketplace/products/${formatProductSlug(
 						row.original
 					)}`}
-					title={`Check out my ${row.original.name} on livestocx: `}
+					title={`Check out my ${row.original.name} on Animaff: `}
 				>
 					<TwitterIcon size={25} round />
 				</TwitterShareButton>

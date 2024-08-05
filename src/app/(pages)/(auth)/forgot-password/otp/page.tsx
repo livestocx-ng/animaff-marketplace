@@ -3,10 +3,12 @@ import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
-import {useEffect, useRef, useState} from 'react';
+import {Fragment, useEffect, useRef, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import ButtonLoader from '@/components/loader/button-loader';
 import AuthHeader from '../../../../../components/header/auth-header';
+import MainNavbar from '@/components/navigation/main-nav-bar';
+import Footer from '@/components/navigation/footer';
 
 const numberOfInputs = 4;
 
@@ -90,71 +92,75 @@ const SignInPage = () => {
 	};
 
 	return (
-		<div className='w-full'>
-			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-				<h1 className='text-xl md:text-5xl font-medium text-white'>
-					Verify OTP
-				</h1>
-			</section>
+		<Fragment>
+			<MainNavbar />
+			<div className='w-full'>
+				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+					<h1 className='text-xl md:text-5xl font-medium text-white'>
+						Verify OTP
+					</h1>
+				</section>
 
-			<div className='flex flex-col justify-center items-center  py-20'>
-				<form
-					autoComplete='off'
-					onSubmit={handleSubmit}
-					className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded-lg shadow-md flex flex-col space-y-8'
-				>
-					<div className='space-y-3'>
-						<h1 className='text-center text-2xl font-semibold'>
-							Enter OTP
-						</h1>
-					</div>
-
-					<div className='space-y-4'>
-						<div className='flex justify-between items-center'>
-							{otp.map((digit, index) => (
-								<input
-									key={index}
-									name='number'
-									value={digit}
-									onChange={(e) => {
-										handleInputChange(e, index);
-									}}
-									onKeyDown={(e) => {
-										handleKeyDown(e, index);
-									}}
-									ref={(ref) => {
-										(inputRefs.current[index] = ref)
-									}}
-									className='h-10 py-8 md:py-10 px-4 w-[60px] md:w-[100px] text-center text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
-								/>
-							))}
+				<div className='flex flex-col justify-center items-center  py-20'>
+					<form
+						autoComplete='off'
+						onSubmit={handleSubmit}
+						className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded-lg shadow-md flex flex-col space-y-8'
+					>
+						<div className='space-y-3'>
+							<h1 className='text-center text-2xl font-semibold'>
+								Enter OTP
+							</h1>
 						</div>
 
-						<div className='flex justify-end'>
-							<p className='text-sm cursor-pointer'>
-								Resend Code?
-							</p>
-						</div>
+						<div className='space-y-4'>
+							<div className='flex justify-between items-center'>
+								{otp.map((digit, index) => (
+									<input
+										key={index}
+										name='number'
+										value={digit}
+										onChange={(e) => {
+											handleInputChange(e, index);
+										}}
+										onKeyDown={(e) => {
+											handleKeyDown(e, index);
+										}}
+										ref={(ref) => {
+											inputRefs.current[index] = ref;
+										}}
+										className='h-10 py-8 md:py-10 px-4 w-[60px] md:w-[100px] text-center text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+									/>
+								))}
+							</div>
 
-						{loading ? (
-							<Button
-								type='button'
-								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
-							>
-								<ButtonLoader />
-							</Button>
-						) : (
-							<Button
-								type='submit'
-								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
-							>
-								Submit
-							</Button>
-						)}
-					</div>
-				</form>
+							<div className='flex justify-end'>
+								<p className='text-sm cursor-pointer'>
+									Resend Code?
+								</p>
+							</div>
+
+							{loading ? (
+								<Button
+									type='button'
+									className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
+								>
+									<ButtonLoader />
+								</Button>
+							) : (
+								<Button
+									type='submit'
+									className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
+								>
+									Submit
+								</Button>
+							)}
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
+			<Footer />
+		</Fragment>
 	);
 };
 

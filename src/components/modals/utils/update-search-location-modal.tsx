@@ -208,7 +208,7 @@ const UpdateSearchLocationModal = () => {
 									updateSearchLocation('', location);
 
 									window.localStorage.setItem(
-										'livestocx_search_query',
+										'animaff_search_query',
 										JSON.stringify({
 											searchQueryState: location,
 											searchQueryCity: '',
@@ -253,7 +253,7 @@ const UpdateSearchLocationModal = () => {
 											);
 
 											window.localStorage.setItem(
-												'livestocx_search_query',
+												'animaff_search_query',
 												JSON.stringify({
 													searchQueryState:
 														formData.searchLocationState,
@@ -304,7 +304,7 @@ const UpdateSearchLocationModal = () => {
 											);
 
 											window.localStorage.setItem(
-												'livestocx_search_query',
+												'animaff_search_query',
 												JSON.stringify({
 													searchQueryState:
 														formData.searchLocationState,
@@ -355,7 +355,7 @@ const UpdateSearchLocationModal = () => {
 											);
 
 											window.localStorage.setItem(
-												'livestocx_search_query',
+												'animaff_search_query',
 												JSON.stringify({
 													searchQueryState:
 														formData.searchLocationState,

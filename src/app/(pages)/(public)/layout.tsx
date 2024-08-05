@@ -252,9 +252,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 			{/* {updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />} */}
 
-			<Navbar />
+			{/* <Navbar /> */}
 			{children}
-			<Footer />
+			{/* <Footer /> */}
 		</div>
 	);
 };

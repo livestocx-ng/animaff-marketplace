@@ -88,7 +88,7 @@ const SellerInfoSearchForm = () => {
 				</Button>
 			</div>
 
-			<div className='w-full sm:w-fit'>
+			{/* <div className='w-full sm:w-fit'>
 				<select
 					name='search'
 					className='w-full border py-3 rounded px-3 text-xs scrollbar__1'
@@ -115,7 +115,7 @@ const SellerInfoSearchForm = () => {
 						</option>
 					))}
 				</select>
-			</div>
+			</div> */}
 		</div>
 	);
 };
