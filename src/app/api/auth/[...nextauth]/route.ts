@@ -5,7 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import {COOKIE_MAX_AGE, COOKIE_NAME} from '@/lib/constants';
 
 const handler = NextAuth({
-	secret: process.env.NEXTAUTH_SECRET ?? '',
+	secret: process.env.NEXTAUTH_SECRET,
 	providers: [
 		GoogleProvider({
 			clientId: process.env.NEXTAUTH_GOOGLE_CLIENT_ID ?? '',
@@ -21,9 +21,6 @@ const handler = NextAuth({
 	callbacks: {
 		async signIn({account, profile}) {
 			if (account?.provider === 'google') {
-				// // console.log('[GOOGLE-SIGNIN-SUCCESS]');
-				// // console.log(`[USER] :: `, profile);
-
 				try {
 					const name = profile?.name
 						? profile?.name?.split(' ')
@@ -57,7 +54,7 @@ const handler = NextAuth({
 					// console.error('[GOOGLE-SIGIN-API-ERROR]', error);
 				}
 			}
-			return true; // Do different verification for other providers that don't have `email`
+			return true; 
 		},
 		async redirect({url, baseUrl}) {
 			return url || baseUrl;
