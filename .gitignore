@@ -139,3 +139,6 @@ package-lock.json
 
 dist.zip
 ./dist.zip
+
+.DS_Store
+./.DS_Store
