@@ -11,6 +11,7 @@ import {
 	MessageCircle,
 	MessagesSquare,
 	ZapIcon,
+	Store,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -23,17 +24,18 @@ import {
 } from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
+import {usePathname, useRouter} from 'next/navigation';
 import {signOut, useSession} from 'next-auth/react';
 
 const MainNavbar = () => {
 	const router = useRouter();
-	const session = useSession();
+	const pathName = usePathname();
 
 	const {
 		user,
 		updateUser,
+		vendorProfile,
 		chatConversations,
 		updateCurrentAccountTab,
 		updateChatConversations,
@@ -77,6 +79,33 @@ const MainNavbar = () => {
 			}
 		});
 	}, []);
+
+	const handleLogout = async () => {
+		try {
+			await axios.get(
+				'/api/auth/signout'
+			);
+
+			toast.success('Logged out!');
+
+			updateUser(null);
+			updateChatConversations([]);
+			setSetShowAccountMenu(false);
+
+			if (pathName.includes('account')) {
+				router.push('/');
+			}
+
+			// window.location.reload();
+		} catch (error) {
+			//  console.log(
+			// 	'[LOGOUT-ERROR] :: ',
+			// 	error
+			// );
+
+			toast.error('Error!');
+		}
+	}
 
 	return (
 		<div className='relative'>
@@ -149,11 +178,36 @@ const MainNavbar = () => {
 						</div>
 					)}
 
+					{userPremiumSubscription && user?.role === 'FARMER' && (
+						<Link
+							target='_blank'
+							href={`/store/${vendorProfile?.slug}`}
+							className={`h-8 w-8 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
+						>
+							<Store
+								className={`h-4 w-4 ${
+									scrolling
+										? 'text-main'
+										: 'text-white cursor-pointer'
+								}`}
+							/>
+						</Link>
+					)}
+
 					<div
-						// href={user ? '/account' : '/signin'}
 						onClick={() => {
 							if (!user) {
-								router.push(`${!user && '/signin'}`);
+								if (pathName.length > 1) {
+									router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+								} else {
+									router.push('/signin');
+								}
 							} else {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
@@ -321,30 +375,7 @@ const MainNavbar = () => {
 								</Link>
 								<p
 									// href={'#'}
-									onClick={async () => {
-										try {
-											await axios.get(
-												'/api/auth/signout'
-											);
-
-											toast.success('Logged out!');
-
-											updateUser(null);
-											updateChatConversations([]);
-											setSetShowAccountMenu(false);
-
-											router.push('/');
-
-											// window.location.reload();
-										} catch (error) {
-											//  console.log(
-											// 	'[LOGOUT-ERROR] :: ',
-											// 	error
-											// );
-
-											toast.error('Error!');
-										}
-									}}
+									onClick={handleLogout}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
 									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}
@@ -493,11 +524,36 @@ const MainNavbar = () => {
 						</div>
 					)}
 
+					{userPremiumSubscription && user?.role === 'FARMER' && (
+						<Link
+							target='_blank'
+							href={`/store/${vendorProfile?.slug}`}
+							className={`h-8 w-8 ${
+								scrolling ? 'bg-white' : 'bg-main'
+							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
+						>
+							<Store
+								className={`h-4 w-4 ${
+									scrolling
+										? 'text-main'
+										: 'text-white cursor-pointer'
+								}`}
+							/>
+						</Link>
+					)}
+
 					<div
-						// href={user ? '/account' : '/signin'}
 						onClick={() => {
 							if (!user) {
-								router.push(`${!user && '/signin'}`);
+								if (pathName.length > 1) {
+									router.push(
+										`/signin?redirect_to=${pathName.slice(
+											1
+										)}`
+									);
+								} else {
+									router.push('/signin');
+								}
 							} else {
 								setSetShowAccountMenu(!showAccountMenu);
 							}
@@ -647,31 +703,7 @@ const MainNavbar = () => {
 									<p className='text-xs'>Settings</p>
 								</Link>
 								<p
-									// href={'#'}
-									onClick={async () => {
-										try {
-											await axios.get(
-												'/api/auth/signout'
-											);
-
-											toast.success('Logged out!');
-
-											updateUser(null);
-											setSetShowAccountMenu(false);
-											updateUserPremiumSubscription(null);
-
-											router.push('/');
-
-											// window.location.reload();
-										} catch (error) {
-											//  console.log(
-											// 	'[LOGOUT-ERROR] :: ',
-											// 	error
-											// );
-
-											toast.error('Error!');
-										}
-									}}
+									onClick={handleLogout}
 									className={` ${
 										scrolling ? 'bg-white' : 'bg-mai'
 									} pt-10 rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in cursor-pointer`}

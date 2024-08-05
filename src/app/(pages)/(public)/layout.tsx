@@ -43,6 +43,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const transactionStatus = queryParams.get('transactionStatus');
 
 	const {
+		updateVendorProfile,
 		updatePromotionPlans,
 		updateChatConversations,
 		updateUserPromotionPlan,
@@ -105,10 +106,16 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			}
 
 			const [
+				vendorProfileRequest,
 				userPromotionPlanRequest,
 				userPremiumSubscriptionPlansRequest,
 				userProductUploadSubscriptionPlansRequest,
 			] = await Promise.all([
+				axios.get(`${process.env.NEXT_PUBLIC_API_URL}/vendor/profile`, {
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}),
 				axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plan`,
 					{
@@ -134,6 +141,8 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 					}
 				),
 			]);
+
+			updateVendorProfile(vendorProfileRequest.data.data);
 
 			updateUserPromotionPlan(userPromotionPlanRequest.data.data);
 

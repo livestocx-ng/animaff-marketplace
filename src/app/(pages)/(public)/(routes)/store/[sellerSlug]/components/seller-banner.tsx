@@ -14,7 +14,7 @@ const SellerBanner = () => {
 
 	const {
 		user,
-		vendorProfile,
+		vendor,
 		updateChatConversation,
 		updateCurrentAccountTab,
 		updateShowChatConversation,
@@ -26,18 +26,18 @@ const SellerBanner = () => {
 				<Image
 					fill
 					unoptimized={true}
-					src={vendorProfile?.avatar!}
-					alt={formatVendorSlug(vendorProfile!)}
+					src={vendor?.avatar!}
+					alt={formatVendorSlug(vendor!)}
 					className='h-full w-full object-cover border border-slate-300 shadow-lg shadow-slate-200 rounded-md'
 				/>
 			</div>
 
 			<div className='flex flex-col justify-be h-full sm:space-y-3 w-full sm:w-[85%] sm:px-10 mt-2 sm:mt-0'>
 				<h1 className='text-sm sm:text-xl font-semibold'>
-					{vendorProfile?.name}
+					{vendor?.name}
 				</h1>
 				<p className='text-xs sm:text-sm'>
-					{vendorProfile?.city} {vendorProfile?.state}
+					{vendor?.city} {vendor?.state}
 				</p>
 				<div className='hidden sm:flex flex-col sm:flex-row sm:space-x-5'>
 					<Button
@@ -52,12 +52,12 @@ const SellerBanner = () => {
 										)}`
 									);
 
-								if (user?.id === vendorProfile?.user) {
+								if (user?.id === vendor?.user) {
 									return;
 								}
 
 								const {data} = await axios.get(
-									`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendorProfile?.user}`,
+									`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
 									{
 										headers: {
 											Authorization: user?.accessToken,
@@ -103,7 +103,7 @@ const SellerBanner = () => {
 								);
 
 								const link = document.createElement('a');
-								link.href = `tel:${vendorProfile?.phoneNumber}`;
+								link.href = `tel:${vendor?.phoneNumber}`;
 								link.target = '_blank';
 
 								link.click();
@@ -130,12 +130,12 @@ const SellerBanner = () => {
 									`/signin?redirect_to=${pathName.slice(1)}`
 								);
 
-							if (user?.id === vendorProfile?.user) {
+							if (user?.id === vendor?.user) {
 								return;
 							}
 
 							const {data} = await axios.get(
-								`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendorProfile?.user}`,
+								`${process.env.NEXT_PUBLIC_API_URL}/chat/conversation?receiver=${vendor?.user}`,
 								{
 									headers: {
 										Authorization: user?.accessToken,
@@ -179,7 +179,7 @@ const SellerBanner = () => {
 							);
 
 							const link = document.createElement('a');
-							link.href = `tel:${vendorProfile?.phoneNumber}`;
+							link.href = `tel:${vendor?.phoneNumber}`;
 							link.target = '_blank';
 
 							link.click();
