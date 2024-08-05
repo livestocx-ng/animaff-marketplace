@@ -1,11 +1,5 @@
 #!/bin/bash
 
-echo "[REMOVING-.DS_STORE-FILE]"
-cd src
-rm .DS_Store
-cd ../
-echo "[REMOVED-.DS_STORE-FILE]"
-
 echo "[ENTER-COMMIT-MESSAGE]"
 read commit_message
 
