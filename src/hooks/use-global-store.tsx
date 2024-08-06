@@ -216,6 +216,12 @@ export const useVerifyPremiumSubscriptionPaymentModalStore = create<ActivateModa
 	onClose: () => set({isOpen: false}),
 }));
 
+export const usePremiumSubscriptionSuccessModalStore =	create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
 export const useCreateProductModalStore = create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),

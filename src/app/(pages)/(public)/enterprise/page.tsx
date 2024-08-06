@@ -1,21 +1,21 @@
 'use client';
+import axios from 'axios';
 import Image from 'next/image';
 import {
 	useGlobalStore,
 	usePremiumSubscriptionCheckoutModalStore,
 } from '@/hooks/use-global-store';
 import {toast} from 'react-hot-toast';
-import {Fragment, useEffect, useRef, useState} from 'react';
-import {CheckCircle} from 'lucide-react';
-import {useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components/ui/button';
+import {enterprisePlanComparisons} from '@/data';
+import Footer from '@/components/navigation/footer';
+import {DataTable} from '@/components/ui/data-table';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {subscriptionPlanDurationFormatter} from '@/utils';
-import {DataTable} from '@/components/ui/data-table';
-import {enterprisePlanComparisons} from '@/data';
-import {EnterprisePlansComparisonsColumns} from './components/pricing-columns';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {Fragment, useEffect, useRef, useState} from 'react';
 import MainNavbar from '@/components/navigation/main-nav-bar';
-import Footer from '@/components/navigation/footer';
+import {EnterprisePlansComparisonsColumns} from './components/pricing-columns';
 
 const EnterprisePage = () => {
 	const router = useRouter();
@@ -47,8 +47,24 @@ const EnterprisePage = () => {
 			subscriptionPlansRef.current!.scrollIntoView({
 				behavior: 'smooth',
 			});
+			subscriptionPlansRef.current!.scrollTo({
+				behavior: 'smooth',
+				top: -20,
+			});
 		}
 	}, [searchParams, subscriptionPlansRef]);
+
+	const handlePremiumSubscriptionInquiry = async () => {
+		axios.post(
+			`${process.env.NEXT_PUBLIC_API_URL}/vendor/premium-subscription-inquiry`,
+			{},
+			{
+				headers: {
+					Authorization: user?.accessToken,
+				},
+			}
+		);
+	};
 
 	return (
 		<Fragment>
@@ -76,6 +92,10 @@ const EnterprisePage = () => {
 											behavior: 'smooth',
 										}
 									);
+								}
+
+								if (user) {
+									handlePremiumSubscriptionInquiry();
 								}
 							}}
 							className='bg-sky-600 text-white hover:bg-sky-700 w-fit rounded-md py-8 px-4 md:px-8 mx-auto md:mx-0'
@@ -119,10 +139,7 @@ const EnterprisePage = () => {
 					</div>
 				</div>
 
-				<div
-					ref={subscriptionPlansRef}
-					className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'
-				>
+				<div className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'>
 					<h1 className='font-medium text-lg md:text-4xl text-center'>
 						Comparing Animaff to owning a regular website/store
 					</h1>
@@ -134,7 +151,10 @@ const EnterprisePage = () => {
 					/>
 				</div>
 
-				<div className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0'>
+				<div
+					ref={subscriptionPlansRef}
+					className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0'
+				>
 					{premiumSubscriptionPlans?.map((plan, index) => (
 						<div
 							key={plan.id}
@@ -203,6 +223,8 @@ const EnterprisePage = () => {
 											amount: plan.price,
 											buttonTitle: `Proceed to checkout`,
 										});
+
+										handlePremiumSubscriptionInquiry();
 									}}
 									className={`text-white h-10 w-fit rounded-full py-3 text-xs ${
 										plan.duration === 'ONE_MONTH'

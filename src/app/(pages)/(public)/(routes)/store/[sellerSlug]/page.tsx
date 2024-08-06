@@ -1,6 +1,5 @@
 'use client';
 import axios, {AxiosError} from 'axios';
-import Footer from '@/components/navigation/footer';
 import SellerBanner from './components/seller-banner';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import PageBanner from '@/components/banner/page-banner';
@@ -9,6 +8,7 @@ import MainNavbar from '@/components/navigation/main-nav-bar';
 import SellerInfoSearchForm from './components/seller-search-form';
 import SellerInfoProducts from './components/seller-info-products';
 import LoadingAnimationOne from '@/components/loader/loading-animation-one';
+import SellerFooter from './components/seller-footer';
 
 interface SellerProfilePageProps {
 	params: {
@@ -131,7 +131,7 @@ const SellerProfilePage = ({params}: SellerProfilePageProps) => {
 					</div>
 				)}
 			</main>
-			<Footer />
+			<SellerFooter />
 		</Fragment>
 	);
 };

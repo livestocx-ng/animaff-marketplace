@@ -1,5 +1,6 @@
 import {
 	useGlobalStore,
+	usePremiumSubscriptionSuccessModalStore,
 	useVerifyPremiumSubscriptionPaymentModalStore,
 } from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
@@ -20,8 +21,16 @@ const VerifyPremiumSubscriptionPaymentModal = ({
 }: VerifyPremiumSubscriptionPaymentModalProps) => {
 	const router = useRouter();
 
-	const {user, updateUser, updateUserPremiumSubscription} = useGlobalStore();
+	const {
+		user,
+		updateUser,
+		updateVendorProfile,
+		updateUserPremiumSubscription,
+	} = useGlobalStore();
+
 	const modal = useVerifyPremiumSubscriptionPaymentModalStore();
+	const premiumSubscriptionSuccessModal =
+		usePremiumSubscriptionSuccessModalStore();
 
 	const [isVerifyTransactionPending, setIsVerifyTransactionPending] =
 		useState<boolean>(false);
@@ -103,6 +112,7 @@ const VerifyPremiumSubscriptionPaymentModal = ({
 					);
 
 					updateUser(cookieUpdate.data);
+					updateVendorProfile(profileUpdateResponse.data.data);
 
 					setIsVerifyTransactionPending(false);
 
@@ -120,6 +130,7 @@ const VerifyPremiumSubscriptionPaymentModal = ({
 					);
 
 					modal.onClose();
+					premiumSubscriptionSuccessModal.onOpen();
 
 					return router.push('/enterprise');
 				}
@@ -138,7 +149,7 @@ const VerifyPremiumSubscriptionPaymentModal = ({
 
 			const _error = error as AxiosError;
 
-			// console.log('[CREATE-PREMIUM-SUBSCRIPTION-PAYMENT-ERROR]', _error);
+			console.log('[CREATE-PREMIUM-SUBSCRIPTION-PAYMENT-ERROR]', _error);
 
 			// toast.error('An error occurred.');
 		}

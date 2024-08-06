@@ -13,6 +13,7 @@ import {
 	usePremiumSubscriptionCheckoutModalStore,
 	useVerifyProductUploadSubscriptionPaymentModalStore,
 	useVerifyPremiumSubscriptionPaymentModalStore,
+	usePremiumSubscriptionSuccessModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
@@ -30,6 +31,7 @@ import UpdateSearchLocationModal from '@/components/modals/utils/update-search-l
 import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
 import VerifyPremiumSubscriptionPaymentModal from '@/components/modals/premium/verify-premium-subscription-payment-modal';
 import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-payment-modal';
+import PremiumSubscriptionSuccessModal from '@/components/modals/premium/premium-subscription-success-modal';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -61,6 +63,8 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
+	const premiumSubscriptionSuccessModal =
+		usePremiumSubscriptionSuccessModalStore();
 	const premiumSubscriptionCheckoutModal =
 		usePremiumSubscriptionCheckoutModalStore();
 	const verifyPremiumSubscriptionPaymentModal =
@@ -257,6 +261,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 					transactionRef={transactionRef!}
 					transactionStatus={transactionStatus!}
 				/>
+			)}
+			{premiumSubscriptionSuccessModal.isOpen && (
+				<PremiumSubscriptionSuccessModal />
 			)}
 
 			{/* {updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />} */}

@@ -6,16 +6,14 @@ import {
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {Fragment, useEffect, useState} from 'react';
-import Footer from '@/components/navigation/footer';
 import {usePathname, useRouter} from 'next/navigation';
+import SellerFooter from '../../components/seller-footer';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import MainNavbar from '@/components/navigation/main-nav-bar';
 import LoadingAnimationOne from '@/components/loader/loading-animation-one';
-import SingleProductContent from '@/components/product/single-product-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
-import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../../../../public/animations/animation__3.json';
 import StoreSingleProductContent from '@/components/product/store-single-product-content';
+import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
 	params: {
@@ -228,7 +226,7 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 					/>
 				)}
 			</main>
-			<Footer />
+			<SellerFooter />
 		</Fragment>
 	);
 };

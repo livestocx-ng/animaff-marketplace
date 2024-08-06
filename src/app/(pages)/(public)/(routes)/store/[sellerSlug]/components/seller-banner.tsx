@@ -37,7 +37,7 @@ const SellerBanner = () => {
 					{vendor?.name}
 				</h1>
 				<p className='text-xs sm:text-sm'>
-					{vendor?.city} {vendor?.state}
+					{vendor?.city}, {vendor?.state}
 				</p>
 				<div className='hidden sm:flex flex-col sm:flex-row sm:space-x-5'>
 					<Button

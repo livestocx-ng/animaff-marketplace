@@ -1,24 +1,27 @@
 'use client';
 import {
-	useGlobalStore,
-	usePremiumSubscriptionCheckoutModalStore,
-} from '@/hooks/use-global-store';
-import {toast} from 'react-hot-toast';
-import axios, {AxiosError} from 'axios';
-import {Button} from '@/components/ui/button';
-import {useEffect, useReducer, useState} from 'react';
-import {CircleDollarSign, Info, X} from 'lucide-react';
-import ButtonLoader from '@/components/loader/button-loader';
-import FormTextInput from '@/components/input/form-text-input';
-import {ValidatePremiumSubscriptionCheckoutFormData} from '@/utils/form-validations/auth.validation';
-import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import {Badge} from '@/components/ui/badge';
+import {
+	useGlobalStore,
+	usePremiumSubscriptionCheckoutModalStore,
+} from '@/hooks/use-global-store';
+import {toast} from 'react-hot-toast';
+import axios, {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
+import {Badge} from '@/components/ui/badge';
+import {Button} from '@/components/ui/button';
+import {
+	ValidatePremiumSubscriptionCheckoutStepOneFormData,
+	ValidatePremiumSubscriptionCheckoutStepTwoFormData,
+} from '@/utils/form-validations/auth.validation';
+import {useEffect, useReducer, useState} from 'react';
+import {CircleDollarSign, Info, X} from 'lucide-react';
+import ButtonLoader from '@/components/loader/button-loader';
+import FormTextInput from '@/components/input/form-text-input';
 
 type FormData = {
 	name: string;
@@ -27,6 +30,9 @@ type FormData = {
 	address: string;
 	slug: string;
 	zipPostalCode: string;
+	facebookUrl: string;
+	instagramUrl: string;
+	twitterUrl: string;
 };
 
 type FormAction = {
@@ -41,6 +47,9 @@ const initialState: FormData = {
 	address: '',
 	slug: '',
 	zipPostalCode: '',
+	facebookUrl: '',
+	instagramUrl: '',
+	twitterUrl: '',
 };
 
 const formReducer = (state: FormData, action: FormAction) => {
@@ -64,9 +73,18 @@ const PremiumSubscriptionCheckoutModal = () => {
 
 	const {onClose} = usePremiumSubscriptionCheckoutModalStore();
 
+	const [formStep, setFormStep] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [isValidateStepOneFormPending, setIsValidateStepOneFormPending] =
+		useState<boolean>(false);
 	const [vendorSlugExists, setVendorSlugExists] = useState<boolean>(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+	const [isFormDataValidated, setIsFormDataValidated] =
+		useState<boolean>(false);
+	const [
+		isCreatePremiumSubscriptionPending,
+		setCreatePremiumSubscriptionPending,
+	] = useState<boolean>(false);
 
 	const fetchVendorProfile = async () => {
 		try {
@@ -101,6 +119,9 @@ const PremiumSubscriptionCheckoutModal = () => {
 				slug: vendorProfile?.slug,
 				phoneNumber: vendorProfile?.phoneNumber,
 				zipPostalCode: vendorProfile?.zipPostalCode,
+				facebookUrl: vendorProfile?.facebookUrl,
+				instagramUrl: vendorProfile?.instagramUrl,
+				twitterUrl: vendorProfile?.twitterUrl,
 			},
 		});
 
@@ -114,15 +135,16 @@ const PremiumSubscriptionCheckoutModal = () => {
 		});
 	};
 
-	const handleSubmit = async () => {
+	const handleStepOneFormSubmit = async () => {
 		try {
-			setLoading(true);
+			setIsValidateStepOneFormPending(true);
 
 			const validationError =
-				ValidatePremiumSubscriptionCheckoutFormData(formData);
+				ValidatePremiumSubscriptionCheckoutStepOneFormData(formData);
 
 			if (validationError) {
-				setLoading(false);
+				setIsValidateStepOneFormPending(false);
+
 				return toast.error(validationError, {
 					duration: 10000,
 					className: 'text-sm',
@@ -139,13 +161,50 @@ const PremiumSubscriptionCheckoutModal = () => {
 			);
 
 			if (sellerSlugAvailability.data.data === true) {
-				setLoading(false);
-
 				return toast.error('Business domain handle already exists!', {
 					duration: 10000,
 					className: 'text-sm',
 				});
 			}
+
+			setFormStep(2);
+			setIsValidateStepOneFormPending(false);
+		} catch (error) {
+			setIsValidateStepOneFormPending(false);
+
+			const _error = error as AxiosError;
+
+			toast.error('An error occurred');
+		}
+	};
+
+	const handleStepTwoFormSubmit = async () => {
+		try {
+			const validationError =
+				ValidatePremiumSubscriptionCheckoutStepTwoFormData(formData);
+
+			if (validationError) {
+				setCreatePremiumSubscriptionPending(false);
+
+				return toast.error(validationError, {
+					duration: 10000,
+					className: 'text-sm',
+				});
+			}
+
+			setIsFormDataValidated(true);
+		} catch (error) {
+			setCreatePremiumSubscriptionPending(false);
+			const _error = error as AxiosError;
+
+			// console.log('[UPDATE-VENDOR-PROFILE-ERROR]', _error);
+		}
+	};
+
+	const handleSubmit = async () => {
+		try {
+			setLoading(true);
+			setCreatePremiumSubscriptionPending(true);
 
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/payments/initialize-premium-subscription-payment?plan=${premiumSubscriptionPlanId}`,
@@ -157,7 +216,7 @@ const PremiumSubscriptionCheckoutModal = () => {
 				}
 			);
 
-			localStorage.setItem(
+			await localStorage.setItem(
 				'animaff_premium_subscription_data',
 				JSON.stringify(formData)
 			);
@@ -165,8 +224,10 @@ const PremiumSubscriptionCheckoutModal = () => {
 			router.push(data.data.secureUrl);
 
 			setLoading(false);
+			setCreatePremiumSubscriptionPending(false);
 		} catch (error) {
 			setLoading(false);
+			setCreatePremiumSubscriptionPending(false);
 
 			const _error = error as AxiosError;
 
@@ -195,150 +256,310 @@ const PremiumSubscriptionCheckoutModal = () => {
 					</Button>
 				</div>
 
-				<div className='flex flex-col space-y-2 w-full py-3'>
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business Name{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							name='name'
-							disabled={loading}
-							padding='py-4 px-4'
-							placeHolder='Business Name'
-							value={formData.name}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
+				{formStep === 1 && (
+					<div className='flex flex-col space-y-2 w-full py-3'>
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business Name{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								name='name'
+								padding='py-4 px-4'
+								placeHolder='Business Name'
+								value={formData.name}
+								handleChange={handleChange}
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium flex items-center space-x-2'>
+								<p>Business Domain Handle</p>
+								<TooltipProvider>
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<Info size={14} />
+										</TooltipTrigger>
+										<TooltipContent className='w-[350px]'>
+											<p className='text-sm font-normal'>
+												This value will be used to
+												create your custom domain
+												handle. &nbsp;
+												<span className='font-medium'>
+													https://animaff.com/store/handle
+												</span>
+											</p>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
+								<p className='text-red-500'>*</p>
+							</p>
+							<FormTextInput
+								name='slug'
+								padding='py-4 px-4'
+								value={formData.slug}
+								handleChange={handleChange}
+								placeHolder='Enter store name to see how your handle will look'
+								disabled={
+									loading ||
+									vendorSlugExists ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-sm placeholder:text-xs border focus:border-slate-500 rounded'
+							/>
+
+							<Badge
+								variant={'secondary'}
+								className='text-sky-500 text-xs'
+							>
+								https://animaff.com/store/{formData.slug}
+							</Badge>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business Email{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								name='email'
+								padding='py-4 px-4'
+								placeHolder='Business Email'
+								value={formData.email}
+								handleChange={handleChange}
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Phone Number{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								type='text'
+								name='phoneNumber'
+								padding='py-3 px-4'
+								placeHolder='Phone Number'
+								value={formData.phoneNumber}
+								handleChange={handleChange}
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Business Address{' '}
+								<span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								type='text'
+								name='address'
+								padding='py-3 px-4'
+								placeHolder='Business Address'
+								value={formData.address}
+								handleChange={handleChange}
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
 					</div>
+				)}
 
-					<div className='w-full'>
-						<p className='text-sm font-medium flex items-center space-x-2'>
-							<p>Business Domain Handle</p>
-							<TooltipProvider>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<Info size={14} />
-									</TooltipTrigger>
-									<TooltipContent className='w-[350px]'>
-										<p className='text-sm font-normal'>
-											This value will be used to create
-											your custom domain handle. &nbsp;
-											<span className='font-medium'>
-												https://domain.com/store/handle
-											</span>
-										</p>
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
-							<p className='text-red-500'>*</p>
-						</p>
-						<FormTextInput
-							name='slug'
-							disabled={loading || vendorSlugExists}
-							padding='py-4 px-4'
-							value={formData.slug}
-							handleChange={handleChange}
-							placeHolder='Domain Handle'
-							classes='w-full text-sm placeholder:text-xs border focus:border-slate-500 rounded'
-						/>
+				{formStep === 2 && (
+					<div className='flex flex-col space-y-2 w-full py-3'>
+						<div className='w-full'>
+							<p className='text-sm font-medium'>
+								Zip Code <span className='text-red-500'>*</span>
+							</p>
+							<FormTextInput
+								type='text'
+								name='zipPostalCode'
+								padding='py-3 px-4'
+								handleChange={handleChange}
+								placeHolder='Zip/Postal Code'
+								value={formData.zipPostalCode}
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+						</div>
 
-						<Badge
-							variant={'secondary'}
-							className='text-sky-500 text-xs'
-						>
-							https://domain.com/store/{formData.slug}
-						</Badge>
+						<div className='w-full'>
+							<p className='text-xs md:text-sm font-medium flex items-center space-x-2'>
+								<p>Facebook Handle</p>
+							</p>
+							<FormTextInput
+								name='facebookUrl'
+								padding='py-4 px-4'
+								value={formData.facebookUrl}
+								handleChange={handleChange}
+								placeHolder='Enter facebook profile url'
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-xs md:text-sm placeholder:text-xs border focus:border-slate-500 rounded'
+							/>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-xs md:text-sm font-medium flex items-center space-x-2'>
+								<p>Twitter Handle</p>
+							</p>
+							<FormTextInput
+								name='twitterUrl'
+								padding='py-4 px-4'
+								value={formData.twitterUrl}
+								handleChange={handleChange}
+								placeHolder='Enter twitter profile url'
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-xs md:text-sm placeholder:text-xs border focus:border-slate-500 rounded'
+							/>
+						</div>
+
+						<div className='w-full'>
+							<p className='text-xs md:text-sm font-medium flex items-center space-x-2'>
+								<p>Instagram Handle</p>
+							</p>
+							<FormTextInput
+								name='instagramUrl'
+								padding='py-4 px-4'
+								value={formData.instagramUrl}
+								handleChange={handleChange}
+								placeHolder='Enter instagram profile url'
+								disabled={
+									loading ||
+									isCreatePremiumSubscriptionPending ||
+									isFormDataValidated
+								}
+								classes='w-full text-xs md:text-sm placeholder:text-xs border focus:border-slate-500 rounded'
+							/>
+						</div>
 					</div>
+				)}
 
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business Email{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							name='email'
-							disabled={loading}
-							padding='py-4 px-4'
-							placeHolder='Business Email'
-							value={formData.email}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
+				{formStep === 1 && (
+					<>
+						{isValidateStepOneFormPending ? (
+							<Button
+								type='button'
+								variant={'outline'}
+								className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							>
+								<ButtonLoader />
+							</Button>
+						) : (
+							<Button
+								type='button'
+								variant={'outline'}
+								onClick={handleStepOneFormSubmit}
+								className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							>
+								Next
+							</Button>
+						)}
+					</>
+				)}
+
+				{formStep === 2 && (
+					<div className='flex justify-end'>
+						{isCreatePremiumSubscriptionPending ? (
+							<Button
+								type='button'
+								variant={'outline'}
+								className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+							>
+								<ButtonLoader />
+							</Button>
+						) : (
+							<>
+								{!isFormDataValidated ? (
+									<div className='flex justify-between items-center w-full'>
+										<Button
+											type='button'
+											variant={'outline'}
+											onClick={() => {
+												setFormStep(1);
+
+												setIsFormDataValidated(false);
+												setCreatePremiumSubscriptionPending(
+													false
+												);
+											}}
+											className='w-fit bg-slate-500 hover:bg-slate-500 text-[10px] md:text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+										>
+											Back
+										</Button>
+										<Button
+											type='button'
+											variant={'outline'}
+											onClick={handleStepTwoFormSubmit}
+											className='w-fit bg-sky-600 hover:bg-sky-600 text-[10px] md:text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+										>
+											Submit
+										</Button>
+									</div>
+								) : (
+									<div className='flex justify-between items-center w-full'>
+										<Button
+											type='button'
+											variant={'outline'}
+											onClick={() => {
+												setFormStep(2);
+
+												setIsFormDataValidated(false);
+												setCreatePremiumSubscriptionPending(
+													false
+												);
+											}}
+											className='w-fit bg-slate-500 hover:bg-slate-500 text-[10px] md:text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+										>
+											Back
+										</Button>
+										<Button
+											type='button'
+											variant={'outline'}
+											onClick={handleSubmit}
+											className='w-fit bg-sky-600 hover:bg-sky-600 text-[10px] md:text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
+										>
+											Proceed to Payment
+										</Button>
+									</div>
+								)}
+							</>
+						)}
 					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Phone Number <span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							type='text'
-							name='phoneNumber'
-							padding='py-3 px-4'
-							disabled={loading}
-							placeHolder='Phone Number'
-							value={formData.phoneNumber}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Business Address{' '}
-							<span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							type='text'
-							name='address'
-							padding='py-3 px-4'
-							disabled={loading}
-							placeHolder='Business Address'
-							value={formData.address}
-							handleChange={handleChange}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
-
-					<div className='w-full'>
-						<p className='text-sm font-medium'>
-							Zip Code <span className='text-red-500'>*</span>
-						</p>
-						<FormTextInput
-							type='text'
-							name='zipPostalCode'
-							padding='py-3 px-4'
-							disabled={loading}
-							handleChange={handleChange}
-							placeHolder='Zip/Postal Code'
-							value={formData.zipPostalCode}
-							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-						/>
-					</div>
-				</div>
-
-				<div className='flex justify-end'>
-					{loading ? (
-						<Button
-							// disabled
-							type='button'
-							variant={'outline'}
-							className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0'
-						>
-							<ButtonLoader />
-						</Button>
-					) : (
-						<Button
-							type='button'
-							variant={'outline'}
-							onClick={handleSubmit}
-							className='w-full bg-sky-600 hover:bg-sky-600 text-xs h-12 text-white hover:text-white rounded py-3 px-8 border-0 flex items-center space-x-2'
-						>
-							<p>Proceed to Checkout</p>{' '}
-							<CircleDollarSign size={15} />
-						</Button>
-					)}
-				</div>
+				)}
 			</div>
 		</div>
 	);

@@ -32,6 +32,21 @@ interface SignupDto {
 	role: 'FARMER' | 'CUSTOMER';
 }
 
+interface PremiumSubscriptionCheckoutFormOneDto {
+	name: string;
+	slug: string;
+	email: string;
+	phoneNumber: string;
+	address: string;
+}
+
+interface PremiumSubscriptionCheckoutFormTwoDto {
+	zipPostalCode: string;
+	facebookUrl?: string;
+	instagramUrl?: string;
+	twitterUrl?: string;
+}
+
 const sellerSlugRegEX = new RegExp(/^[a-z]+$/);
 
 const zipPostalCodeRegEX = new RegExp(/^\d{5}$/);
@@ -44,6 +59,10 @@ const emailRegEX = new RegExp(/^\S+@\S+\.\S+$/);
 
 const passwordRegEX = new RegExp(
 	'(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^ws]).{8,60}$'
+);
+
+const socialMediaRegEX = new RegExp(
+	/^(https?:\/\/)?(www\.|web\.)?(facebook\.com\/.+|instagram\.com\/.+|twitter\.com\/.+)$/
 );
 
 export function ValidateSigninFormData(formData: SigninDto): string {
@@ -186,13 +205,21 @@ export function ValidateVendorProfileFormData(
 	return message;
 }
 
-export function ValidatePremiumSubscriptionCheckoutFormData(
-	formData: PremiumSubscriptionCheckoutDto
+export function ValidatePremiumSubscriptionCheckoutStepOneFormData(
+	formData: PremiumSubscriptionCheckoutFormOneDto
 ): string {
 	let message = '';
 
 	if (!formData.name) {
 		return (message = 'Business name is required.');
+	}
+
+	if (!formData.slug) {
+		return (message = 'Business domain handle is required.');
+	}
+	if (!sellerSlugRegEX.test(formData.slug)) {
+		return (message =
+			'Invalid domain handle, use lowercase characters without space.');
 	}
 
 	if (!formData.email) {
@@ -213,21 +240,35 @@ export function ValidatePremiumSubscriptionCheckoutFormData(
 		return (message = 'Business address is required.');
 	}
 
-	if (!formData.slug) {
-		return (message = 'Business domain handle is required.');
-	}
-	if (!sellerSlugRegEX.test(formData.slug)) {
-		return (message =
-			'Invalid domain handle, use lowercase characters without space.');
+	return message;
+}
+
+
+export function ValidatePremiumSubscriptionCheckoutStepTwoFormData(
+	formData: PremiumSubscriptionCheckoutFormTwoDto
+): string {
+	let message = '';
+
+	if (!formData.zipPostalCode) {
+		return (message = 'Zip/postal code is required.');
 	}
 
-	// if (!formData.state) {
-	// 	return (message = 'Business state is required.');
-	// }
+	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
+		return (message = 'Zip code must be at least 5 digits.');
+	}
 
-	// if (!formData.city) {
-	// 	return (message = 'Business city is required.');
-	// }
+	if (formData.facebookUrl && !socialMediaRegEX.test(formData.facebookUrl)) {
+		return (message = 'Invalid facebook url.');
+	}
+	if (
+		formData.instagramUrl &&
+		!socialMediaRegEX.test(formData.instagramUrl)
+	) {
+		return (message = 'Invalid instagram url.');
+	}
+	if (formData.twitterUrl && !socialMediaRegEX.test(formData.twitterUrl)) {
+		return (message = 'Invalid twitter url.');
+	}
 
 	return message;
 }

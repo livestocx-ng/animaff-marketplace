@@ -54,6 +54,9 @@ export interface Vendor {
 	email: string;
 	user: string;
 	slug: string;
+	facebookUrl: string,
+	twitterUrl: string,
+	instagramUrl: string,
 	phoneNumber: string;
 	zipPostalCode: string;
 	isAccountDisabled: boolean;
