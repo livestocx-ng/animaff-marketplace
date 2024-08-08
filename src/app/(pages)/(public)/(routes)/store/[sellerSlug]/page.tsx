@@ -1,6 +1,7 @@
 'use client';
 import axios, {AxiosError} from 'axios';
 import SellerBanner from './components/seller-banner';
+import SellerFooter from './components/seller-footer';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import PageBanner from '@/components/banner/page-banner';
 import React, {Fragment, useEffect, useState} from 'react';
@@ -8,7 +9,6 @@ import MainNavbar from '@/components/navigation/main-nav-bar';
 import SellerInfoSearchForm from './components/seller-search-form';
 import SellerInfoProducts from './components/seller-info-products';
 import LoadingAnimationOne from '@/components/loader/loading-animation-one';
-import SellerFooter from './components/seller-footer';
 
 interface SellerProfilePageProps {
 	params: {
@@ -27,6 +27,7 @@ const SellerProfilePage = ({params}: SellerProfilePageProps) => {
 
 	const [loading, setLoading] = useState<boolean>(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [isSellerProductsLoading, setIsSellerProductsLoading] = useState<boolean>(true);
 
 	const fetchSeller = async () => {
 		try {
@@ -49,7 +50,7 @@ const SellerProfilePage = ({params}: SellerProfilePageProps) => {
 
 	const fetchSellerProducts = async () => {
 		try {
-			setLoading(true);
+			setIsSellerProductsLoading(true);
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile/products?slug=${params.sellerSlug}&page=${currentPage}`
@@ -60,9 +61,9 @@ const SellerProfilePage = ({params}: SellerProfilePageProps) => {
 			updateSellerProducts(data.data.products);
 			updateSellerPagination(data.data.totalPages, data.data.hasNext);
 
-			setLoading(false);
+			setIsSellerProductsLoading(false);
 		} catch (error) {
-			setLoading(false);
+			setIsSellerProductsLoading(false);
 			const _error = error as AxiosError;
 
 			// console.log('[FETCH-SELLERS-ERROR] :: ', _error);
@@ -126,6 +127,7 @@ const SellerProfilePage = ({params}: SellerProfilePageProps) => {
 							<SellerInfoProducts
 								currentPage={currentPage}
 								updateCurrentPage={setCurrentPage}
+								isSellerProductsLoading={isSellerProductsLoading}
 							/>
 						</div>
 					</div>

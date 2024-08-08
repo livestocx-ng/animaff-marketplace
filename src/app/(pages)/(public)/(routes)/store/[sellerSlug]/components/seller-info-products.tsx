@@ -4,18 +4,20 @@ import {RotateCw} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {Dispatch, SetStateAction} from 'react';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import ProductCard from '@/components/cards/product-card';
 import SellerProductCard from '@/components/cards/seller-product-card';
+import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
 
 interface SellerInfoProductsProps {
 	currentPage: number;
+	isSellerProductsLoading: boolean;
 	updateCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
 const SellerInfoProducts = ({
 	currentPage,
 	updateCurrentPage,
+	isSellerProductsLoading,
 }: SellerInfoProductsProps) => {
 	const {sellerProducts, sellerTotalPages, sellerHasNextPage} =
 		useGlobalStore();
@@ -24,8 +26,18 @@ const SellerInfoProducts = ({
 
 	return (
 		<div className='flex flex-col w-full bg-white '>
-			{sellerProducts?.length === 0 && (
-				<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
+			{isSellerProductsLoading && sellerProducts?.length === 0 && (
+				<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 sm:pt-0 mt-4'>
+					{Array(16)
+						.fill(1)
+						.map((item, index) => (
+							<ProductCardSkeleton key={index} />
+						))}
+				</div>
+			)}
+
+			{!isSellerProductsLoading && sellerProducts?.length === 0 && (
+				<div className='w-full bg-white h-[60vh] flex flex-col items-center justify-center'>
 					<div className='h-[200px] w-1/2 mx-auto bg-white'>
 						<Lottie
 							loop={false}
