@@ -3,10 +3,11 @@ import {
 	Award,
 	Forward,
 	MapPin,
-	MessageCircle,
-	ThumbsDown,
 	ThumbsUp,
+	ThumbsDown,
+	MessageCircle,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
 	useGlobalStore,
@@ -15,12 +16,11 @@ import {
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {useInView} from 'react-intersection-observer';
-import {redirect, usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
-import {formatProductSlug, formatVendorSlug} from '@/utils/slug.formatter';
-import Link from 'next/link';
+import {formatProductSlug} from '@/utils/slug.formatter';
 
 interface ProductCardProps {
 	product: Product | null;
@@ -28,7 +28,6 @@ interface ProductCardProps {
 
 const ProductCard = ({product}: ProductCardProps) => {
 	const router = useRouter();
-	const pathName = usePathname();
 
 	const shareProductModal = useShareProductModalStore();
 	const {
@@ -267,7 +266,9 @@ const ProductCard = ({product}: ProductCardProps) => {
 
 					<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-1'>
 						<MapPin className='h-3 w-3 text-black' />
-						<p className='text-[8px]'>{product?.vendor?.city}, {product?.vendor?.state}</p>
+						<p className='text-[8px]'>
+							{product?.vendor?.city}, {product?.vendor?.state}
+						</p>
 					</div>
 				</div>
 			</div>

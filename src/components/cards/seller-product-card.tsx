@@ -7,6 +7,7 @@ import {
 	ThumbsDown,
 	ThumbsUp,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
 	useGlobalStore,
@@ -15,8 +16,8 @@ import {
 import {Product} from '@/types/types';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {useInView} from 'react-intersection-observer';
-import {usePathname, useRouter} from 'next/navigation';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import {formatProductSlug} from '@/utils/slug.formatter';
@@ -27,7 +28,6 @@ interface SellerProductCardProps {
 
 const SellerProductCard = ({product}: SellerProductCardProps) => {
 	const router = useRouter();
-	const pathName = usePathname();
 
 	const shareProductModal = useShareProductModalStore();
 	const {
@@ -133,13 +133,17 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 			ref={ref}
 			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 relative'
 		>
-			<div
-				onClick={() => {
-					return router.push(
-						`/store/${vendorProfile?.slug}/products/${formatProductSlug(product!)}`
-					);
-				}}
+			<Link
+				// onClick={() => {
+				// 	return router.push(
+				// 		`/store/${vendorProfile?.slug}/products/${formatProductSlug(product!)}`
+				// 	);
+				// }}
+				prefetch
 				className='h-[180px] relative cursor-pointer'
+				href={`/store/${
+					vendorProfile?.slug
+				}/products/${formatProductSlug(product!)}`}
 			>
 				<Image
 					fill
@@ -175,7 +179,7 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 						<p className='text-[8px] text-white'>Out Of Stock</p>
 					</div>
 				)}
-			</div>
+			</Link>
 
 			<div className='flex flex-col justify-between bg-orange-100 border border-t-0 border-slate-400 py-2 relative h-[160px] rounded-b-md'>
 				<div className='space-y-1'>
@@ -255,7 +259,9 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 
 					<div className='border-t border-slate-400 text-xs font-medium px-2 pt-1 flex items-center space-x-2'>
 						<MapPin className='h-3 w-3 text-black' />
-						<p className='text-[8px]'>{product?.vendor?.city}, {product?.vendor?.state}</p>
+						<p className='text-[8px]'>
+							{product?.vendor?.city}, {product?.vendor?.state}
+						</p>
 					</div>
 				</div>
 			</div>
