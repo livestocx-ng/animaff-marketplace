@@ -16,14 +16,14 @@ const PromotionBanner = () => {
 
 	const filterPremiumSubscriptionPlans = () => {
 		const plan = premiumSubscriptionPlans?.filter(
-			(plan) => plan.position === 3
+			(plan) => plan.position === 1
 		)[0];
 
 		if (plan) {
 			setPlan(plan);
 		}
 
-		console.log('[PLAN] :: ', plan);
+		// console.log('[PLAN] :: ', plan);
 	};
 
 	useEffect(() => {
