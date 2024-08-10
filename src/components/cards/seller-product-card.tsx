@@ -1,11 +1,11 @@
 'use client';
 import {
 	Award,
-	Forward,
 	MapPin,
-	MessageCircle,
-	ThumbsDown,
+	Forward,
 	ThumbsUp,
+	ThumbsDown,
+	MessageCircle,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -229,18 +229,18 @@ const SellerProductCard = ({product}: SellerProductCardProps) => {
 						</div>
 					</div>
 
-					<div className='text-xs sm:text-sm font-semibold px-2'>
+					<div className='text-xs sm:text-s font-semibold px-2'>
 						{product?.name.length! > 15
 							? `${product?.name.slice(0, 15)}...`
 							: product?.name}
 					</div>
 					{product?.isNegotiable && (
-						<div className='text-xs sm:text-sm text-main font-medium px-2'>
+						<div className='text-xs sm:text-s text-main font-medium px-2'>
 							{PriceFormatter(product?.discountPrice!)}
 						</div>
 					)}
 					<div
-						className={`text-xs sm:text-sm font-medium px-2 ${
+						className={`text-xs sm:text-s font-medium px-2 ${
 							product?.isNegotiable
 								? 'line-through text-slate-500'
 								: 'text-main'

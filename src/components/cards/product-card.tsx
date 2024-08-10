@@ -1,8 +1,8 @@
 'use client';
 import {
 	Award,
-	Forward,
 	MapPin,
+	Forward,
 	ThumbsUp,
 	ThumbsDown,
 	MessageCircle,
@@ -236,18 +236,18 @@ const ProductCard = ({product}: ProductCardProps) => {
 						</div>
 					</div>
 
-					<div className='text-xs sm:text-sm font-semibold px-2'>
+					<div className='text-xs sm:text-s font-semibold px-2'>
 						{product?.name.length! > 15
 							? `${product?.name.slice(0, 15)}...`
 							: product?.name}
 					</div>
 					{product?.isNegotiable && (
-						<div className='text-xs sm:text-sm text-main font-medium px-2'>
+						<div className='text-xs sm:text-s text-main font-medium px-2'>
 							{PriceFormatter(product?.discountPrice!)}
 						</div>
 					)}
 					<div
-						className={`text-xs sm:text-sm font-medium px-2 ${
+						className={`text-xs sm:text-s font-medium px-2 ${
 							product?.isNegotiable
 								? 'line-through text-slate-500'
 								: 'text-main'

@@ -36,6 +36,11 @@ export async function generateMetadata(
 	return {
 		title: data.data.name,
 		openGraph: {
+			title: data.data.name,
+			description: 'Best deals, Everything Animals',
+			url: 'https://animaff.com',
+			siteName: 'Animaff',
+			type: 'website',
 			images: [
 				{
 					url: ogImage200x200,
@@ -58,6 +63,11 @@ export async function generateMetadata(
 			],
 		},
 		twitter: {
+			card: 'summary',
+			site: '@animaff',
+			creator: '@livestocx',
+			title: data.data.name,
+			description: 'Best deals, Everything Animals',
 			images: [
 				{
 					url: ogImage200x200,

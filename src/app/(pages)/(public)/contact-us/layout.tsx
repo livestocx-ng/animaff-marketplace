@@ -55,8 +55,7 @@ export const metadata: Metadata = {
 		card: 'summary',
 		site: '@animaff',
 		creator: '@animaff',
-		title: 'Animaff',
-
+		title: 'Animaff - Contact Us',
 		description: 'Best deals, Everything Animals',
 		images: [
 			{

@@ -37,7 +37,17 @@ export async function generateMetadata(
 
 	return {
 		title: `Animaff - ${data.data.name}`,
+		description: data.data?.description,
+		keywords: ['Animaff', 'Livestock', 'United States', 'Animals', 'Meat'],
+		other: {
+			'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
+		},
 		openGraph: {
+			title: `Animaff - ${data.data.name}`,
+			description: data.data?.description,
+			url: 'https://animaff.com',
+			siteName: 'Animaff',
+			type: 'website',
 			images: [
 				{
 					url: ogImage200x200,
@@ -60,6 +70,11 @@ export async function generateMetadata(
 			],
 		},
 		twitter: {
+			card: 'summary',
+			site: '@animaff',
+			creator: '@livestocx',
+			title: `Animaff - ${data.data.name}`,
+			description: data.data?.description,
 			images: [
 				{
 					url: ogImage200x200,

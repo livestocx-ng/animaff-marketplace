@@ -1,11 +1,11 @@
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
-	title: 'Animaff - Best deals, Everything Animals',
+	title: 'Animaff - Marketplace',
 	description: 'Best deals, Everything Animals',
 	keywords: ['Animaff', 'United States', 'Pets', 'Animals', 'Meat'],
 	openGraph: {
-		title: 'Animaff - Enterprise',
+		title: 'Animaff - Marketplace',
 		description: 'Best deals, Everything Animals',
 		url: 'https://animaff.com',
 		siteName: 'Animaff',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 		card: 'summary',
 		site: '@animaff',
 		creator: '@animaff',
-		title: 'Animaff',
+		title: 'Animaff - Marketplace',
 		description: 'Best deals, Everything Animals',
 		images: [
 			{
