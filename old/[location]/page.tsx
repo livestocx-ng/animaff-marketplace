@@ -3,7 +3,7 @@ import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {Fragment, useEffect, useState} from 'react';
 import {useGlobalStore} from '@/hooks/use-global-store';
-import EmptyAnimation from '../../../../../../public/animations/animation__3.json';
+import EmptyAnimation from '../../public/animations/animation__3.json';
 import PromotionBanner from '@/components/banner/promotion-banner';
 import SearchForm from '@/components/home/search-form';
 import HomeProducts from '@/components/home/home-products';

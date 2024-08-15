@@ -3,26 +3,26 @@ import {useEffect} from 'react';
 import {
 	useGlobalStore,
 	useDownloadAppStore,
+	useReferralModalStore,
 	useShareProductModalStore,
 	useUpdateUserRoleModalStore,
 	useReadNotificationModalStore,
-	useUpdateVendorProfileModalStore,
-	useUpdateSearchLocationModalStore,
 	useUpgradeToPremiumAccessStore,
+	useUpdateVendorProfileModalStore,
 	useUpdateWelcomeFarmerModalStore,
-	usePremiumSubscriptionCheckoutModalStore,
-	useVerifyProductUploadSubscriptionPaymentModalStore,
-	useVerifyPremiumSubscriptionPaymentModalStore,
+	useUpdateSearchLocationModalStore,
 	usePremiumSubscriptionSuccessModalStore,
+	usePremiumSubscriptionCheckoutModalStore,
+	useVerifyPremiumSubscriptionPaymentModalStore,
+	useVerifyProductUploadSubscriptionPaymentModalStore,
 } from '@/hooks/use-global-store';
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {useSearchParams} from 'next/navigation';
-import Footer from '@/components/navigation/footer';
-import Navbar from '@/components/navigation/main-nav-bar';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
 import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
+import UserReferralModal from '@/components/modals/referrals/user-referral-modal';
 import NotificationModal from '@/components/modals/notifications/notification-modal';
 import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premium-modal';
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
@@ -55,6 +55,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		updateProductUploadSubscriptionPlans,
 	} = useGlobalStore();
 
+	const referralModal = useReferralModalStore();
 	const downloadAppModal = useDownloadAppStore();
 	const shareProductModal = useShareProductModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
@@ -63,20 +64,69 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
-	const premiumSubscriptionSuccessModal =
-		usePremiumSubscriptionSuccessModalStore();
-	const premiumSubscriptionCheckoutModal =
-		usePremiumSubscriptionCheckoutModalStore();
-	const verifyPremiumSubscriptionPaymentModal =
-		useVerifyPremiumSubscriptionPaymentModalStore();
-	const verifyProductUploadPaymentModal =
-		useVerifyProductUploadSubscriptionPaymentModalStore();
+	const premiumSubscriptionSuccessModal = usePremiumSubscriptionSuccessModalStore();
+	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
+	const verifyPremiumSubscriptionPaymentModal = useVerifyPremiumSubscriptionPaymentModalStore();
+	const verifyProductUploadPaymentModal = useVerifyProductUploadSubscriptionPaymentModalStore();
+
+	const initializeUserReferralModal = () => {
+		setTimeout(() => {
+			referralModal.onOpen();
+		}, 6500);
+		
+		setTimeout(() => {
+			referralModal.onOpen();
+		}, 300000 );
+	};
 
 	const initializeDownloadAppModal = () => {
 		setTimeout(() => {
 			downloadAppModal.onOpen();
 		}, 6500);
 	};
+
+	useEffect(() => {
+		initializeDownloadAppModal();
+	}, []);
+
+	useEffect(() => {
+		if (
+			user &&
+			user?.role === 'FARMER' &&
+			user?.isVendorProfileUpdated === false
+		) {
+			updateVendorProfileModal.onOpen();
+		}
+
+		if(user) {
+			initializeUserReferralModal();
+		}
+
+		fetchChatConversations();
+		fetchUserSubscriptions();
+		fetchSubscriptionPlans();
+	}, [user]);
+
+	useEffect(() => {
+		if (
+			paymentFor === 'product_upload' &&
+			transactionRef !== '' &&
+			transactionStatus !== ''
+		) {
+			if (verifyProductUploadPaymentModal.isOpen) return;
+
+			verifyProductUploadPaymentModal.onOpen();
+		}
+		if (
+			paymentFor === 'premium_subscription' &&
+			transactionRef !== '' &&
+			transactionStatus !== ''
+		) {
+			if (verifyPremiumSubscriptionPaymentModal.isOpen) return;
+
+			verifyPremiumSubscriptionPaymentModal.onOpen();
+		}
+	}, [paymentFor]);
 
 	const fetchChatConversations = async () => {
 		try {
@@ -198,48 +248,9 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		}
 	};
 
-	useEffect(() => {
-		initializeDownloadAppModal();
-	}, []);
-
-	useEffect(() => {
-		if (
-			user &&
-			user?.role === 'FARMER' &&
-			user?.isVendorProfileUpdated === false
-		) {
-			// router.push('/compliance');
-			updateVendorProfileModal.onOpen();
-		}
-
-		fetchChatConversations();
-		fetchUserSubscriptions();
-		fetchSubscriptionPlans();
-	}, [user]);
-
-	useEffect(() => {
-		if (
-			paymentFor === 'product_upload' &&
-			transactionRef !== '' &&
-			transactionStatus !== ''
-		) {
-			if (verifyProductUploadPaymentModal.isOpen) return;
-
-			verifyProductUploadPaymentModal.onOpen();
-		}
-		if (
-			paymentFor === 'premium_subscription' &&
-			transactionRef !== '' &&
-			transactionStatus !== ''
-		) {
-			if (verifyPremiumSubscriptionPaymentModal.isOpen) return;
-
-			verifyPremiumSubscriptionPaymentModal.onOpen();
-		}
-	}, [paymentFor]);
-
 	return (
 		<div className='relative'>
+			{referralModal.isOpen && <UserReferralModal />}
 			{shareProductModal.isOpen && <ShareProductModal />}
 			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
 			{/* {downloadAppModal.isOpen && <DownloadMobileAppModal />} */}
@@ -268,9 +279,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 			{/* {updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />} */}
 
-			{/* <Navbar /> */}
 			{children}
-			{/* <Footer /> */}
 		</div>
 	);
 };

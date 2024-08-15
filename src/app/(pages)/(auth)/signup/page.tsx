@@ -9,7 +9,6 @@ import {
 	useUpdateWelcomeFarmerModalStore,
 } from '@/hooks/use-global-store';
 import {Button} from '@/components/ui/button';
-import {RegionCities, RegionStates} from '@/data';
 import {Separator} from '@/components/ui/separator';
 import Footer from '@/components/navigation/footer';
 import {useRouter, useSearchParams} from 'next/navigation';
@@ -30,9 +29,8 @@ type FormData = {
 	businessSlug: string;
 	businessName: string;
 	businessAddress: string;
-	businessState: string;
-	businessCity: string;
 	location: string;
+	referralCode: string;
 	zipPostalCode: string;
 	country: string;
 	countryCode: string;
@@ -54,9 +52,8 @@ const initialState: FormData = {
 	businessSlug: '',
 	businessName: '',
 	businessAddress: '',
-	businessState: 'Alabama',
-	businessCity: '',
 	location: '',
+	referralCode: '',
 	role: 'CUSTOMER',
 	zipPostalCode: '',
 	country: 'United States',
@@ -91,24 +88,24 @@ const SignUpPage = () => {
 	}, [user]);
 
 	useEffect(() => {
-		if (searchParams.get('seller')) {
+		if (searchParams.has('seller')) {
 			updateFormData({
 				type: 'UPDATE_FORMDATA',
 				payload: {role: 'FARMER'},
 			});
 		}
-	}, [searchParams.get('seller')]);
+	}, [searchParams.has('seller')]);
+
+	useEffect(() => {
+		if (searchParams.has('referralCode')) {
+			updateFormData({
+				type: 'UPDATE_FORMDATA',
+				payload: {referralCode: searchParams.get('referralCode')!},
+			});
+		}
+	}, [searchParams.has('referralCode')]);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		updateFormData({
-			type: 'UPDATE_FORMDATA',
-			payload: {[event.target.name]: event.target.value},
-		});
-	};
-
-	const handleSelectChange = (
-		event: React.ChangeEvent<HTMLSelectElement>
-	) => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
 			payload: {[event.target.name]: event.target.value},
@@ -167,7 +164,7 @@ const SignUpPage = () => {
 
 			// console.error('[SIGNUP-ERROR]', error);
 
-			toast.error('An error occurred');
+			toast.error('An error occurred', {className: 'text-sm'});
 		}
 	};
 
@@ -234,14 +231,7 @@ const SignUpPage = () => {
 										placeHolder='Business Name'
 										classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 									/>
-									{/* <FormTextInput
-									name='businessSlug'
-									padding='py-4 px-4'
-									value={formData.businessSlug}
-									handleChange={handleChange}
-									placeHolder='Business Domain Handle (https://animaff.com/sellers/slug)'
-									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-								/> */}
+
 									<FormTextInput
 										name='businessAddress'
 										padding='py-4 px-4'
@@ -250,58 +240,8 @@ const SignUpPage = () => {
 										placeHolder='Business Address'
 										classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 									/>
-
-									{/* <div className='w-full'>
-									<select
-										name='businessState'
-										className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-										onChange={handleSelectChange}
-									>
-										<option value=''>Business State</option>
-										{RegionStates.map((option) => (
-											<option
-												key={option}
-												value={option}
-												className='cursor-pointer'
-											>
-												{option}
-											</option>
-										))}
-									</select>
-								</div>
-
-								<FormTextInput
-									name='businessCity'
-									type='text'
-									padding='py-4 px-4'
-									value={formData.businessCity}
-									handleChange={handleChange}
-									placeHolder='Los Angeles'
-									classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
-								/> */}
 								</>
 							)}
-
-							{/* {formData.role === 'CUSTOMER' && (
-							<div>
-								<select
-									name='location'
-									className='w-full border py-4 rounded px-3 text-sm scrollbar__1'
-									onChange={handleSelectChange}
-								>
-									<option value=''>State</option>
-									{RegionStates.map((option) => (
-										<option
-											key={option}
-											value={option}
-											className='cursor-pointer'
-										>
-											{option}
-										</option>
-									))}
-								</select>
-							</div>
-						)} */}
 
 							<FormTextInput
 								name='zipPostalCode'
@@ -327,6 +267,15 @@ const SignUpPage = () => {
 								value={formData.confirmPassword}
 								handleChange={handleChange}
 								placeHolder='Confirm Password'
+								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
+							/>
+
+							<FormTextInput
+								name='referralCode'
+								padding='py-4 px-4'
+								value={formData.referralCode}
+								handleChange={handleChange}
+								placeHolder='Referral Code (Optional)'
 								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded'
 							/>
 

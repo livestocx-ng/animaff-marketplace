@@ -3,6 +3,7 @@ import {
 	Bell,
 	User2,
 	Mails,
+	Store,
 	Package,
 	Settings,
 	Megaphone,
@@ -10,8 +11,7 @@ import {
 	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
-	ZapIcon,
-	Store,
+	Users,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -19,14 +19,13 @@ import Image from 'next/image';
 import {NavLinks} from '@/data';
 import {
 	useGlobalStore,
+	useReferralModalStore,
 	useUpdateUserRoleModalStore,
-	useUpgradeToPremiumAccessStore,
 } from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
 import {usePathname, useRouter} from 'next/navigation';
-import {signOut, useSession} from 'next-auth/react';
 
 const MainNavbar = () => {
 	const router = useRouter();
@@ -43,8 +42,8 @@ const MainNavbar = () => {
 		updateUserPremiumSubscription,
 	} = useGlobalStore();
 
+	const referralModal = useReferralModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
-	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 
 	const [scrolling, setScrolling] = useState<boolean>(false);
 	const [showMenu, setSetShowMenu] = useState<boolean>(false);
@@ -72,13 +71,19 @@ const MainNavbar = () => {
 
 			if (scrollPosition > 50) {
 				setScrolling(true);
-				// // console.log('[SCROLLING]');
+				// console.log('[SCROLLING]');
 			} else {
 				setScrolling(false);
-				// // console.log('[FALSE]');
+				// console.log('[FALSE]');
 			}
 		});
 	}, []);
+
+	const handleReferralModal = () => {
+		if (referralModal.isOpen) return;
+
+		referralModal.onOpen();
+	};
 
 	const handleLogout = async () => {
 		try {
@@ -91,19 +96,13 @@ const MainNavbar = () => {
 			updateUser(null);
 			updateChatConversations([]);
 			setSetShowAccountMenu(false);
+			updateUserPremiumSubscription(null);
 
 			if (pathName.includes('account')) {
 				router.push('/');
 			}
-
-			// window.location.reload();
 		} catch (error) {
-			//  console.log(
-			// 	'[LOGOUT-ERROR] :: ',
-			// 	error
-			// );
-
-			toast.error('Error!');
+			toast.error('Error!', { className: 'text-sm' });
 		}
 	}
 
@@ -246,6 +245,16 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
+								<div
+									onClick={handleReferralModal}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Users className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Referrals</p>
+								</div>
 								<Link
 									href={'/account'}
 									onClick={() => {
@@ -592,6 +601,16 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Account</p>
 								</Link>
+								<div
+									onClick={handleReferralModal}
+									className={` ${
+										scrolling ? 'bg-white' : 'bg-mai'
+									} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
+								>
+									<Users className={`h-5 w-5 text-main`} />
+
+									<p className='text-xs'>Referrals</p>
+								</div>
 								{user?.role === 'CUSTOMER' && (
 									<Link
 										href={'/account'}

@@ -54,6 +54,8 @@ interface GlobalStore {
 	sellerProducts: Product[];
 	totalPages: number;
 	hasNextPage: boolean;
+	searchTotalPages: number;
+	searchHasNextPage: boolean;
 	sellerTotalPages: number;
 	sellerHasNextPage: boolean;
 	currentAccountTab: Tab | 'Account' | null;
@@ -113,6 +115,7 @@ interface GlobalStore {
 	updateProductInfo: (value: ProductInfo) => void;
 	updateProduct: (productId: string, product: Product) => void;
 	updatePagination: (totalPages: number, hasNextPage: boolean) => void;
+	updateSearchPagination: (totalPages: number, hasNextPage: boolean) => void;
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => void;
 }
 
@@ -235,6 +238,12 @@ export const useDownloadAppStore = create<ActivateModal>((set) => ({
 }));
 
 export const useUpgradeToPremiumAccessStore = create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
+export const useReferralModalStore =	create<ActivateModal>((set) => ({
 	isOpen: false,
 	onOpen: () => set({isOpen: true}),
 	onClose: () => set({isOpen: false}),
@@ -393,6 +402,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	products: [],
 	sellerProducts: [],
 	totalPages: 0,
+	searchTotalPages: 0,
+	searchHasNextPage: false,
 	sellerTotalPages: 0,
 	sellerHasNextPage: false,
 	product: null,
@@ -483,6 +494,7 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 		});
 	},
 	updatePagination: (totalPages: number, hasNextPage: boolean) => set({totalPages: totalPages, hasNextPage: hasNextPage}),
+	updateSearchPagination: (totalPages: number, hasNextPage: boolean) => set({searchTotalPages: totalPages, searchHasNextPage: hasNextPage}),
 	updateSellerPagination: (totalPages: number, hasNextPage: boolean) => set({sellerTotalPages: totalPages, sellerHasNextPage: hasNextPage}),
 	updateProducts: (products: Product[]) => set({products: products}),
 	updateSearchProducts: (products: Product[]) => set({searchProducts: products}),

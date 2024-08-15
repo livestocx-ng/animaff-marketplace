@@ -10,10 +10,6 @@ interface VendorProfileDto {
 	phoneNumber: string;
 }
 
-interface PremiumSubscriptionCheckoutDto extends VendorProfileDto {
-	slug: string;
-}
-
 interface SignupDto {
 	firstName: string;
 	lastName: string;
@@ -23,12 +19,11 @@ interface SignupDto {
 	businessName: string;
 	businessSlug: string;
 	businessAddress: string;
-	businessState: string;
-	businessCity: string;
 	phoneNumber: string;
 	zipPostalCode: string;
 	acceptedTerms: boolean;
 	confirmPassword: string;
+	referralCode?: string;
 	role: 'FARMER' | 'CUSTOMER';
 }
 
@@ -127,29 +122,17 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 		return (message = 'Zip code must be at least 5 digits.');
 	}
 
-	// if (formData.role === 'CUSTOMER' && !formData.location) {
-	// 	return (message = 'Location is required.');
-	// }
+	if (formData.referralCode && (formData.referralCode.length > 8 || formData.referralCode.length < 7)) {
+		return (message = 'Referral code must be at least 8 characters');
+	}
 
 	if (formData.role === 'FARMER' && !formData.businessName) {
 		return (message = 'Business name is required.');
 	}
-	// if (!formData.businessSlug) {
-	// 	return (message = 'Business slug is required.');
-	// }
-	// if (!sellerSlugRegEX.test(formData.businessSlug)) {
-	// 	return (message =
-	// 		'Invalid business slug, use lowercase characters without space.');
-	// }
+	
 	if (formData.role === 'FARMER' && !formData.businessAddress) {
 		return (message = 'Business address is required.');
 	}
-	// if (formData.role === 'FARMER' && !formData.businessState) {
-	// 	return (message = 'Business state is required.');
-	// }
-	// if (formData.role === 'FARMER' && !formData.businessCity) {
-	// 	return (message = 'Business city is required.');
-	// }
 
 	if (formData.acceptedTerms === false) {
 		return (message =

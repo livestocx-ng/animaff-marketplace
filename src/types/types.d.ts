@@ -26,6 +26,7 @@ export interface User {
 	isVendorProfileUpdated: boolean;
 	accessToken: string;
 	refreshToken: string;
+	referralCode: string;
 	productUploadLimit: number;
 	isMonthlyProductUploadSubscriptionActive: boolean;
 }
