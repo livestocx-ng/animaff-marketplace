@@ -46,7 +46,7 @@ const UserReferralModal = () => {
 
 					<div className='flex justify-center'>
 						<CopyToClipboard
-							text={`https://animaff.com/signup?referralCode=${user?.referralCode}`}
+							text={`Hey, I use Animaff to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products.\nhttps://animaff.com/signup?referralCode=${user?.referralCode}`}
 							onCopy={(text: string, result: boolean) => {
 								toast.success(
 									'Referral code copied to clipboard',
@@ -88,7 +88,7 @@ const UserReferralModal = () => {
 						</TwitterShareButton>
 
 						<CopyToClipboard
-							text={`https://animaff.com/signup?referralCode=${user?.referralCode}`}
+							text={`Hey, I use Animaff to buy and sell my livestock and pets faster. Use my link or my code "${user?.referralCode}" to join and get easy promotions and sales of your products.\nhttps://animaff.com/signup?referralCode=${user?.referralCode}`}
 							onCopy={(text: string, result: boolean) => {
 								toast.success(
 									'Referral link copied to clipboard',
