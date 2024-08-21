@@ -70,13 +70,15 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const verifyProductUploadPaymentModal = useVerifyProductUploadSubscriptionPaymentModalStore();
 
 	const initializeUserReferralModal = () => {
-		setTimeout(() => {
-			referralModal.onOpen();
-		}, 6500);
+		// setTimeout(() => {
+		// 	referralModal.onOpen();
+		// }, 6500);
 		
-		setTimeout(() => {
-			referralModal.onOpen();
-		}, 300000 );
+		setInterval(() => {
+			if(!referralModal.isOpen){
+				referralModal.onOpen();
+			}
+		}, 150000);
 	};
 
 	const initializeDownloadAppModal = () => {

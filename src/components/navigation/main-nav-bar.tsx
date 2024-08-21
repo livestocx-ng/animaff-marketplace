@@ -87,11 +87,9 @@ const MainNavbar = () => {
 
 	const handleLogout = async () => {
 		try {
-			await axios.get(
-				'/api/auth/signout'
-			);
+			await axios.get('/api/auth/signout');
 
-			toast.success('Logged out!');
+			toast.success('Logged out!', {className: 'text-xs sm:text-sm'});
 
 			updateUser(null);
 			updateChatConversations([]);
@@ -102,9 +100,9 @@ const MainNavbar = () => {
 				router.push('/');
 			}
 		} catch (error) {
-			toast.error('Error!', { className: 'text-sm' });
+			toast.error('Error!', {className: 'text-xs sm:text-sm'});
 		}
-	}
+	};
 
 	return (
 		<div className='relative'>
@@ -182,7 +180,9 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+								scrolling
+									? 'bg-white'
+									: 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -212,7 +212,9 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+							scrolling
+								? 'bg-white'
+								: 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
@@ -538,7 +540,9 @@ const MainNavbar = () => {
 							target='_blank'
 							href={`/store/${vendorProfile?.slug}`}
 							className={`h-8 w-8 ${
-								scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+								scrolling
+									? 'bg-white'
+									: 'bg-main shadow-sm shadow-slate-400'
 							} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 						>
 							<Store
@@ -568,7 +572,9 @@ const MainNavbar = () => {
 							}
 						}}
 						className={`h-8 w-8 ${
-							scrolling ? 'bg-white' : 'bg-main shadow-sm shadow-slate-400'
+							scrolling
+								? 'bg-white'
+								: 'bg-main shadow-sm shadow-slate-400'
 						} rounded-full flex flex-col items-center justify-center relative cursor-pointer`}
 					>
 						<User2
