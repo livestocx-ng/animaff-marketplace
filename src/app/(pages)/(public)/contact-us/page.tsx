@@ -127,7 +127,21 @@ const ContactUsPage = () => {
 					</h1>
 				</section>
 
-				<div className='w-full py-5 text-center'>
+				<div className='w-full py-5 text-center space-y-3'>
+					<Link
+						target='_blank'
+						href={
+							'https://calendly.com/williamskevwe/meet-with-the-animaff-team'
+						}
+					>
+						<Button
+							type='button'
+							className='bg-main text-white h-12 hover:bg-main rounded-xl py-4 w-fit'
+						>
+							Book a call with us
+						</Button>
+					</Link>
+
 					<h1 className='text-xl md:text-2xl font-semibold text-mai'>
 						Send us a message!
 					</h1>

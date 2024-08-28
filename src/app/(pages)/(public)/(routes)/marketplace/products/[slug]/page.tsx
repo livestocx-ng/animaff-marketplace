@@ -4,6 +4,7 @@ import {
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
 import Lottie from 'lottie-react';
+import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {Fragment, useEffect, useState} from 'react';
 import Footer from '@/components/navigation/footer';
@@ -123,6 +124,16 @@ const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
 		try {
 			if (!user)
 				return router.push(`/signin?redirect_to=${pathName.slice(1)}`);
+
+			if (!product?.vendor?.phoneNumber) {
+				return toast.error(
+					'Sorry, the seller for this product does not have a contact phone number',
+					{
+						duration: 8500,
+						className: 'text-xs sm:text-sm',
+					}
+				);
+			}
 
 			axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
