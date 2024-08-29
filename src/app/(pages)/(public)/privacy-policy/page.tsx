@@ -19,10 +19,10 @@ const PrivacyPolicyPage = () => {
 					</h1>
 
 					<p className='text-sm leading-7'>
-						This Privacy Policy (“Policy”) outlines how Livestock
+						This Privacy Policy (“Policy”) outlines how Animaff
 						Agritech Solutions LTD (“we,” “us,” or “our”) collects,
 						uses, discloses, and protects personal data in
-						accordance with the provisions of The Nigeria Data
+						accordance with the provisions of The USA Data
 						Protection Act 2023 (“Act”). This Policy describes the
 						type of data we may collect from you (“you”, “user”,
 						“your”) on animaff.com (“Website”). Please read this
@@ -40,13 +40,13 @@ const PrivacyPolicyPage = () => {
 							person (“data subject”) as defined in the Act.
 						</li>
 						<li className='text-sm leading-7'>
-							1.2. “Data controller” refers to Livestocx Agritech
+							1.2. “Data controller” refers to Animaff Agritech
 							Solutions LTD, the entity that determines the
 							purposes and means of processing personal data.
 						</li>
 						<li className='text-sm leading-7'>
 							1.3. “Data processor” refers to any entity that
-							processes personal data on behalf of Livestocx
+							processes personal data on behalf of Animaff
 							Agritech Solutions LTD.
 						</li>
 						<li className='text-sm leading-7'>
@@ -127,7 +127,7 @@ const PrivacyPolicyPage = () => {
 							<li className='text-sm leading-7'>
 								3.1.3. Legal obligation: When processing is
 								necessary for compliance with a legal obligation
-								to which Livestocx Agritech Solutions LTD is
+								to which Animaff Agritech Solutions LTD is
 								subject.
 							</li>
 							<li className='text-sm leading-7'>
@@ -139,13 +139,13 @@ const PrivacyPolicyPage = () => {
 								3.1.5. Public interest: When processing is
 								necessary for the performance of a task carried
 								out in the public interest or in the exercise of
-								official authority vested in Livestock Agritech
+								official authority vested in Animaff Agritech
 								Solutions LTD or a third party to whom the data
 								is disclosed.
 							</li>
 							<li className='text-sm leading-7'>
 								3.1.6. Legitimate interests: When processing is
-								necessary for Livestocx Agritech Solutions LTD’s
+								necessary for Animaff Agritech Solutions LTD’s
 								legitimate interests or the legitimate interests
 								of a third party, except where such interests
 								are overridden by the rights and freedoms of the
@@ -172,7 +172,7 @@ const PrivacyPolicyPage = () => {
 							</li>
 							<li className='text-sm leading-7'>
 								4.1.2. Right of access: The right to obtain
-								confirmation of whether Livestock Agritech
+								confirmation of whether Animaff Agritech
 								Solutions LTD processes personal data and, if
 								so, access to that data and related information.
 							</li>
@@ -328,7 +328,7 @@ const PrivacyPolicyPage = () => {
 							required or permitted by law. We will securely
 							dispose of personal data when it is no longer
 							needed, in which beyond the time necessary,
-							Livestock Agritech Solutions LTD will keep
+							Animaff Agritech Solutions LTD will keep
 							anonymised copies of all information for research
 							and historical purposes.
 						</li>
@@ -352,7 +352,7 @@ const PrivacyPolicyPage = () => {
 						<li className='text-sm leading-7'>
 							11.1 If you have any questions, concerns, or
 							requests regarding this Privacy Policy or our data
-							practices, please contact us at support@livestocx.com.
+							practices, please contact us at support@animaff.com.
 						</li>
 					</ol>
 
@@ -362,14 +362,14 @@ const PrivacyPolicyPage = () => {
 					<ol className='space-y-5 px-4 list-none'>
 						<li className='text-sm leading-7'>
 							12.1 This Privacy Policy shall be governed by and
-							construed in accordance with the laws of Nigeria.
+							construed in accordance with the laws of USA.
 							Any disputes arising out of or relating to this
-							Policy shall be resolved in the courts of Nigeria.
+							Policy shall be resolved in the courts of USA.
 						</li>
 					</ol>
 
 					<div className='text-sm font-semibold'>
-						13. Livestock Agritech Solutions LTD complies with the
+						13. Animaff Agritech Solutions LTD complies with the
 						Google API Service: User Data Policy regarding the
 						access, use, storage, and sharing of Google user data.
 						This includes:{' '}

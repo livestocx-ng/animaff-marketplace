@@ -20,12 +20,12 @@ const CarouselSlideItems: Slide[] = [
 	{
 		id: 2,
 		image: '/carousel__2.png',
-		description: 'Get pets from the best dealers in Nigeria!',
+		description: 'Get pets from the best dealers in USA!',
 	},
 	{
 		id: 3,
 		image: '/carousel__3.png',
-		description: 'Discover new livestock sellers on Livestocx!',
+		description: 'Discover new livestock sellers on Animaff!',
 	},
 ];
 
@@ -40,7 +40,7 @@ const CarouselSlide = () => {
 		<div className='w-full md:h-[250px] bg-[#262626] md:rounded-lg flex flex-col justify-between px-5 md:px-10 py-10 relative'>
 			<div className='flex flex-col space-y-6'>
 				<p className='p-3 bg-orange-400 md:w-[220px] text-center text-white text-sm rounded-lg'>
-					Welcome to Livestocx!
+					Welcome to Animaff!
 				</p>
 
 				<div className='p-3 md:ml-6 rounded-lg border-2 border-orange-400 flex flex-col space-y-2 items-center justify-center md:w-[350px] text-center text-white'>
