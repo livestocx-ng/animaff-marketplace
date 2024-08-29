@@ -6,6 +6,7 @@ import {
 	ThumbsUp,
 	ThumbsDown,
 	MessageCircle,
+	Phone,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ import {
 	useShareProductModalStore,
 } from '@/hooks/use-global-store';
 import {Product} from '@/types/types';
+import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
@@ -96,7 +98,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 		}
 	};
 
-	const handleAddToDesiredProducts = async () => {
+	const handleMessageSeller = async () => {
 		try {
 			if (loading) return;
 
@@ -160,14 +162,14 @@ const ProductCard = ({product}: ProductCardProps) => {
 					className='object-cover rounded-t-md'
 				/>
 
-				{product?.likeCount !== 0 && (
+				{/* {product?.likeCount !== 0 && (
 					<div className='absolute bottom-0 left-0 bg-[#11111180] px-4 rounded-tl-md'>
 						<p className='text-[8px] text-white'>
 							{product?.likeCount}{' '}
 							{product?.likeCount == 1 ? 'Like' : 'Likes'}
 						</p>
 					</div>
-				)}
+				)} */}
 
 				{product?.isPromotion && (
 					<div className='absolute top-0 right-0 bg-green-500 px-1 py-1 rounded-md shadow-lg shadow-slate-500'>
@@ -195,34 +197,62 @@ const ProductCard = ({product}: ProductCardProps) => {
 							onClick={() => {
 								if (loading) return;
 
-								if (!user) return router.push('/signin');
+								if (!user) return router.replace('/signin');
 
-								const formData: {value?: boolean} = {};
-								if (
-									product?.likedUsers?.includes(
-										parseInt(user?.id!)
-									)
-								) {
-									formData.value = false;
-								} else {
-									formData.value = true;
+								// const formData: {value?: boolean} = {};
+								// if (
+								// 	product?.likedUsers?.includes(
+								// 		parseInt(user?.id!)
+								// 	)
+								// ) {
+								// 	formData.value = false;
+								// } else {
+								// 	formData.value = true;
+								// }
+
+								// handleLikeUnlikeProduct(formData);
+
+								if (!product?.vendor?.phoneNumber) {
+									return toast.error(
+										'Sorry, the seller for this product does not have a contact phone number',
+										{
+											duration: 8500,
+											className: 'text-xs sm:text-sm',
+										}
+									);
 								}
 
-								handleLikeUnlikeProduct(formData);
+								axios.get(
+									`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
+									{
+										headers: {
+											Authorization: user?.accessToken,
+										},
+									}
+								);
+
+								const telLink = document.createElement('a');
+
+								telLink.href = `tel:${product?.vendor?.phoneNumber}`;
+
+								telLink.target = '_blank';
+
+								telLink.click();
 							}}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
-							{product?.likedUsers?.includes(
+							{/* {product?.likedUsers?.includes(
 								parseInt(user?.id!)
 							) ? (
 								<ThumbsDown className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
 							) : (
 								<ThumbsUp className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-							)}
+							)} */}
+							<Phone className='h-4 w-4 sm:w-4 text-white' />
 						</div>
 
 						<div
-							onClick={handleAddToDesiredProducts}
+							onClick={handleMessageSeller}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
 							<MessageCircle className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
@@ -267,7 +297,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 					<div className='border-t border-slate-400 text-[8px] font-medium px-2 pt-1 flex items-center space-x-1'>
 						<MapPin className='h-3 w-3 text-black' />
 						<p className='text-[8px]'>
-							{product?.vendor?.city}, {product?.vendor?.state}
+							{product?.vendor?.city}- {product?.vendor?.state}
 						</p>
 					</div>
 				</div>

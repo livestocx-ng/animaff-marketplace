@@ -9,7 +9,7 @@ import {
 } from 'react-share';
 import axios from 'axios';
 import Image from 'next/image';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Copy, X} from 'lucide-react';
 import {toast} from 'react-hot-toast';
 import {Button} from '@/components/ui/button';
@@ -20,13 +20,17 @@ import {useShareProductModalStore} from '@/hooks/use-global-store';
 const ShareProductModal = () => {
 	const {payload, onClose} = useShareProductModalStore();
 
+	const [productSlug, setProductSlug] = useState<string>('');
+
 	useEffect(() => {
-		axios.get(
-			`https://animaff.com/marketplace/products/${formatProductSlug(
-				payload!
-			)}`
-		);
-	}, []);
+		if (payload) {
+			const slug = formatProductSlug(payload);
+
+			setProductSlug(slug);
+
+			axios.get(`https://animaff.com/marketplace/products/${slug}`);
+		}
+	}, [payload]);
 
 	return (
 		<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-10'>
@@ -68,33 +72,25 @@ const ShareProductModal = () => {
 						<div className='flex space-x-2'>
 							<WhatsappShareButton
 								title={`Check out my ${payload.name} on Animaff: `}
-								url={`https://animaff.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								url={`https://animaff.com/marketplace/products/${productSlug}`}
 							>
 								<WhatsappIcon size={30} round />
 							</WhatsappShareButton>
 							<FacebookShareButton
 								title={`Check out my ${payload.name} on Animaff: `}
-								url={`https://animaff.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								url={`https://animaff.com/marketplace/products/${productSlug}`}
 							>
 								<FacebookIcon size={30} round />
 							</FacebookShareButton>
 							<TwitterShareButton
 								title={`Check out my ${payload.name} on Animaff: `}
-								url={`https://animaff.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								url={`https://animaff.com/marketplace/products/${productSlug}`}
 							>
 								<TwitterIcon size={30} round />
 							</TwitterShareButton>
 
 							<CopyToClipboard
-								text={`https://animaff.com/marketplace/products/${formatProductSlug(
-									payload!
-								)}`}
+								text={`https://animaff.com/marketplace/products/${productSlug}`}
 								onCopy={(text: string, result: boolean) => {
 									toast.success('Copied to clipboard');
 								}}

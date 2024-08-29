@@ -1,10 +1,11 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {usePathname, useRouter} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {MessageCircle, Phone} from 'lucide-react';
+import {usePathname, useRouter} from 'next/navigation';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {formatVendorSlug} from '@/utils/slug.formatter';
 
@@ -93,6 +94,18 @@ const SellerBanner = () => {
 										)}`
 									);
 
+								if (vendor?.isAccountDisabled) return;
+
+								if (!vendor?.phoneNumber) {
+									return toast.error(
+										'Sorry, this store does not have a contact phone number',
+										{
+											duration: 8500,
+											className: 'text-xs sm:text-sm',
+										}
+									);
+								}
+
 								axios.get(
 									`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=0`,
 									{
@@ -168,6 +181,18 @@ const SellerBanner = () => {
 								return router.push(
 									`/signin?redirect_to=${pathName.slice(1)}`
 								);
+
+							if (vendor?.isAccountDisabled) return;
+
+							if (!vendor?.phoneNumber) {
+								return toast.error(
+									'Sorry, this store does not have a contact phone number',
+									{
+										duration: 8500,
+										className: 'text-xs sm:text-sm',
+									}
+								);
+							}
 
 							axios.get(
 								`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=0`,

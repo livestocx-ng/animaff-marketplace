@@ -426,7 +426,7 @@ const StoreSingleProductContent = ({
 			<div className='w-full pb-5 px-4 md:px-0'>
 				{currentTab === 'Seller Info' && <SellerInfoTab />}
 				{currentTab === 'Review' && <ProductReviewTab />}
-				{currentTab === 'More From Seller' && <MoreFromSellerTab />}
+				{/* {currentTab === 'More From Seller' && <MoreFromSellerTab />} */}
 			</div>
 
 			{/* <div className='flex flex-col space-y-5 w-full px-4 md:px-0'>
