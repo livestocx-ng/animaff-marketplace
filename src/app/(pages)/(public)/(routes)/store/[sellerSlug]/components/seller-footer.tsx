@@ -92,7 +92,7 @@ const SellerFooter = () => {
 			)}
 
 			<div className='border-t border-t-[#ffffff80] w-full mt-5 md:mt-5 py-3 text-center text-[#ffffff80] text-xs'>
-				Powered by Livestocx Inc &copy; {new Date().getFullYear()}. All
+				Powered by Animaff Inc &copy; {new Date().getFullYear()}. All
 				Rights Reserved
 			</div>
 		</div>

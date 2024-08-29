@@ -40,7 +40,7 @@ const UserReferralModal = () => {
 				<div className='space-y-3 my-'>
 					<p className='text-sm leading-6'>
 						Top referrers get promotions every week!!!🎉🎉🎉 Refer
-						your friends and colleagues to use Livestocx. Try it
+						your friends and colleagues to use Animaff. Try it
 						now!
 					</p>
 

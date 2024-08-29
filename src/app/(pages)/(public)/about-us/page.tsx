@@ -41,7 +41,7 @@ const AboutUsPage = () => {
 				<div className='mx-auto text-center text-base sm:text-xl sm:py-10 my-10 sm:my-20 w-full sm:w-[70%] px-5 sm:px-0'>
 					Our platform provides a centralized, transparent, and
 					efficient marketplace where local livestock farmers connect
-					with buyers from anywhere around Nigeria, carry out
+					with buyers from anywhere around USA, carry out
 					transactions, and coordinate logistics.
 				</div>
 
@@ -139,7 +139,7 @@ const AboutUsPage = () => {
 							</h1>
 							<p className='text-base text-white leading-8'>
 								Our grand vision for Animaff is to become the
-								go-to livestock marketplace across Africa,
+								go-to livestock marketplace across USA,
 								transforming the livestock industry by
 								connecting over 50 million small-holder farmers
 								directly to sellers. In 5-10 years, we aim to
@@ -155,7 +155,7 @@ const AboutUsPage = () => {
 							</h1>
 							<p className='text-base text-white leading-8'>
 								We are on a mission to revolutionize the
-								livestock industry across Africa. Our mission is
+								livestock industry across USA. Our mission is
 								to empower small-holder farmers by connecting
 								them directly to sellers, eliminating
 								inefficiencies and middlemen. We leverage AI and

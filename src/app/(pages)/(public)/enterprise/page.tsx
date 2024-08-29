@@ -259,7 +259,7 @@ const EnterprisePage = () => {
 						you to display your products directly on your site,
 						enhancing your online presence and engaging customers
 						without requiring them to leave your platform. Email us
-						for more information at support@livestocx.com
+						for more information at support@animaff.com
 					</p>
 				</div>
 			</main>
