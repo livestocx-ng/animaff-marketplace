@@ -5,7 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import {COOKIE_MAX_AGE, COOKIE_NAME} from '@/lib/constants';
 
 const handler = NextAuth({
-	secret: process.env.AWS_NEXTAUTH_SECRET ?? '',
+	secret: process.env.NEXT_AUTH_SECRET ?? '',
 	// secret: process.env.AUTH_SECRET,
 	providers: [
 		GoogleProvider({
