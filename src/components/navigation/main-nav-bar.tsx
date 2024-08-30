@@ -274,29 +274,7 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Messages</p>
 								</Link>
-								{user?.role === 'CUSTOMER' && (
-									<Link
-										href={'/account'}
-										onClick={() => {
-											setSetShowAccountMenu(false);
-
-											router.push('/account');
-
-											updateCurrentAccountTab(
-												'Desired Items'
-											);
-										}}
-										className={` ${
-											scrolling ? 'bg-white' : 'bg-mai'
-										} rounded-full flex items-center space-x-4 hover:translate-x-1 transition-all duration-500 ease-in`}
-									>
-										<ShoppingCart
-											className={`h-5 w-5 text-main`}
-										/>
-
-										<p className='text-xs'>Desired Items</p>
-									</Link>
-								)}
+				
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
