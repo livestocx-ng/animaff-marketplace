@@ -142,7 +142,7 @@ const ProductCard = ({product}: ProductCardProps) => {
 	return (
 		<div
 			ref={ref}
-			className='w-[48%] sm:w-[150px] flex flex-col justify-between shadow__1 relative'
+			className='w-[48%] sm:w-[165px] flex flex-col justify-between shadow__1 relative'
 		>
 			<Link
 				// onClick={() => {
