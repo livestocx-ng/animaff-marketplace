@@ -65,7 +65,7 @@ const PromotionBanner = () => {
 										premiumSubscriptionPlans[0]?.price
 								  ).split('.00')[0]
 					  }/year.`
-					: `${PriceFormatter(21).split('.00')[0]}`}
+					: `${PriceFormatter(5).split('.00')[0]}`}
 			</p>
 			<Rocket size={20} className='text-white' />
 		</motion.div>
