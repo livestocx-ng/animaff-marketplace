@@ -50,20 +50,20 @@ const ChatConversationCard = ({conversation}: ChatConversationCardProps) => {
 						{(conversation?.user1?.role === 'ADMIN' && user?.id !== conversation?.user1?.id.toString()) ? (
 							<Image
 								alt='image'
-								width={40}
-								height={40}
+								width={15}
+								height={15}
 								src={'/icon__verified__1.svg'}
 								unoptimized={true}
-								className='object-cover h-full w-full'
+								className='object-cover '
 							/>
 						) : (conversation?.user2?.role  === 'ADMIN' && user?.id !== conversation?.user2?.id.toString()) ? (
 							<Image
-								width={40}
-								height={40}
+								width={15}
+								height={15}
 								alt='image'
 								unoptimized={true}
 								src={'/icon__verified__1.svg'}
-								className='object-cover h-full w-full'
+								className='object-cover '
 							/>
 						) : (
 							<div></div>
