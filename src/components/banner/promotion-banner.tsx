@@ -3,7 +3,10 @@ import {Rocket} from 'lucide-react';
 import {motion} from 'framer-motion';
 import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
-import {PriceFormatter} from '@/utils/price.formatter';
+import {
+	formatSubscriptionDurationTitle,
+	PriceFormatter,
+} from '@/utils/price.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import {PremiumSubscriptionPlan} from '@/types/types';
 
@@ -13,6 +16,7 @@ const PromotionBanner = () => {
 	const {premiumSubscriptionPlans} = useGlobalStore();
 
 	const [plan, setPlan] = useState<PremiumSubscriptionPlan | null>(null);
+	const [planDuration, setPlanDuration] = useState<string>('');
 
 	const filterPremiumSubscriptionPlans = () => {
 		const plan = premiumSubscriptionPlans?.filter(
@@ -21,9 +25,10 @@ const PromotionBanner = () => {
 
 		if (plan) {
 			setPlan(plan);
+			setPlanDuration(formatSubscriptionDurationTitle(plan?.duration))
 		}
 
-		// console.log('[PLAN] :: ', plan);
+		console.log('[PLAN] :: ', plan?.duration);
 	};
 
 	useEffect(() => {
@@ -60,11 +65,15 @@ const PromotionBanner = () => {
 				{premiumSubscriptionPlans?.length > 0
 					? `${
 							plan
-								? PriceFormatter(plan?.price).split('.00')[0]
+								? `${
+										PriceFormatter(plan?.price).split(
+											'.00'
+										)[0]
+								  }`
 								: PriceFormatter(
 										premiumSubscriptionPlans[0]?.price
 								  ).split('.00')[0]
-					  }/year.`
+					  }`
 					: `${PriceFormatter(5).split('.00')[0]}`}
 			</p>
 			<Rocket size={20} className='text-white' />
