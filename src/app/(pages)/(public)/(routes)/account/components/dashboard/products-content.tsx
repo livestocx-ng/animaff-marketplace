@@ -50,8 +50,7 @@ const ProductsContent = () => {
 	return (
 		<div className='w-full md:w-[78%] flex flex-col gap-5 '>
 			<div className='flex justify-end space-x-5'>
-				{userProductUploadSubscription === null &&
-					user?.productUploadLimit === 0 && (
+				{userProductUploadSubscription === null && (
 						<Button
 							type='button'
 							onClick={() => {
@@ -60,7 +59,7 @@ const ProductsContent = () => {
 							className='bg-sky-600 flex items-center space-x-3 text-white h-10 hover:bg-sky-700 w-fit rounded py-2'
 						>
 							<ZapIcon className='h-4 w-4' />{' '}
-							<p className='text-xs md:text-xs'>Subscribe</p>
+							<p className='text-xs md:text-xs'>Renew subscription</p>
 						</Button>
 					)}
 
@@ -68,12 +67,12 @@ const ProductsContent = () => {
 					type='button'
 					onClick={() => {
 						if (
-							userProductUploadSubscription === null &&
+							userProductUploadSubscription === null ||
 							user?.productUploadLimit === 0
 						) {
 							return toast.error(
-								'Product upload limit exceeded!',
-								{className: 'text-sm'}
+								'Product upload subscription expired!',
+								{className: 'text-xs sm:text-base'}
 							);
 						}
 

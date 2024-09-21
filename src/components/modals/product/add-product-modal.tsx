@@ -415,7 +415,7 @@ const AddProductModal = () => {
 							</p>
 						)}
 
-						{!user?.isMonthlyProductUploadSubscriptionActive && (
+						{/* {!user?.isMonthlyProductUploadSubscriptionActive && (
 							<div
 								className={`flex items-center space-x-2 border text-xs rounded-md px-2 py-4 shadow-md ${
 									user?.productUploadLimit === 1
@@ -436,7 +436,7 @@ const AddProductModal = () => {
 									post uploads left
 								</p>
 							</div>
-						)}
+						)} */}
 					</div>
 
 					<div className='w-full lg:w-[70%] flex flex-col space-y-3 lg:pl-8 mb-5 lg:mb-0'>
