@@ -67,7 +67,7 @@ const ProductsContent = () => {
 					type='button'
 					onClick={() => {
 						if (
-							userProductUploadSubscription === null ||
+							userProductUploadSubscription === null &&
 							user?.productUploadLimit === 0
 						) {
 							return toast.error(
