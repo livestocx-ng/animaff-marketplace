@@ -10,6 +10,7 @@ import AuthProvider from '@/providers/auth-provider';
 import CookieBannerProvider from '@/providers/cookie-banner-provider';
 import GoogleAnalyticsProvider from '@/providers/google-analytics-provider';
 import SocketProvider from '@/providers/socket-provider';
+import ReferralProvider from '@/providers/referral-provider';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -50,6 +51,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 					</SocketProvider>
 				</AuthProvider>
 
+				<ReferralProvider />
 				<CookieBannerProvider />
 			</body>
 		</html>

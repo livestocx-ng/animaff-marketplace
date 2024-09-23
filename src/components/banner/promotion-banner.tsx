@@ -1,23 +1,21 @@
 'use client';
+import {
+	PriceFormatter,
+	formatSubscriptionDurationTitle,
+} from '@/utils/price.formatter';
 import {Rocket} from 'lucide-react';
 import {motion} from 'framer-motion';
 import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
-import {
-	formatSubscriptionDurationTitle,
-	PriceFormatter,
-} from '@/utils/price.formatter';
-import {useGlobalStore} from '@/hooks/use-global-store';
 import {PremiumSubscriptionPlan} from '@/types/types';
+import {useGlobalStore} from '@/hooks/use-global-store';
 
 const PromotionBanner = () => {
 	const router = useRouter();
 
-	const {premiumSubscriptionPlans} = useGlobalStore();
+	const {user, premiumSubscriptionPlans} = useGlobalStore();
 
 	const [plan, setPlan] = useState<PremiumSubscriptionPlan | null>(null);
-	const [planDuration, setPlanDuration] = useState<string>('');
-
 	const filterPremiumSubscriptionPlans = () => {
 		const plan = premiumSubscriptionPlans?.filter(
 			(plan) => plan.position === 1
@@ -25,10 +23,7 @@ const PromotionBanner = () => {
 
 		if (plan) {
 			setPlan(plan);
-			setPlanDuration(formatSubscriptionDurationTitle(plan?.duration))
 		}
-
-		console.log('[PLAN] :: ', plan?.duration);
 	};
 
 	useEffect(() => {
@@ -58,23 +53,19 @@ const PromotionBanner = () => {
 					// console.log(_error);
 				}
 			}}
-			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-orange-200 to-orange-500 text-sm px-4 flex justify-center space-x-3 cursor-pointer'
+			className='absolute top-0 left-0 w-full py-2 bg-gradient-to-tr from-orange-200 to-orange-500 text-sm px-4 flex justify-center space-x-1 cursor-pointer'
 		>
 			<p className='text-[12px] md:text-sm font-medium text-center'>
-				Want to sell very fast? Get your Animaff online store for{' '}
-				{premiumSubscriptionPlans?.length > 0
+				Want to sell very fast? Get{' '}
+				{user
+					? `https://${user?.firstName.toLowerCase()}.animaff.store `
+					: 'your Animaff online store '}{' '}
+				for{' '}
+				{premiumSubscriptionPlans?.length > 0 && plan
 					? `${
-							plan
-								? `${
-										PriceFormatter(plan?.price).split(
-											'.00'
-										)[0]
-								  }`
-								: PriceFormatter(
-										premiumSubscriptionPlans[0]?.price
-								  ).split('.00')[0]
-					  }`
-					: `${PriceFormatter(5).split('.00')[0]}`}
+							PriceFormatter(plan?.price).split('.00')[0]
+					  }${formatSubscriptionDurationTitle(plan?.duration)}`
+					: `${PriceFormatter(5).split('.00')[0]}/month`}
 			</p>
 			<Rocket size={20} className='text-white' />
 		</motion.div>

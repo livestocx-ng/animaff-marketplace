@@ -32,6 +32,7 @@ import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premiu
 import VerifyPremiumSubscriptionPaymentModal from '@/components/modals/premium/verify-premium-subscription-payment-modal';
 import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-payment-modal';
 import PremiumSubscriptionSuccessModal from '@/components/modals/premium/premium-subscription-success-modal';
+import {getLocalStorage} from '@/lib/localstorageHelper';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -64,21 +65,26 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const updateVendorProfileModal = useUpdateVendorProfileModalStore();
 	const upgradeToPremiumAccessModal = useUpgradeToPremiumAccessStore();
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
-	const premiumSubscriptionSuccessModal = usePremiumSubscriptionSuccessModalStore();
-	const premiumSubscriptionCheckoutModal = usePremiumSubscriptionCheckoutModalStore();
-	const verifyPremiumSubscriptionPaymentModal = useVerifyPremiumSubscriptionPaymentModalStore();
-	const verifyProductUploadPaymentModal = useVerifyProductUploadSubscriptionPaymentModalStore();
+	const premiumSubscriptionSuccessModal =
+		usePremiumSubscriptionSuccessModalStore();
+	const premiumSubscriptionCheckoutModal =
+		usePremiumSubscriptionCheckoutModalStore();
+	const verifyPremiumSubscriptionPaymentModal =
+		useVerifyPremiumSubscriptionPaymentModalStore();
+	const verifyProductUploadPaymentModal =
+		useVerifyProductUploadSubscriptionPaymentModalStore();
 
 	const initializeUserReferralModal = () => {
-		setTimeout(() => {
-			referralModal.onOpen();
-		}, 6500);
-		
-		// setInterval(() => {
-		// 	if(!referralModal.isOpen){
-		// 		referralModal.onOpen();
-		// 	}
-		// }, 150000);
+		const referralModalConsent = getLocalStorage('animaff_referral_banner');
+
+		if (
+			referralModalConsent === null ||
+			referralModalConsent === undefined
+		) {
+			setTimeout(() => {
+				referralModal.onOpen();
+			}, 6500);
+		}
 	};
 
 	const initializeDownloadAppModal = () => {
@@ -100,7 +106,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			updateVendorProfileModal.onOpen();
 		}
 
-		if(user) {
+		if (user) {
 			initializeUserReferralModal();
 		}
 

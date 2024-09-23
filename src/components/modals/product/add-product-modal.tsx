@@ -718,12 +718,7 @@ const AddProductModal = () => {
 						<Button
 							type='submit'
 							variant={'outline'}
-							disabled={
-								loading ||
-								(user?.productUploadLimit === 0 &&
-									user?.isMonthlyProductUploadSubscriptionActive ===
-										false)
-							}
+							disabled={loading}
 							className='w-full lg:w-[200px] bg-main hover:bg-main text-xs h-12 text-white hover:text-white rounded-none py-3 px-8 border-0'
 						>
 							Submit

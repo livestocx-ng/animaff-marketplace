@@ -11,7 +11,7 @@ import SearchForm from '@/components/home/search-form';
 import HomeProducts from '@/components/home/home-products';
 
 export default function HomePage() {
-	const {products, updateProducts, updatePagination, updateSearchLocation} =
+	const {products, updateProducts, updatePagination, updateSearchLocation, userProductUploadSubscription} =
 		useGlobalStore();
 
 	const [loading, setLoading] = useState(true);

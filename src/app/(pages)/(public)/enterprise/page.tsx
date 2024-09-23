@@ -114,7 +114,7 @@ const EnterprisePage = () => {
 					</div>
 				</section>
 
-				<div className='space-y-10 my-14'>
+				{/* <div className='space-y-10 my-14'>
 					<h1 className='text-lg md:text-5xl font-semibold text-center'>
 						What you get
 					</h1>
@@ -137,23 +137,11 @@ const EnterprisePage = () => {
 							</p>
 						</div>
 					</div>
-				</div>
-
-				<div className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'>
-					<h1 className='font-medium text-lg md:text-4xl text-center'>
-						Comparing Animaff to owning a regular website/store
-					</h1>
-					<DataTable
-						hasPagination={false}
-						borderRadius='rounded-b'
-						data={enterprisePlanComparisons}
-						columns={EnterprisePlansComparisonsColumns}
-					/>
-				</div>
+				</div> */}
 
 				<div
 					ref={subscriptionPlansRef}
-					className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-5 px-4 md:px-8 lg:px-0'
+					className='flex flex-col lg:flex-row lg:flex-wrap items-center lg:items-start justify-center lg:justify-evenly gap-y-10 w-full py-20 px-4 md:px-8 lg:px-0'
 				>
 					{premiumSubscriptionPlans?.map((plan, index) => (
 						<div
@@ -245,6 +233,18 @@ const EnterprisePage = () => {
 							)}
 						</div>
 					))}
+				</div>
+
+				<div className='w-full px-4 md:px-[160px] mb-20 flex flex-col space-y-5'>
+					<h1 className='font-medium text-lg md:text-4xl text-center'>
+						Comparing Animaff to owning a regular website/store
+					</h1>
+					<DataTable
+						hasPagination={false}
+						borderRadius='rounded-b'
+						data={enterprisePlanComparisons}
+						columns={EnterprisePlansComparisonsColumns}
+					/>
 				</div>
 
 				<div className='w-full py-5 px-4 md:px-[160px] my-10 flex flex-col space-y-5'>

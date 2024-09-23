@@ -12,6 +12,7 @@ import {Copy, Users, X} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {useReferralModalStore, useGlobalStore} from '@/hooks/use-global-store';
+import {setLocalStorage} from '@/lib/localstorageHelper';
 
 const UserReferralModal = () => {
 	const {user} = useGlobalStore();
@@ -29,6 +30,8 @@ const UserReferralModal = () => {
 					<Button
 						type='button'
 						onClick={() => {
+							setLocalStorage('animaff_referral_banner', true);
+							
 							onClose();
 						}}
 						className='bg-white hover:bg-white'
@@ -40,8 +43,7 @@ const UserReferralModal = () => {
 				<div className='space-y-3 my-'>
 					<p className='text-sm leading-6'>
 						Top referrers get promotions every week!!!🎉🎉🎉 Refer
-						your friends and colleagues to use Animaff. Try it
-						now!
+						your friends and colleagues to use Animaff. Try it now!
 					</p>
 
 					<div className='flex justify-center'>

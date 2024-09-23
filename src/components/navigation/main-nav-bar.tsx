@@ -26,6 +26,7 @@ import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
 import {usePathname, useRouter} from 'next/navigation';
+import {checkProductUploadSubscriptionExpiration} from '@/utils';
 
 const MainNavbar = () => {
 	const router = useRouter();
@@ -39,6 +40,7 @@ const MainNavbar = () => {
 		updateCurrentAccountTab,
 		updateChatConversations,
 		userPremiumSubscription,
+		userProductUploadSubscription,
 		updateUserPremiumSubscription,
 	} = useGlobalStore();
 
@@ -96,6 +98,8 @@ const MainNavbar = () => {
 			setSetShowAccountMenu(false);
 			updateUserPremiumSubscription(null);
 
+			window.localStorage.removeItem('animaff_referral_banner');
+
 			if (pathName.includes('account')) {
 				router.push('/');
 			}
@@ -106,9 +110,29 @@ const MainNavbar = () => {
 
 	return (
 		<div className='relative'>
+			{userProductUploadSubscription &&
+				checkProductUploadSubscriptionExpiration(
+					userProductUploadSubscription
+				).isWithinRange && (
+					<div className='fixed z-[12] bg-gradient-to-r from-green-500 to-green-100 w-full py-2 flex justify-center items-center text-xs font-medium'>
+						Your product upload subscription expires in{' '}
+						{
+							checkProductUploadSubscriptionExpiration(
+								userProductUploadSubscription
+							).remainingDays
+						}{' '}
+						days
+					</div>
+				)}
 			<nav
 				className={`w-full py-4 px-8 hidden fixed z-10 lg:flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
+				} ${
+					userProductUploadSubscription &&
+					checkProductUploadSubscriptionExpiration(
+						userProductUploadSubscription
+					).isWithinRange &&
+					'mt-[29px]'
 				}`}
 			>
 				<div className='flex items-center gap-x-8'>
@@ -274,7 +298,7 @@ const MainNavbar = () => {
 
 									<p className='text-xs'>Messages</p>
 								</Link>
-				
+
 								{user?.role === 'FARMER' && (
 									<Link
 										href={'/account'}
@@ -420,6 +444,12 @@ const MainNavbar = () => {
 			<div
 				className={`w-full py-1 px-4 pl-1 lg:pl-8 lg:px-8 lg:hidden fixed z-10 flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
+				}  ${
+					userProductUploadSubscription &&
+					checkProductUploadSubscriptionExpiration(
+						userProductUploadSubscription
+					).isWithinRange &&
+					'mt-[29px]'
 				}`}
 			>
 				<Button
