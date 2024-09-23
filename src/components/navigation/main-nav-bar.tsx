@@ -42,6 +42,7 @@ const MainNavbar = () => {
 		userPremiumSubscription,
 		userProductUploadSubscription,
 		updateUserPremiumSubscription,
+		updateUserProductUploadSubscription,
 	} = useGlobalStore();
 
 	const referralModal = useReferralModalStore();
@@ -97,6 +98,7 @@ const MainNavbar = () => {
 			updateChatConversations([]);
 			setSetShowAccountMenu(false);
 			updateUserPremiumSubscription(null);
+			updateUserProductUploadSubscription(null);
 
 			window.localStorage.removeItem('animaff_referral_banner');
 
