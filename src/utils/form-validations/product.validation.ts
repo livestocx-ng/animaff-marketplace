@@ -46,7 +46,7 @@ interface ProductReviewDto {
 
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
 
-const zipPostalCodeRegEX = new RegExp(/^\d{5}$/);
+const zipPostalCodeRegEX = new RegExp(/^\d{4}$/);
 
 export function ValidateCreateProductFormData(
 	formData: CreateProductDto
@@ -71,11 +71,8 @@ export function ValidateCreateProductFormData(
 	if (!formData.zipPostalCode) {
 		return (message = 'Product zip/postal code is required.');
 	}
-	if (!formData.zipPostalCode) {
-		return (message = 'Product zip/postal code is required.');
-	}
 	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
-		return (message = 'Product zip/postal code must be at least 5 digits.');
+		return (message = 'Product zip/postal code must be at least 4 digits.');
 	}
 	if (!formData.description) {
 		return (message = 'Product description is required.');

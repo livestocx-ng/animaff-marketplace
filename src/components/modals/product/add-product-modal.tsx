@@ -235,14 +235,19 @@ const AddProductModal = () => {
 			);
 
 			const cookieUpdate = await axios.patch('/api/auth/update-cookies', {
-				productUploadLimit: user?.productUploadLimit! - 1,
+				productUploadLimit:
+					user?.productUploadLimit! === 0
+						? user?.productUploadLimit!
+						: user?.productUploadLimit! - 1,
 			});
 
 			await updateUser(cookieUpdate.data);
 
 			setLoading(false);
 
-			toast.success('New product created');
+			toast.success('New product created', {
+				className: 'text-xs sm:text-sm',
+			});
 
 			shareProductModal.onOpen();
 
@@ -255,11 +260,21 @@ const AddProductModal = () => {
 		} catch (error) {
 			setLoading(false);
 
-			const _error = error as AxiosError;
+			const _error = error as AxiosError<{message: string}>;
 
-			// console.log('[CREATE-PRODUCT-ERROR]', _error);
+			console.log('[CREATE-PRODUCT-ERROR]', _error);
 
-			toast.error('Error');
+			if (_error?.response?.data?.message) {
+				return toast.error(_error?.response?.data?.message!, {
+					duration: 6500,
+					className: 'text-xs sm:text-sm',
+				});
+			}
+
+			toast.error('An error occurred', {
+				duration: 6500,
+				className: 'text-xs sm:text-sm',
+			});
 		}
 	};
 
