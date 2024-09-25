@@ -35,10 +35,9 @@ const PromotionBanner = () => {
 			initial={{opacity: 0.8}}
 			animate={{opacity: 1}}
 			transition={{
+				delay: 1.2,
 				duration: 1.5,
 				repeat: Infinity,
-				delay: 1.2,
-				// repeatDelay: 0.5,
 			}}
 			onClick={async () => {
 				try {

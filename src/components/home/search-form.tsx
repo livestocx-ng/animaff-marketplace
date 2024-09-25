@@ -119,7 +119,7 @@ const SearchForm = () => {
 				onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
 					event.preventDefault();
 
-					if (formData.query.length < 2) return;
+					if (formData.query.trim().length === 0) return;
 
 					const updatedSearchParams = new URLSearchParams(
 						searchParams.toString()

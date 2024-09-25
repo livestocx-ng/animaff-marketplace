@@ -31,7 +31,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 	},
 	{
 		accessorKey: 'name',
-		header: 'Product',
+		header: () => <h1 className="text-xs sm:text-sm font-semibold">Name</h1>,
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
@@ -85,7 +85,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 	},
 	{
 		accessorKey: 'price',
-		header: 'Price',
+		header: () => <h1 className="text-xs sm:text-sm font-semibold">Price</h1>,
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
@@ -104,7 +104,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 	},
 	{
 		accessorKey: 'discountPrice',
-		header: 'Discount Price',
+		header: () => <h1 className="text-xs sm:text-sm font-semibold">Discount Price</h1>,
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
@@ -123,7 +123,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 	},
 	{
 		accessorKey: 'inStock',
-		header: 'In Stock',
+		header: () => <h1 className="text-xs sm:text-sm font-semibold">In Stock</h1>,
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
@@ -142,7 +142,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 	},
 	{
 		accessorKey: 'isNegotiable',
-		header: 'Negotiable',
+		header: () => <h1 className="text-xs sm:text-sm font-semibold">Negotiable</h1>,
 		cell: ({row}) => {
 			const {updatePayload, updateCurrentAccountTab} = useGlobalStore();
 
@@ -161,7 +161,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 	},
 	{
 		accessorKey: 'id',
-		header: 'Share',
+		header: () => <h1 className="text-xs sm:text-sm font-semibold">Share</h1>,
 		cell: ({row}) => (
 			<div className='flex space-x-2'>
 				<WhatsappShareButton

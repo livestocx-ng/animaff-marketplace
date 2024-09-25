@@ -4,6 +4,7 @@ export type Tab =
 	| 'Messages'
 	| 'Desired Item'
 	| 'Desired Items'
+	| 'Adverts'
 	| 'Products'
 	| 'Order History'
 	| 'Wishlist'

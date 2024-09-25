@@ -51,17 +51,17 @@ const ProductsContent = () => {
 		<div className='w-full md:w-[78%] flex flex-col gap-5 '>
 			<div className='flex justify-end space-x-5'>
 				{userProductUploadSubscription === null && (
-						<Button
-							type='button'
-							onClick={() => {
-								modal.onOpen();
-							}}
-							className='bg-sky-600 flex items-center space-x-3 text-white h-10 hover:bg-sky-700 w-fit rounded py-2'
-						>
-							<ZapIcon className='h-4 w-4' />{' '}
-							<p className='text-xs md:text-xs'>Renew subscription</p>
-						</Button>
-					)}
+					<Button
+						type='button'
+						onClick={() => {
+							modal.onOpen();
+						}}
+						className='bg-sky-600 flex items-center space-x-3 text-white h-10 hover:bg-sky-700 w-fit rounded py-2'
+					>
+						<ZapIcon className='h-4 w-4' />{' '}
+						<p className='text-xs md:text-xs'>Renew subscription</p>
+					</Button>
+				)}
 
 				<Button
 					type='button'
@@ -80,10 +80,9 @@ const ProductsContent = () => {
 							onModalOpen();
 						}
 					}}
-					className='bg-green-600 flex items-center space-x-3 text-white h-10 hover:bg-green-700 w-fit rounded py-2'
+					className='bg-green-600 text-white h-10 hover:bg-green-700 w-fit rounded py-2'
 				>
-					<Plus className='h-4 w-4' />{' '}
-					<p className='text-xs md:text-xs'>Post Product</p>
+					<p className='text-xs'>Post Ad</p>
 				</Button>
 			</div>
 
@@ -91,7 +90,20 @@ const ProductsContent = () => {
 				data={products}
 				columns={columns}
 				borderRadius='rounded-b'
+				emptyText='No Ads found.'
+				hasPagination={products.length > 10}
 			/>
+
+			<div className='flex flex-col space-y-2'>
+				<h1 className='text-xs sm:text-base font-semibold'>Note:</h1>
+				<ol className='text-xs sm:text-sm space-y-1'>
+					<li>1. We do not take commission from your sales</li>
+					<li>
+						2. Expired Ads are still visible in the marketplace but
+						users will be unable to communicate with you.
+					</li>
+				</ol>
+			</div>
 		</div>
 	);
 };

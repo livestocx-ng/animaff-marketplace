@@ -27,14 +27,16 @@ interface DataTableProps<TData, TValue> {
 	data: TData[];
 	searchKey?: string;
 	borderRadius?: string;
+	emptyText?: string;
 	hasPagination?: boolean;
 }
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
-	borderRadius,
 	searchKey,
+	emptyText,
+	borderRadius,
 	hasPagination,
 }: DataTableProps<TData, TValue>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -122,7 +124,7 @@ export function DataTable<TData, TValue>({
 									colSpan={columns.length}
 									className='h-24 text-center'
 								>
-									No results.
+									{emptyText ? emptyText : 'No results.'}
 								</TableCell>
 							</TableRow>
 						)}
@@ -135,14 +137,16 @@ export function DataTable<TData, TValue>({
 					<Button
 						variant='outline'
 						size='sm'
+						className="text-xs"
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}
-					>
+						>
 						Previous
 					</Button>
 					<Button
 						variant='outline'
 						size='sm'
+						className="text-xs"
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}
 					>

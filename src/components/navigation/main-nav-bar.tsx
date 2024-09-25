@@ -23,6 +23,7 @@ import {
 	useUpdateUserRoleModalStore,
 } from '@/hooks/use-global-store';
 import {Button} from '../ui/button';
+import {motion} from 'framer-motion';
 import {toast} from 'react-hot-toast';
 import {useEffect, useState} from 'react';
 import {usePathname, useRouter} from 'next/navigation';
@@ -116,8 +117,8 @@ const MainNavbar = () => {
 				checkProductUploadSubscriptionExpiration(
 					userProductUploadSubscription
 				).isWithinRange && (
-					<div className='fixed z-[12] bg-gradient-to-r from-green-500 to-green-100 w-full py-2 flex justify-center items-center text-xs font-medium'>
-						Your product upload subscription expires in{' '}
+					<div className='fixed z-[12] bg-gradient-to-r from-green-700 to-green-400 w-full py-2 text-center text-white text-[10px] md:text-xs font-semibold'>
+						Your post Ad subscription expires in{' '}
 						{
 							checkProductUploadSubscriptionExpiration(
 								userProductUploadSubscription
@@ -407,7 +408,14 @@ const MainNavbar = () => {
 						)}
 					</div>
 
-					<div
+					<motion.div
+						animate={{opacity: 1}}
+						initial={{opacity: 0.9}}
+						transition={{
+							delay: 1.2,
+							duration: 2,
+							repeat: Infinity,
+						}}
 						onClick={() => {
 							if (!user) {
 								router.push(`/signup?seller=true`);
@@ -423,10 +431,10 @@ const MainNavbar = () => {
 								router.push('/account');
 							}
 						}}
-						className={`h-8 bg-orange-400 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+						className={`h-8 bg-gradient-to-tr from-orange-400 to-orange-200 rounded-sm w-[80px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
-						Sell
-					</div>
+						Post Ad
+					</motion.div>
 
 					{/* {!userPremiumSubscription && (
 						<div
@@ -474,7 +482,14 @@ const MainNavbar = () => {
 				</Button>
 
 				<div className='flex items-center space-x-2'>
-					<div
+					<motion.div
+						animate={{opacity: 1}}
+						initial={{opacity: 0.9}}
+						transition={{
+							delay: 1.2,
+							duration: 2,
+							repeat: Infinity,
+						}}
 						onClick={() => {
 							if (!user) {
 								router.push(`/signup?seller=true`);
@@ -492,8 +507,8 @@ const MainNavbar = () => {
 						}}
 						className={`h-8 bg-orange-400 rounded-sm w-[60px] text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
 					>
-						Sell
-					</div>
+						Post Ad
+					</motion.div>
 
 					{/* {!userPremiumSubscription && (
 						<div

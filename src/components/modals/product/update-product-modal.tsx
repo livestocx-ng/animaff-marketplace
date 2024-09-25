@@ -295,7 +295,7 @@ const UpdateProductModal = () => {
 				className='flex flex-col w-[90%] lg:w-[60%] bg-white py-2 px-4 max-h-[600px] overflow-y-auto scrollbar__1'
 			>
 				<div className='flex items-center justify-between px4 w-full'>
-					<h1 className='font-medium'>Update Product</h1>
+					<h1 className='font-medium'>Update Ad</h1>
 
 					<Button
 						type='button'
