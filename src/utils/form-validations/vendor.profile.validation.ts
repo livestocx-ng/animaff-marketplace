@@ -11,7 +11,7 @@ interface UpdateVendorProfileDto {
 	isUpdated: boolean;
 }
 
-const zipPostalCodeRegEX = new RegExp(/^\d{5}$/);
+const zipPostalCodeRegEX = new RegExp(/^\d{4,5}$/);
 
 const phoneRegEX = new RegExp(/^\d{10}$/);
 
@@ -51,7 +51,7 @@ export function ValidateUpdateVendorProfileFormData(
 		return (message = 'Zip/postal code is required.');
 	}
 	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
-		return (message = 'Zip code must be at least 5 digits.');
+		return (message = 'Zip code must be at least 4 digits.');
 	}
 
 	if (!formData.phoneNumber) {

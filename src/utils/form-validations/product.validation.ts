@@ -46,7 +46,7 @@ interface ProductReviewDto {
 
 const isNumberRegEX = new RegExp(/^[0-9]+$/);
 
-const zipPostalCodeRegEX = new RegExp(/^\d{4}$/);
+const zipPostalCodeRegEX = new RegExp(/^\d{4,5}$/);
 
 export function ValidateCreateProductFormData(
 	formData: CreateProductDto

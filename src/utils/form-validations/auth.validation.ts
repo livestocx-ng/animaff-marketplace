@@ -44,7 +44,7 @@ interface PremiumSubscriptionCheckoutFormTwoDto {
 
 const sellerSlugRegEX = new RegExp(/^[a-z]+$/);
 
-const zipPostalCodeRegEX = new RegExp(/^\d{5}$/);
+const zipPostalCodeRegEX = new RegExp(/^\d{4,5}$/);
 
 const phoneRegEX = new RegExp(/^\d{10}$/);
 
@@ -119,7 +119,7 @@ export function ValidateSignupFormData(formData: SignupDto): string {
 	}
 
 	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
-		return (message = 'Zip code must be at least 5 digits.');
+		return (message = 'Zip code must be at least 4 digits.');
 	}
 
 	if (formData.referralCode && (formData.referralCode.length > 8 || formData.referralCode.length < 7)) {
@@ -237,7 +237,7 @@ export function ValidatePremiumSubscriptionCheckoutStepTwoFormData(
 	}
 
 	if (!zipPostalCodeRegEX.test(formData.zipPostalCode)) {
-		return (message = 'Zip code must be at least 5 digits.');
+		return (message = 'Zip code must be at least 4 digits.');
 	}
 
 	if (formData.facebookUrl && !socialMediaRegEX.test(formData.facebookUrl)) {
