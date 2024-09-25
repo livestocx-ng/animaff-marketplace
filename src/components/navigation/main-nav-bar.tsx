@@ -118,7 +118,7 @@ const MainNavbar = () => {
 					userProductUploadSubscription
 				).isWithinRange && (
 					<div className='fixed z-[12] bg-gradient-to-r from-green-700 to-green-400 w-full py-2 text-center text-white text-[10px] md:text-xs font-semibold'>
-						Your post Ad subscription expires in{' '}
+						Your post ads subscription expires in{' '}
 						{
 							checkProductUploadSubscriptionExpiration(
 								userProductUploadSubscription
