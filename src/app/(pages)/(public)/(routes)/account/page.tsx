@@ -1,5 +1,5 @@
 'use client';
-import {Fragment} from 'react';
+import {Fragment, useEffect} from 'react';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
@@ -16,13 +16,24 @@ import DashboardContent from './components/dashboard/dashboard-content';
 import PromotionsContent from './components/dashboard/promotions-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import NotificationsContent from './components/dashboard/notifications-content';
+import {useSearchParams} from 'next/navigation';
 
 const AccountPage = () => {
-	const {currentAccountTab} = useGlobalStore();
+	const searchParams = useSearchParams();
+
+	const {currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
 	);
+
+	useEffect(() => {
+		if (searchParams.has('createAd')) {
+			updateCurrentAccountTab(
+				searchParams.get('createAd')! == 'true' ? 'Products' : 'Account'
+			);
+		}
+	}, [searchParams.has('createAd')]);
 
 	return (
 		<Fragment>
