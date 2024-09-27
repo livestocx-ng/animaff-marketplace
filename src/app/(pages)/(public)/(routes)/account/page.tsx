@@ -47,11 +47,10 @@ const AccountPage = () => {
 							<h1 className='text-xl md:text-5xl font-medium'>
 								{currentAccountTab}
 							</h1>
-							<p className='text-xs font-medium'>
-								New users get 1 free Ad post in their first month. Ads expires at the
-								end of every month.
+							<p className='text-xs sm:text-sm font-medium'>
+								New users get 1 free Ad post in their first month. 
 							</p>
-							<p className='text-xs font-medium'>
+							<p className='text-xs sm:text-sm font-medium'>
 								Renew and post unlimited Ads for $3/month.
 							</p>
 						</div>
