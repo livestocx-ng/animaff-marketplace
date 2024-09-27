@@ -95,12 +95,12 @@ const ProductsContent = () => {
 			/>
 
 			<div className='flex flex-col space-y-2'>
-				<h1 className='text-xs sm:text-base font-semibold'>Note:</h1>
-				<ol className='text-xs sm:text-sm space-y-1'>
+				<h1 className='text-xs font-semibold'>Note:</h1>
+				<ol className='text-xs space-y-1 font-medium'>
 					<li>1. We do not take commission from your sales</li>
 					<li>
 						2. Expired Ads are still visible in the marketplace but
-						users will be unable to communicate with you.
+						users will be unable to communicate with you until you renew your subscription.
 					</li>
 				</ol>
 			</div>

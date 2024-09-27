@@ -43,13 +43,16 @@ const AccountPage = () => {
 
 				<section className='h-[28vh] sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
 					{currentAccountTab === 'Products' ? (
-						<div className='flex flex-col justify-center items-center text-center space-y-2 text-white px-4 sm:px-10'>
+						<div className='flex flex-col justify-center items-center text-center space-y-1 text-white px-4 sm:px-10'>
 							<h1 className='text-xl md:text-5xl font-medium'>
 								{currentAccountTab}
 							</h1>
-							<p className='text-xs sm:text-sm'>
-								New users get 1 free Ad post which expires at
-								the end of every month and renews at $3/month.
+							<p className='text-xs font-medium'>
+								New users get 1 free Ad post in their first month. Ads expires at the
+								end of every month.
+							</p>
+							<p className='text-xs font-medium'>
+								Renew and post unlimited Ads for $3/month.
 							</p>
 						</div>
 					) : (
