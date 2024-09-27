@@ -95,8 +95,8 @@ const ProductsContent = () => {
 			/>
 
 			<div className='flex flex-col space-y-2'>
-				<h1 className='text-[10px] sm:text-xs'>Note:</h1>
-				<ol className='text-[10px] sm:text-xs space-y-1'>
+				<h1 className='text-[10px]'>Note:</h1>
+				<ol className='text-[10px] space-y-1'>
 					<li>1. Ads expires after one month.</li>
 					<li>
 						2. Expired Ads are still visible in the marketplace but
