@@ -67,7 +67,12 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 				</section>
 
 				<div className='flex flex-col space-y-5 md:space-y-12 w-full bg-white px-4 md:px-[10%] py-10'>
-					<p className='text-sm leading-10'>{blog?.description}</p>
+					<p
+						className='text-sm leading-6'
+						style={{whiteSpace: 'pre-wrap'}}
+					>
+						{blog?.description}
+					</p>
 
 					<div className='w-full h-[280px] md:h-[600px] relative'>
 						<Image
@@ -100,7 +105,10 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 									/>
 								</div>
 							)}
-							<p className='text-sm leading-8'>
+							<p
+								className='text-sm leading-6'
+								style={{whiteSpace: 'pre-wrap'}}
+							>
 								{article?.description}
 							</p>
 						</div>

@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import {
 	Tooltip,
 	TooltipContent,
@@ -7,25 +8,26 @@ import {
 } from '@/components/ui/tooltip';
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {ImagePlus, MinusCircle, PlusCircle, RssIcon, X} from 'lucide-react';
 import {useUserHook} from '@/hooks/use-user';
 import {Button} from '@/components/ui/button';
+import {useReducer, useRef, useState} from 'react';
 import ButtonLoader from '@/components/loader/button-loader';
-import {useEffect, useReducer, useRef, useState} from 'react';
 import {isFileSizeValid} from '@/utils/media/file.validation';
 import FormTextInput from '@/components/input/form-text-input';
+import {ImagePlus, MinusCircle, RssIcon, X} from 'lucide-react';
+import {createBlobImageUrls} from '@/utils/media/file.mutation';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
 import {useGlobalStore, useCreateBlogStore} from '@/hooks/use-global-store';
-import Link from 'next/link';
-import Image from 'next/image';
-import {createBlobImageUrls} from '@/utils/media/file.mutation';
+import {Checkbox} from '@/components/ui/checkbox';
 
 export type FormData = {
 	title: string;
 	description: string;
+	hasCTA: boolean;
 	media: File[];
 	blogArticles: {
 		title: string;
+		hasCTA: boolean;
 		description: string;
 	}[];
 };
@@ -37,6 +39,7 @@ type FormAction = {
 
 const initialState: FormData = {
 	title: '',
+	hasCTA: false,
 	description: '',
 	blogArticles: [],
 	media: [],
@@ -51,7 +54,7 @@ const formReducer = (state: FormData, action: FormAction) => {
 				...state,
 				blogArticles: [
 					...state.blogArticles,
-					{title: '', description: ''},
+					{title: '', description: '', hasCTA: false},
 				],
 			};
 		default:
@@ -223,6 +226,12 @@ const CreateBlogModal = () => {
 				}
 			}
 
+			// setLoading(false);
+
+			// console.log(FormData);
+
+			// return;
+
 			const {data} = await axios.post(
 				`${process.env.NEXT_PUBLIC_API_URL}/blog/create`,
 				FormData,
@@ -301,6 +310,27 @@ const CreateBlogModal = () => {
 							padding={'py-3 px-4'}
 							classes='w-full text-xs placeholder:text-xs border focus:border-slate-500  resize-none'
 						/>
+					</div>
+
+					<div className='flex items-center space-x-2 w-full'>
+						<Checkbox
+							id='hasCTA'
+							checked={formData.hasCTA}
+							onCheckedChange={(hasCTA: boolean) => {
+								updateFormData({
+									type: 'UPDATE_FORMDATA',
+									payload: {
+										hasCTA: hasCTA,
+									},
+								});
+							}}
+						/>
+						<label
+							htmlFor='terms'
+							className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-semibold'
+						>
+							Has CTA?
+						</label>
 					</div>
 
 					<div className='w-full space-y-2'>
@@ -426,14 +456,13 @@ const CreateBlogModal = () => {
 												blogArticles: updatedArticles,
 											},
 										});
-
-										
 									}}
 									className='bg-white hover:bg-white'
 								>
 									<MinusCircle className='text-red-500 h-4 w-4' />
 								</Button>
 							</div>
+
 							<div className='w-full'>
 								<p className='text-xs'>Article Title</p>
 								<FormTextInput
@@ -463,6 +492,38 @@ const CreateBlogModal = () => {
 									padding={'py-3 px-4'}
 									classes='w-full text-xs placeholder:text-xs border focus:border-slate-500 resize-none'
 								/>
+							</div>
+
+							<div className='flex items-center space-x-2 w-full pt-4'>
+								<Checkbox
+									id='hasCTA'
+									checked={article.hasCTA}
+									onCheckedChange={(hasCTA: boolean) => {
+										const updatedArticles =
+											formData.blogArticles.map(
+												(article, i) =>
+													i === index
+														? {
+																...article,
+																hasCTA: hasCTA,
+														  }
+														: article
+											);
+
+										updateFormData({
+											type: 'UPDATE_FORMDATA',
+											payload: {
+												blogArticles: updatedArticles,
+											},
+										});
+									}}
+								/>
+								<label
+									htmlFor='terms'
+									className='text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-semibold'
+								>
+									Has CTA?
+								</label>
 							</div>
 						</div>
 					))}

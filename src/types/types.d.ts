@@ -18,13 +18,15 @@ export type Tab =
 export interface Blog {
 	id: number;
 	title: string;
+	hasCTA: boolean;
 	imageUrl: string;
 	description: string;
 	articles: {
 		id: number;
 		blog: number;
+		hasCTA: boolean;
+        imageUrl?: string;
 		title: string;
-		imageUrl: string;
 		description: string;
 	}[];
 }
