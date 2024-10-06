@@ -19,6 +19,7 @@ import {
 	PremiumSubscriptionPlan,
 	ProductUploadSubscription,
 	ProductUploadSubscriptionPlan,
+	Blog,
 } from '@/types/types';
 import {create} from 'zustand';
 import { Socket } from 'socket.io-client';
@@ -34,6 +35,8 @@ interface GlobalStore {
 	searchQueryState: string;
 	searchQueryCity: string | 'United States';
 	premiumSubscriptionPlanId: number;
+	blog: Blog | null;
+	blogs: Blog[];
 	user: User | null;
 	userPremiumSubscription: PremiumSubscription | null;
 	premiumSubscriptionPlans: PremiumSubscriptionPlan[];
@@ -72,6 +75,8 @@ interface GlobalStore {
 	promotionInfoProducts: Product[];
 	promotionProductsTotalPages: number;
 	promotionProductsHasNextPage: boolean;
+	updateBlog: (value: Blog)=> void;
+	updateBlogs: (value: Blog[])=> void;
 	updatePremiumSubscriptionPlanId: (value: number)=> void;
 	updateUserPremiumSubscription: (value: PremiumSubscription | null)=> void;
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[])=> void;
@@ -249,6 +254,12 @@ export const useReferralModalStore =	create<ActivateModal>((set) => ({
 	onClose: () => set({isOpen: false}),
 }));
 
+export const useCreateBlogStore =	create<ActivateModal>((set) => ({
+	isOpen: false,
+	onOpen: () => set({isOpen: true}),
+	onClose: () => set({isOpen: false}),
+}));
+
 export const useUpdateProductModalStore = create<UpdateProductModal>((set) => ({
 	isOpen: false,
 	payload: {
@@ -389,6 +400,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	searchLocationState: '',
 	searchQueryCity: 'United States',
 	premiumSubscriptionPlanId: 0,
+	blog: null,
+	blogs: [],
 	user: null,
 	desiredProductInfo: null,
 	desiredProduct: null,
@@ -423,6 +436,8 @@ export const useGlobalStore = create<GlobalStore>((set) => ({
 	promotionInfoProducts: [],
 	promotionProductsTotalPages: 0,
 	promotionProductsHasNextPage: false,
+	updateBlog: (value: Blog) => set({blog: value}),
+	updateBlogs: (value: Blog[]) => set({blogs: value}),
 	updatePremiumSubscriptionPlanId: (value: number) => set({premiumSubscriptionPlanId: value}),
 	updateUserPremiumSubscription: (value: PremiumSubscription | null) => set({userPremiumSubscription: value}),
 	updatePremiumSubscriptionPlans: (value: PremiumSubscriptionPlan[]) => set({premiumSubscriptionPlans: value}),

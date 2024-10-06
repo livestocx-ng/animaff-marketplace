@@ -74,6 +74,7 @@ module.exports = {
 			},
 			backgroundImage: {
 				home: "url('/home.jpg')",
+				blog: "url('/blog_2.jpg')",
 				about: "url('/about__art__4.png')",
 			},
 		},

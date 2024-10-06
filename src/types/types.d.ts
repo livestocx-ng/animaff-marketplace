@@ -15,6 +15,20 @@ export type Tab =
 	| 'Settings'
 	| 'Logout';
 
+export interface Blog {
+	id: number;
+	title: string;
+	imageUrl: string;
+	description: string;
+	articles: {
+		id: number;
+		blog: number;
+		title: string;
+		imageUrl: string;
+		description: string;
+	}[];
+}
+
 export interface User {
 	id: string;
 	firstName: string;
@@ -56,9 +70,9 @@ export interface Vendor {
 	email: string;
 	user: string;
 	slug: string;
-	facebookUrl: string,
-	twitterUrl: string,
-	instagramUrl: string,
+	facebookUrl: string;
+	twitterUrl: string;
+	instagramUrl: string;
 	phoneNumber: string;
 	zipPostalCode: string;
 	isAccountDisabled: boolean;

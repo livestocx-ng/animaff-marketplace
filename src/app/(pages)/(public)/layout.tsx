@@ -2,6 +2,7 @@
 import {useEffect} from 'react';
 import {
 	useGlobalStore,
+	useCreateBlogStore,
 	useDownloadAppStore,
 	useReferralModalStore,
 	useShareProductModalStore,
@@ -19,6 +20,8 @@ import {
 import axios, {AxiosError} from 'axios';
 import {useUserHook} from '@/hooks/use-user';
 import {useSearchParams} from 'next/navigation';
+import {getLocalStorage} from '@/lib/localstorageHelper';
+import CreateBlogModal from '@/components/modals/blogs/create-blog-modal';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
 import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
@@ -28,11 +31,10 @@ import UpgradeToPremiumModal from '@/components/modals/premium/upgrade-to-premiu
 import DownloadMobileAppModal from '@/components/modals/welcome/download-mobile-app-modal';
 import UpdateVendorProfileModal from '@/components/modals/user/update-vendor-profile-modal';
 import UpdateSearchLocationModal from '@/components/modals/utils/update-search-location-modal';
+import PremiumSubscriptionSuccessModal from '@/components/modals/premium/premium-subscription-success-modal';
 import PremiumSubscriptionCheckoutModal from '@/components/modals/premium/premium-subscription-checkout-modal';
 import VerifyPremiumSubscriptionPaymentModal from '@/components/modals/premium/verify-premium-subscription-payment-modal';
 import VerifyProductUploadSubscriptionPaymentModal from '@/components/modals/premium/verify-product-upload-subscription-payment-modal';
-import PremiumSubscriptionSuccessModal from '@/components/modals/premium/premium-subscription-success-modal';
-import {getLocalStorage} from '@/lib/localstorageHelper';
 
 interface PagesLayoutProps {
 	children: React.ReactNode;
@@ -46,6 +48,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const transactionStatus = queryParams.get('transactionStatus');
 
 	const {
+		updateBlogs,
 		updateVendorProfile,
 		updatePromotionPlans,
 		updateChatConversations,
@@ -56,6 +59,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		updateProductUploadSubscriptionPlans,
 	} = useGlobalStore();
 
+	const createBlogModal = useCreateBlogStore();
 	const referralModal = useReferralModalStore();
 	const downloadAppModal = useDownloadAppStore();
 	const shareProductModal = useShareProductModalStore();
@@ -94,6 +98,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	};
 
 	useEffect(() => {
+		fetchBlogs();
 		initializeDownloadAppModal();
 	}, []);
 
@@ -135,6 +140,22 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 			verifyPremiumSubscriptionPaymentModal.onOpen();
 		}
 	}, [paymentFor]);
+
+	const fetchBlogs = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/blog/fetch-all`,
+			);
+
+			// console.log('[CONVERSATIONS-RESPONSE] :: ', data);
+
+			updateBlogs(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-BLOGS-ERROR] :: ', _error);
+		}
+	};
 
 	const fetchChatConversations = async () => {
 		try {
@@ -258,6 +279,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	return (
 		<div className='relative'>
+			{createBlogModal.isOpen && <CreateBlogModal />}
 			{referralModal.isOpen && <UserReferralModal />}
 			{shareProductModal.isOpen && <ShareProductModal />}
 			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}

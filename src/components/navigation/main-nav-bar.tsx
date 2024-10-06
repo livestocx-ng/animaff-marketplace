@@ -2,6 +2,7 @@
 import {
 	Bell,
 	User2,
+	Users,
 	Mails,
 	Store,
 	Package,
@@ -11,13 +12,13 @@ import {
 	ShoppingCart,
 	MessageCircle,
 	MessagesSquare,
-	Users,
 } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import {NavLinks} from '@/data';
 import {
+	useCreateBlogStore,
 	useGlobalStore,
 	useReferralModalStore,
 	useUpdateUserRoleModalStore,
@@ -46,6 +47,7 @@ const MainNavbar = () => {
 		updateUserProductUploadSubscription,
 	} = useGlobalStore();
 
+	const createBlogModal = useCreateBlogStore();
 	const referralModal = useReferralModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 
@@ -436,6 +438,17 @@ const MainNavbar = () => {
 						Post Ad
 					</motion.div>
 
+					{user?.role === 'ADMIN' && (
+						<div
+							onClick={() => {
+								createBlogModal.onOpen();
+							}}
+							className={`h-8 px-3 bg-gradient-to-tr from-indigo-600 to-indigo-400 rounded-sm w-fit text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+						>
+							Create Blog
+						</div>
+					)}
+
 					{/* {!userPremiumSubscription && (
 						<div
 							onClick={() => {
@@ -509,6 +522,19 @@ const MainNavbar = () => {
 					>
 						Post Ad
 					</motion.div>
+
+					{/* <div
+						onClick={() => {
+							if (!user) {
+								router.push(`/signup`);
+							}
+
+							createBlogModal.onOpen();
+						}}
+						className={`h-8 px-3 bg-gradient-to-tr from-indigo-600 to-indigo-400 rounded-sm w-fit text-white text-xs flex flex-col items-center justify-center cursor-pointer`}
+					>
+						Create Blog
+					</div> */}
 
 					{/* {!userPremiumSubscription && (
 						<div

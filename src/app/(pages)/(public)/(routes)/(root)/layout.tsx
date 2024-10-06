@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		// {width: 4096, height: 4096},
 	];
 
-	const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes);
+	// const ogImages = await generateOGImagesFromURLWithSizes(imageUrl, sizes);
 
 	return {
 		title: 'Animaff - Marketplace',
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			url: 'https://animaff.com',
 			siteName: 'Animaff',
 			type: 'website',
-			images: ogImages,
+			// images: ogImages,
 		},
 		twitter: {
 			card: 'summary',
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			creator: '@animaff',
 			title: 'Animaff - Marketplace',
 			description: 'Best deals, Everything Animals',
-			images: ogImages,
+			// images: ogImages,
 		},
 	};
 }
