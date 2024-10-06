@@ -1,23 +1,35 @@
 'use client';
-import axios from 'axios';
-import Image from 'next/image';
-import {
-	useGlobalStore,
-	usePremiumSubscriptionCheckoutModalStore,
-} from '@/hooks/use-global-store';
-import Footer from '@/components/navigation/footer';
-import {useRouter, useSearchParams} from 'next/navigation';
-import {Fragment, useEffect, useRef, useState} from 'react';
-import MainNavbar from '@/components/navigation/main-nav-bar';
 import Link from 'next/link';
+import Image from 'next/image';
+import axios, {AxiosError} from 'axios';
+import {Fragment, useEffect} from 'react';
+import Footer from '@/components/navigation/footer';
 import {formatBlogSlug} from '@/utils/slug.formatter';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import MainNavbar from '@/components/navigation/main-nav-bar';
 
 const BlogPage = () => {
-	const router = useRouter();
+	const {blogs, updateBlog, updateBlogs} = useGlobalStore();
 
-	const {blogs, updateBlog} = useGlobalStore();
+	const fetchBlogs = async () => {
+		try {
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/blog/fetch-all`
+			);
 
-	console.log(blogs);
+			// console.log('[CONVERSATIONS-RESPONSE] :: ', data);
+
+			updateBlogs(data.data);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[FETCH-BLOGS-ERROR] :: ', _error);
+		}
+	};
+
+	useEffect(() => {
+		fetchBlogs();
+	}, []);
 
 	return (
 		<Fragment>
