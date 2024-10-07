@@ -17,7 +17,10 @@ import FormTextInput from '@/components/input/form-text-input';
 import {ImagePlus, MinusCircle, RssIcon, X} from 'lucide-react';
 import {createBlobImageUrls} from '@/utils/media/file.mutation';
 import FormTextAreaInput from '@/components/input/form-text-area-input';
-import {useGlobalStore, useCreateBlogStore} from '@/hooks/use-global-store';
+import {
+	useGlobalStore,
+	useCreateBlogModalStore,
+} from '@/hooks/use-global-store';
 import {Checkbox} from '@/components/ui/checkbox';
 
 export type FormData = {
@@ -68,8 +71,8 @@ const CreateBlogModal = () => {
 	const blogImageRef = useRef<HTMLInputElement>(null);
 	const blogArticleImageRef = useRef<HTMLInputElement>(null);
 
-	const {onClose} = useCreateBlogStore();
-	const {updateProducts} = useGlobalStore();
+	const {onClose} = useCreateBlogModalStore();
+	const {blogs, updateBlogs} = useGlobalStore();
 
 	const [blogImage, setBlogImage] = useState<File>();
 	const [blogImageBlob, setBlogImageBlob] = useState('');
@@ -245,6 +248,8 @@ const CreateBlogModal = () => {
 			console.log('[DATA] :: ', data);
 
 			setLoading(false);
+
+			updateBlogs([data.data, ...blogs]);
 
 			toast.success('Blog created', {
 				className: 'text-xs sm:text-sm',

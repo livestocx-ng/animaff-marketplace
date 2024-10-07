@@ -7,6 +7,7 @@ import Footer from '@/components/navigation/footer';
 import {formatBlogSlug} from '@/utils/slug.formatter';
 import {useGlobalStore} from '@/hooks/use-global-store';
 import MainNavbar from '@/components/navigation/main-nav-bar';
+import BlogCard from '@/components/cards/blog-card';
 
 const BlogPage = () => {
 	const {blogs, updateBlog, updateBlogs} = useGlobalStore();
@@ -44,39 +45,9 @@ const BlogPage = () => {
 
 				<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-2 pb-10'>
 					<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-2'>
-						{blogs.map((blog) => {
-							return (
-								<div
-									key={blog.id}
-									className='w-[360px] h-[480px flex flex-col space-y-5 border rounded-md p-2'
-								>
-									<Link
-										prefetch
-										onClick={() => updateBlog(blog)}
-										href={`/blog/${formatBlogSlug(blog)}`}
-										className='w-full h-[240px] relative cursor-pointer rounded-md'
-									>
-										<Image
-											fill
-											// width={200}
-											// height={200}
-											unoptimized={true}
-											src={blog.imageUrl}
-											alt={`Animaff Blog - ${blog.title}`}
-											className='object-cover rounded-t-md'
-										/>
-									</Link>
-
-									<h1 className='text-sm font-medium h-[40px]'>
-										{blog.title}
-									</h1>
-
-									<p className='text-sm text-slate-600'>
-										{blog.description.slice(0, 250)}...
-									</p>
-								</div>
-							);
-						})}
+						{blogs.map((blog) => (
+							<BlogCard key={blog.id} blog={blog} />
+						))}
 					</div>
 				</div>
 			</main>

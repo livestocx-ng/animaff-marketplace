@@ -2,9 +2,10 @@
 import {useEffect} from 'react';
 import {
 	useGlobalStore,
-	useCreateBlogStore,
 	useDownloadAppStore,
 	useReferralModalStore,
+	useCreateBlogModalStore,
+	useDeleteBlogModalStore,
 	useShareProductModalStore,
 	useUpdateUserRoleModalStore,
 	useReadNotificationModalStore,
@@ -22,6 +23,7 @@ import {useUserHook} from '@/hooks/use-user';
 import {useSearchParams} from 'next/navigation';
 import {getLocalStorage} from '@/lib/localstorageHelper';
 import CreateBlogModal from '@/components/modals/blogs/create-blog-modal';
+import DeleteBlogModal from '@/components/modals/blogs/delete-blog-modal';
 import ShareProductModal from '@/components/modals/product/share-product-modal';
 import WelcomeFarmerModal from '@/components/modals/welcome/welcome-farmer-modal';
 import UpdateUserRoleModal from '@/components/modals/user/update-user-role-modal';
@@ -59,9 +61,10 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 		updateProductUploadSubscriptionPlans,
 	} = useGlobalStore();
 
-	const createBlogModal = useCreateBlogStore();
 	const referralModal = useReferralModalStore();
 	const downloadAppModal = useDownloadAppStore();
+	const createBlogModal = useCreateBlogModalStore();
+	const deleteBlogModal = useDeleteBlogModalStore();
 	const shareProductModal = useShareProductModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 	const readNotificationModal = useReadNotificationModalStore();
@@ -144,7 +147,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const fetchBlogs = async () => {
 		try {
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/blog/fetch-all`,
+				`${process.env.NEXT_PUBLIC_API_URL}/blog/fetch-all`
 			);
 
 			// console.log('[CONVERSATIONS-RESPONSE] :: ', data);
@@ -279,6 +282,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	return (
 		<div className='relative'>
+			{deleteBlogModal.isOpen && <DeleteBlogModal />}
 			{createBlogModal.isOpen && <CreateBlogModal />}
 			{referralModal.isOpen && <UserReferralModal />}
 			{shareProductModal.isOpen && <ShareProductModal />}

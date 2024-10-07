@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {Metadata, ResolvingMetadata} from 'next';
-import {generateOGImageFromURL} from '@/utils/og.image.generator';
 import { formatBlogSlug } from '@/utils/slug.formatter';
+import {generateOGImageFromURL} from '@/utils/og.image.generator';
 
 interface BlogDescriptionLayoutProps {
 	params: {

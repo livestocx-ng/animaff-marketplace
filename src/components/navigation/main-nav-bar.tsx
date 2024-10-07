@@ -18,7 +18,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {NavLinks} from '@/data';
 import {
-	useCreateBlogStore,
+	useCreateBlogModalStore,
 	useGlobalStore,
 	useReferralModalStore,
 	useUpdateUserRoleModalStore,
@@ -47,7 +47,7 @@ const MainNavbar = () => {
 		updateUserProductUploadSubscription,
 	} = useGlobalStore();
 
-	const createBlogModal = useCreateBlogStore();
+	const createBlogModal = useCreateBlogModalStore();
 	const referralModal = useReferralModalStore();
 	const updateUserRoleModal = useUpdateUserRoleModalStore();
 

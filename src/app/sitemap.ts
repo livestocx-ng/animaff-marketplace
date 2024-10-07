@@ -21,6 +21,10 @@ export default async function sitemap() {
 			lastModified: new Date(),
 		},
 		{
+			url: `${baseUrl}/blog`,
+			lastModified: new Date(),
+		},
+		{
 			url: `${baseUrl}/privacy-policy`,
 			lastModified: new Date(),
 		},
