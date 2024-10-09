@@ -1,11 +1,10 @@
 import {Blog, Product, Vendor} from '@/types/types';
 
 export function formatBlogSlug(blog: Blog): string {
-	// Remove commas from the blog name
 	const formattedName = blog.title.replace(/,/g, '');
 
-	// Replace spaces with dashes and convert to lowercase
 	const formattedNameWithoutCommas = formattedName
+		.replace(/[^\w\s]/g, '')
 		.replace(/\s+/g, '-')
 		.toLowerCase();
 
@@ -15,27 +14,19 @@ export function formatBlogSlug(blog: Blog): string {
 }
 
 export function formatProductSlug(product: Product): string {
-	// Remove commas from the product name
 	const formattedProductName = product.name.replace(/,/g, '');
 
-	// Replace spaces with dashes and convert to lowercase
 	const formattedProductNameWithoutCommas = formattedProductName
+		.replace(/[^\w\s]/g, '')
 		.replace(/\s+/g, '-')
 		.toLowerCase();
 
-	// Concatenate product name and product ID with an underscore
 	const slug = `${formattedProductNameWithoutCommas}_${product.productId}`;
 
 	return slug.toLowerCase();
 }
 
 export function formatVendorSlug(vendor: Vendor): string {
-	// const slug = vendor?.slug.replace(/,/g, '');
-
-	// const formattedVendorNameWithOutCommas = formattedVendorName.replace(/\s+/g, '-').toLowerCase();
-
-	// const slug = `${formattedVendorNameWithOutCommas}_${vendor?.vendorId!.toLowerCase()}`;
-
 	return vendor?.slug.toLowerCase();
 }
 

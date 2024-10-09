@@ -29,9 +29,9 @@ const BlogCard = ({blog}: BlogCardProps) => {
 						<PencilIcon
 							size={14}
 							onClick={() => {
-								deleteCardModal.onOpen();
+								// deleteCardModal.onOpen();
 
-								deleteCardModal.updatePayload(blog);
+								// deleteCardModal.updatePayload(blog);
 							}}
 							className='text-green-600'
 						/>
