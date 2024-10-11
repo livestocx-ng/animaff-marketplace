@@ -15,7 +15,7 @@ const SellerInfoTab = () => {
 
 				<li>
 					<span className='font-semibold'>Address:</span>{' '}
-					{productInfo?.address}
+					{productInfo?.address} {productInfo?.vendor?.city && ', '} {productInfo?.vendor?.city} {productInfo?.vendor?.state}
 				</li>
 			</ul>
 
