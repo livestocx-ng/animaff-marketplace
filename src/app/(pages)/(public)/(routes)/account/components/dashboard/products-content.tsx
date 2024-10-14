@@ -72,7 +72,7 @@ const ProductsContent = () => {
 						) {
 							return toast.error(
 								'Product upload subscription expired!',
-								{className: 'text-xs sm:text-base'}
+								{className: 'text-xs sm:text-sm'}
 							);
 						}
 

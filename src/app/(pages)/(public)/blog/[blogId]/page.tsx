@@ -20,9 +20,32 @@ interface BlogDetailsPageParams {
 const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 	const router = useRouter();
 
-	const {blog, updateBlog} = useGlobalStore();
+	const {blog, user, updateBlog} = useGlobalStore();
 
 	const [loading, setLoading] = useState(false);
+
+	const handleViewBlog = async () => {
+		try {
+			if (!user) {
+				return;
+			}
+
+			const formattedBlogId = blogId.split('_')[1];
+
+			const {data} = await axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/blog/view?blogId=${formattedBlogId}`,
+				{
+					headers: {
+						Authorization: user?.accessToken,
+					},
+				}
+			);
+
+			console.log('[VIEW-BLOG-RESPONSE] :: ', data);
+		} catch (error) {
+			console.log('[VIEW-BLOG-ERROR] :: ', error);
+		}
+	};
 
 	const fetchBlogDescription = async () => {
 		try {
@@ -48,6 +71,10 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 			console.log('[FETCH-BLOG-ERROR] :: ', error);
 		}
 	};
+
+	useEffect(() => {
+		handleViewBlog();
+	}, [user]);
 
 	useEffect(() => {
 		fetchBlogDescription();
