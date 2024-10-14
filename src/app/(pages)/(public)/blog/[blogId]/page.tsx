@@ -28,8 +28,22 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 		try {
 			const formattedBlogId = blogId.split('_')[1];
 
-			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/blog/view?blogId=${formattedBlogId}`,
+			axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/blog/view?blogId=${formattedBlogId}`
+			);
+
+			// console.log('[VIEW-BLOG-RESPONSE] :: ', data);
+		} catch (error) {
+			// console.log('[VIEW-BLOG-ERROR] :: ', error);
+		}
+	};
+
+	const handleUserViewBlog = async () => {
+		try {
+			const formattedBlogId = blogId.split('_')[1];
+
+			axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/blog/user-view?blogId=${formattedBlogId}`,
 				{
 					headers: {
 						Authorization: user?.accessToken,
@@ -70,12 +84,14 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 
 	useEffect(() => {
 		if (user) {
-			handleViewBlog();
+			handleUserViewBlog();
 		}
 	}, [user]);
 
 	useEffect(() => {
 		fetchBlogDescription();
+
+		handleViewBlog();
 	}, []);
 
 	return (
