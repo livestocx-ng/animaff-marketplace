@@ -36,14 +36,14 @@ export async function generateMetadata(
 
 	return {
 		title: `Blog - ${data.data.title}`,
-		description: `${data.data?.description.slice(0, 15)}...`,
+		description: `${data.data?.description.slice(0, 30)}...`,
 		keywords: ['Animaff', 'Livestock', 'United States', 'Animals', 'Meat'],
 		other: {
 			'facebook-domain-verification': 'yy2fxudmyl6e8nxtl2zjx9lss8j8dl',
 		},
 		openGraph: {
             title: `Blog - ${data.data.title}`,
-            description: `${data.data?.description.slice(0, 15)}...`,
+            description: `${data.data?.description.slice(0, 30)}...`,
 			url: `https://animaff.com/blog/${formatBlogSlug(data.data)}`,
 			siteName: 'Animaff',
 			type: 'website',
@@ -73,7 +73,7 @@ export async function generateMetadata(
 			site: '@animaff',
 			creator: '@livestocx',
             title: `Blog - ${data.data.title}`,
-            description: `${data.data?.description.slice(0, 15)}...`,
+            description: `${data.data?.description.slice(0, 30)}...`,
 			images: [
 				{
 					url: ogImage200x200,
