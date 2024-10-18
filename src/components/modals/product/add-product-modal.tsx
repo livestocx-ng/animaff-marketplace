@@ -61,7 +61,7 @@ const initialState: FormData = {
 	discountPrice: '',
 	category: '',
 	media: [],
-	inStock: false,
+	inStock: true,
 	isNegotiable: false,
 	zipPostalCode: '',
 	isOrganicallyRaised: false,
