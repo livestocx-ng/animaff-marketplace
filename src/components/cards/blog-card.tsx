@@ -69,9 +69,9 @@ const BlogCard = ({blog}: BlogCardProps) => {
 
 			<h1 className='text-sm font-medium h-[40px]'>{blog.title}</h1>
 
-			<p className='text-sm text-slate-600'>
+			<section className='text-sm text-slate-600'>
 				{blog.description.slice(0, 250)}...
-			</p>
+			</section>
 		</div>
 	);
 };
