@@ -37,20 +37,24 @@ const handler = NextAuth({
 					);
 
 					const cookieStore = await cookies();
-          
+
 					// Set the cookie
-					cookieStore.set(COOKIE_NAME, JSON.stringify({
-					  ...data.data.user,
-					  accessToken: data?.data?.accessToken,
-					  refreshToken: data?.data?.refreshToken,
-					}), {
-					  httpOnly: true,
-					  maxAge: COOKIE_MAX_AGE,
-					  path: '/',
-					  sameSite: 'strict',
-					  secure: process.env.NODE_ENV === 'production',
-					});
-		  
+					cookieStore.set(
+						COOKIE_NAME,
+						JSON.stringify({
+							...data.data.user,
+							accessToken: data?.data?.accessToken,
+							refreshToken: data?.data?.refreshToken,
+						}),
+						{
+							httpOnly: true,
+							maxAge: COOKIE_MAX_AGE,
+							path: '/',
+							sameSite: 'strict',
+							secure: process.env.NODE_ENV === 'production',
+						}
+					);
+
 					// cookies().set({
 					// 	name: COOKIE_NAME,
 					// 	value: JSON.stringify({
@@ -70,7 +74,7 @@ const handler = NextAuth({
 					// console.error('[GOOGLE-SIGIN-API-ERROR]', error);
 				}
 			}
-			return true; 
+			return true;
 		},
 		async redirect({url, baseUrl}) {
 			return url || baseUrl;

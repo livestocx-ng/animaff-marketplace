@@ -31,20 +31,38 @@ const handler = NextAuth({
 					);
 
 					// // console.log('[DATA] :: ', data.data);
+					const cookieStore = await cookies();
 
-					cookies().set({
-						name: COOKIE_NAME,
-						value: JSON.stringify({
+					// Set the cookie
+					cookieStore.set(
+						COOKIE_NAME,
+						JSON.stringify({
 							...data.data.user,
 							accessToken: data?.data?.accessToken,
 							refreshToken: data?.data?.refreshToken,
 						}),
-						httpOnly: true,
-						maxAge: COOKIE_MAX_AGE,
-						path: '/',
-						sameSite: 'strict',
-						secure: process.env.NODE_ENV === 'production',
-					});
+						{
+							httpOnly: true,
+							maxAge: COOKIE_MAX_AGE,
+							path: '/',
+							sameSite: 'strict',
+							secure: process.env.NODE_ENV === 'production',
+						}
+					);
+
+					// cookies().set({
+					// 	name: COOKIE_NAME,
+					// 	value: JSON.stringify({
+					// 		...data.data.user,
+					// 		accessToken: data?.data?.accessToken,
+					// 		refreshToken: data?.data?.refreshToken,
+					// 	}),
+					// 	httpOnly: true,
+					// 	maxAge: COOKIE_MAX_AGE,
+					// 	path: '/',
+					// 	sameSite: 'strict',
+					// 	secure: process.env.NODE_ENV === 'production',
+					// });
 
 					return Promise.resolve('/');
 				} catch (error) {
