@@ -71,7 +71,7 @@ export async function generateMetadata(
 		twitter: {
 			card: 'summary',
 			site: '@animaff',
-			creator: '@livestocx',
+			creator: '@animaff'
             title: `Blog - ${data.data.title}`,
             description: `${data.data?.description.slice(0, 30)}...`,
 			images: [
