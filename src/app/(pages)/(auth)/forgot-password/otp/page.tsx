@@ -92,17 +92,17 @@ const ForgotPasswordOtpPage = () => {
 	};
 
 	return (
-		<Suspense fallback={<div></div>}>
-			<Fragment>
-				<MainNavbar />
-				<div className='w-full'>
-					<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-						<h1 className='text-xl md:text-5xl font-medium text-white'>
-							Verify OTP
-						</h1>
-					</section>
+		<Fragment>
+			<MainNavbar />
+			<div className='w-full'>
+				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+					<h1 className='text-xl md:text-5xl font-medium text-white'>
+						Verify OTP
+					</h1>
+				</section>
 
-					<div className='flex flex-col justify-center items-center  py-20'>
+				<div className='flex flex-col justify-center items-center py-20'>
+					<Suspense fallback={<div></div>}>
 						<form
 							autoComplete='off'
 							onSubmit={handleSubmit}
@@ -158,11 +158,11 @@ const ForgotPasswordOtpPage = () => {
 								)}
 							</div>
 						</form>
-					</div>
+					</Suspense>
 				</div>
-				<Footer />
-			</Fragment>
-		</Suspense>
+			</div>
+			<Footer />
+		</Fragment>
 	);
 };
 
