@@ -5,11 +5,11 @@ import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 
 // Define types for metadata generation
-type MetadataProps = {
-	params: {
-		slug: string;
-	};
-};
+// type MetadataProps = {
+// 	params: {
+// 		slug: string;
+// 	};
+// };
 
 // Define the layout props to match Next.js expectations
 interface LayoutProps {
@@ -20,7 +20,7 @@ interface LayoutProps {
 }
 
 export async function generateMetadata(
-	{params}: MetadataProps,
+	{params}: LayoutProps,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
 	// console.log('SLUG ', params.slug);
@@ -32,7 +32,7 @@ export async function generateMetadata(
 	const {data} = await axios.get(
 		`${
 			process.env.NEXT_PUBLIC_API_URL
-		}/user/products/product/${getProductIdFromSlug(params.slug)}`
+		}/user/products/product/${getProductIdFromSlug((await params)?.slug!)}`
 	);
 
 	const imageUrl = getMediaImageUrl(data.data);
