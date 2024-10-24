@@ -36,19 +36,34 @@ const handler = NextAuth({
 						}
 					);
 
-					cookies().set({
-						name: COOKIE_NAME,
-						value: JSON.stringify({
-							...data.data.user,
-							accessToken: data?.data?.accessToken,
-							refreshToken: data?.data?.refreshToken,
-						}),
-						httpOnly: true,
-						maxAge: COOKIE_MAX_AGE,
-						path: '/',
-						sameSite: 'strict',
-						secure: process.env.NODE_ENV === 'production',
+					const cookieStore = await cookies();
+          
+					// Set the cookie
+					cookieStore.set(COOKIE_NAME, JSON.stringify({
+					  ...data.data.user,
+					  accessToken: data?.data?.accessToken,
+					  refreshToken: data?.data?.refreshToken,
+					}), {
+					  httpOnly: true,
+					  maxAge: COOKIE_MAX_AGE,
+					  path: '/',
+					  sameSite: 'strict',
+					  secure: process.env.NODE_ENV === 'production',
 					});
+		  
+					// cookies().set({
+					// 	name: COOKIE_NAME,
+					// 	value: JSON.stringify({
+					// 		...data.data.user,
+					// 		accessToken: data?.data?.accessToken,
+					// 		refreshToken: data?.data?.refreshToken,
+					// 	}),
+					// 	httpOnly: true,
+					// 	maxAge: COOKIE_MAX_AGE,
+					// 	path: '/',
+					// 	sameSite: 'strict',
+					// 	secure: process.env.NODE_ENV === 'production',
+					// });
 
 					return true;
 				} catch (error) {
