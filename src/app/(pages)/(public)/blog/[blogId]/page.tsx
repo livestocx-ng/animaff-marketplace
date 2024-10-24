@@ -12,13 +12,15 @@ import MainNavbar from '@/components/navigation/main-nav-bar';
 import Link from 'next/link';
 
 interface BlogDetailsPageParams {
-	params: {
+	params?: Promise<{
 		blogId: string;
-	};
+	}>;
 }
 
-const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
+const BlogDetailsPage = async({params}: BlogDetailsPageParams) => {
 	const router = useRouter();
+
+	const resolvedParams = await params;
 
 	const {blog, user, updateBlog} = useGlobalStore();
 
@@ -26,10 +28,10 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 
 	const handleViewBlog = async () => {
 		try {
-			const formattedBlogId = blogId.split('_')[1];
+			const formattedBlogId = resolvedParams?.blogId.split('_')[1];
 
 			axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/blog/view?blogId=${formattedBlogId}`
+				`${process.env.NEXT_PUBLIC_API_URL}/blog/view?resolvedParams?.blogId=${formattedBlogId}`
 			);
 
 			// console.log('[VIEW-BLOG-RESPONSE] :: ', data);
@@ -40,7 +42,7 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 
 	const handleUserViewBlog = async () => {
 		try {
-			const formattedBlogId = blogId.split('_')[1];
+			const formattedBlogId = resolvedParams?.blogId.split('_')[1];
 
 			axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/blog/user-view?blogId=${formattedBlogId}`,
@@ -66,7 +68,7 @@ const BlogDetailsPage = ({params: {blogId}}: BlogDetailsPageParams) => {
 				return;
 			}
 
-			const formattedBlogId = blogId.split('_')[1];
+			const formattedBlogId = resolvedParams?.blogId.split('_')[1];
 
 			const {data} = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/blog/fetch?blogId=${formattedBlogId}`
