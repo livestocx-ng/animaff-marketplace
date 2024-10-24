@@ -65,7 +65,7 @@ export async function generateMetadata(
 		twitter: {
 			card: 'summary',
 			site: '@animaff',
-			creator: '@animaff'
+			creator: '@animaff',
 			title: data.data.name,
 			description: 'Best deals, Everything Animals',
 			images: [
