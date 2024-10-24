@@ -11,11 +11,32 @@ import SearchForm from '@/components/home/search-form';
 import HomeProducts from '@/components/home/home-products';
 
 export default function HomePage() {
-	const {products, updateProducts, updatePagination, updateSearchLocation, userProductUploadSubscription} =
-		useGlobalStore();
+	const {
+		products,
+		updateProducts,
+		updatePagination,
+		updateSearchLocation,
+		user,
+	} = useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);
+
+	const initializeUserActivity = async () => {
+		try {
+			if (!user) {
+				return;
+			}
+
+			axios.get(
+				`${process.env.NEXT_PUBLIC_API_URL}/auth/user-activity?userId=${user?.id}`
+			);
+		} catch (error) {
+			const _error = error as AxiosError;
+
+			// console.log('[USER-ACTIVITY-ERROR] :: ', _error);
+		}
+	};
 
 	const fetchProducts = async () => {
 		try {
@@ -41,6 +62,10 @@ export default function HomePage() {
 
 	useEffect(() => {
 		updateSearchLocation('United States', 'United States');
+	}, []);
+
+	useEffect(() => {
+		initializeUserActivity();
 	}, []);
 
 	useEffect(() => {
