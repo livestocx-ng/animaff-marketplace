@@ -12,10 +12,10 @@ interface SEOParams {
 
 type LayoutProps = {
 	children: React.ReactNode;
-	params: {
-	  slug: string;
-	};
-  };
+	params: Promise<{
+		slug: string;
+	}>;
+};
 
 export async function generateMetadata(
 	{params}: SEOParams,
