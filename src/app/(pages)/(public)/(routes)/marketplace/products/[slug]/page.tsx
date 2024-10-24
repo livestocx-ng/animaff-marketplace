@@ -18,16 +18,19 @@ import EmptyAnimation from '../../../../../../../../public/animations/animation_
 import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
-	params: {
+	params: Promise<{
 		slug: string;
-	};
+	}>;
 }
 
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
-const MarketPlaceProductPage = ({params: {slug}}: ProductPageParams) => {
+const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 	const router = useRouter();
 	const pathName = usePathname();
+
+	const resolvedParams = await params;
+	const {slug} = resolvedParams;
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
