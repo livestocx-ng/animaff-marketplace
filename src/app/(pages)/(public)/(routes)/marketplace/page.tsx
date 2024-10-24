@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 
 const MarketplacePage = () => {
@@ -16,9 +16,11 @@ const MarketplacePage = () => {
 	}, []);
 
 	return (
-		<div className='h-screen flex flex-col items-center justify-center'>
-			Marketplace
-		</div>
+		<Suspense>
+			<div className='h-screen flex flex-col items-center justify-center'>
+				Marketplace
+			</div>
+		</Suspense>
 	);
 };
 
