@@ -4,21 +4,23 @@ import {getMediaImageUrl} from '@/utils/media/media.url';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 
-interface SEOParams {
+// Define types for metadata generation
+type MetadataProps = {
 	params: {
 		slug: string;
 	};
-}
-
-type LayoutProps = {
-	children: React.ReactNode;
-	params: Promise<{
-		slug: string;
-	}>;
 };
 
+// Define the layout props to match Next.js expectations
+interface LayoutProps {
+	children: React.ReactNode;
+	params?: Promise<{
+		slug: string;
+	}>;
+}
+
 export async function generateMetadata(
-	{params}: SEOParams,
+	{params}: MetadataProps,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
 	// console.log('SLUG ', params.slug);
