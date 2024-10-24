@@ -4,6 +4,12 @@ import {getMediaImageUrl} from '@/utils/media/media.url';
 import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 
+interface SEOParams {
+	params: {
+		slug: string;
+	};
+}
+
 interface ProductDescriptionLayoutProps {
 	params: {
 		slug: string;
@@ -12,7 +18,7 @@ interface ProductDescriptionLayoutProps {
 }
 
 export async function generateMetadata(
-	{params}: ProductDescriptionLayoutProps,
+	{params}: SEOParams,
 	parent: ResolvingMetadata
 ): Promise<Metadata> {
 	// console.log('SLUG ', params.slug);
