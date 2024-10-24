@@ -10,7 +10,7 @@ export async function PATCH(req: NextRequest) {
 
 		// console.log('[PAYLOAD] :: ', payload);
 
-		const cookieStore = cookies();
+		const cookieStore = await cookies();
 
 		const cookie = cookieStore.get(COOKIE_NAME);
 

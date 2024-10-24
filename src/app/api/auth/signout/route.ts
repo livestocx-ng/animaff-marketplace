@@ -4,7 +4,7 @@ import {NextResponse} from 'next/server';
 import {COOKIE_NAME} from '@/lib/constants';
 
 export async function GET(req: Request) {
-	const cookieStore = cookies();
+	const cookieStore = await cookies();
 
 	await cookieStore.delete(COOKIE_NAME);
 	await cookieStore.delete('next-auth.csrf-token');

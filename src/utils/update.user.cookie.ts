@@ -3,8 +3,8 @@ import {cookies} from 'next/headers';
 import {NextResponse} from 'next/server';
 import {COOKIE_MAX_AGE, COOKIE_NAME} from '@/lib/constants';
 
-export function UpdateUserCookies(data: {}) {
-	const cookieStore = cookies();
+export async function UpdateUserCookies(data: {}) {
+	const cookieStore = await cookies();
 
 	const cookie = cookieStore.get(COOKIE_NAME);
 
