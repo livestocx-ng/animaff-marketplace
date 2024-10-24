@@ -8,7 +8,6 @@ import Head from 'next/head';
 import {ToastProvider} from '@/providers';
 import AuthProvider from '@/providers/auth-provider';
 import CookieBannerProvider from '@/providers/cookie-banner-provider';
-import GoogleAnalyticsProvider from '@/providers/google-analytics-provider';
 import SocketProvider from '@/providers/socket-provider';
 import ReferralProvider from '@/providers/referral-provider';
 
@@ -40,8 +39,6 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
 		<html lang='en'>
-			<GoogleAnalyticsProvider />
-
 			<body className={poppins.className}>
 				<AuthProvider>
 					<SocketProvider>

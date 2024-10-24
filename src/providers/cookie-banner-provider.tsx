@@ -22,9 +22,9 @@ export default function CookieBannerProvider() {
 	useEffect(() => {
 		const newValue = cookieConsent ? 'granted' : 'denied';
 
-		window.gtag('consent', 'update', {
-			analytics_storage: 'granted',
-		});
+		// window.gtag('consent', 'update', {
+		// 	analytics_storage: 'granted',
+		// });
 
 		if (cookieConsent === true || cookieConsent === false) {
 			setLocalStorage('animaff_cookie_consent', cookieConsent);

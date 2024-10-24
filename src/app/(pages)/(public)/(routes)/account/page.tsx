@@ -1,5 +1,5 @@
 'use client';
-import {Fragment, useEffect} from 'react';
+import {Fragment, Suspense, useEffect} from 'react';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
@@ -36,69 +36,74 @@ const AccountPage = () => {
 	}, [searchParams.has('createAd')]);
 
 	return (
-		<Fragment>
-			<MainNavbar />
-			<div className='w-full relative'>
-				{isProductMediaModalOpen && <ProductMediaModal />}
+		<Suspense>
+			<Fragment>
+				<MainNavbar />
+				<div className='w-full relative'>
+					{isProductMediaModalOpen && <ProductMediaModal />}
 
-				<section className='h-[28vh] sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-					{currentAccountTab === 'Products' ? (
-						<div className='flex flex-col justify-center items-center text-center space-y-1 text-white px-4 sm:px-10'>
-							<h1 className='text-xl md:text-5xl font-medium'>
+					<section className='h-[28vh] sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+						{currentAccountTab === 'Products' ? (
+							<div className='flex flex-col justify-center items-center text-center space-y-1 text-white px-4 sm:px-10'>
+								<h1 className='text-xl md:text-5xl font-medium'>
+									{currentAccountTab}
+								</h1>
+								<p className='text-xs sm:text-sm font-medium'>
+									New users get 1 free Ad post in their first
+									month.
+								</p>
+								<p className='text-xs sm:text-sm font-medium'>
+									Renew and post unlimited Ads for $3/month.
+								</p>
+							</div>
+						) : (
+							<h1 className='text-xl md:text-5xl font-medium text-white'>
 								{currentAccountTab}
 							</h1>
-							<p className='text-xs sm:text-sm font-medium'>
-								New users get 1 free Ad post in their first month. 
-							</p>
-							<p className='text-xs sm:text-sm font-medium'>
-								Renew and post unlimited Ads for $3/month.
-							</p>
+						)}
+					</section>
+
+					<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
+						<div className='flex w-full'>
+							<MobileAccountSideBar />
 						</div>
-					) : (
-						<h1 className='text-xl md:text-5xl font-medium text-white'>
-							{currentAccountTab}
-						</h1>
-					)}
-				</section>
 
-				<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
-					<div className='flex w-full'>
-						<MobileAccountSideBar />
-					</div>
+						<div className='flex items-start justify-between w-full'>
+							<AccountSideBar />
 
-					<div className='flex items-start justify-between w-full'>
-						<AccountSideBar />
+							{currentAccountTab === 'Account' && (
+								<DashboardContent />
+							)}
 
-						{currentAccountTab === 'Account' && (
-							<DashboardContent />
-						)}
+							{currentAccountTab === 'Products' && (
+								<ProductsContent />
+							)}
 
-						{currentAccountTab === 'Products' && (
-							<ProductsContent />
-						)}
+							{currentAccountTab === 'Product' && (
+								<ProductContent />
+							)}
 
-						{currentAccountTab === 'Product' && <ProductContent />}
+							{/* {currentAccountTab === 'Promotions' && (
+								<PromotionsContent />
+							)} */}
 
-						{/* {currentAccountTab === 'Promotions' && (
-						<PromotionsContent />
-					)} */}
+							{currentAccountTab === 'Messages' && (
+								<MessagesContent />
+							)}
 
-						{currentAccountTab === 'Messages' && (
-							<MessagesContent />
-						)}
+							{currentAccountTab === 'Notifications' && (
+								<NotificationsContent />
+							)}
 
-						{currentAccountTab === 'Notifications' && (
-							<NotificationsContent />
-						)}
-
-						{currentAccountTab === 'Settings' && (
-							<SettingsContent />
-						)}
+							{currentAccountTab === 'Settings' && (
+								<SettingsContent />
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
-			<Footer />
-		</Fragment>
+				<Footer />
+			</Fragment>
+		</Suspense>
 	);
 };
 

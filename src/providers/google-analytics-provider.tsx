@@ -1,5 +1,5 @@
 'use client';
-import {useEffect} from 'react';
+import {Suspense, useEffect} from 'react';
 import Script from 'next/script';
 import {pageview} from '@/lib/gtagHelper';
 import {usePathname, useSearchParams} from 'next/navigation';
@@ -15,7 +15,7 @@ export default function GoogleAnalyticsProvider() {
 	}, [pathName, searchParams]);
 
 	return (
-		<>
+		<Suspense>
 			{' '}
 			<Script
 				strategy='afterInteractive'
@@ -40,7 +40,7 @@ export default function GoogleAnalyticsProvider() {
                         `,
 				}}
 			/>
-		</>
+		</Suspense>
 	);
 }
 

@@ -2,7 +2,7 @@
 import Lottie from 'lottie-react';
 import axios, {AxiosError} from 'axios';
 import {useSearchParams} from 'next/navigation';
-import {Fragment, useEffect, useState} from 'react';
+import {Fragment, Suspense, useEffect, useState} from 'react';
 import Footer from '@/components/navigation/footer';
 import SearchForm from '@/components/home/search-form';
 import {useGlobalStore} from '@/hooks/use-global-store';
@@ -16,10 +16,15 @@ import EmptyAnimation from '../../../../../../public/animations/animation__3.jso
 export default function SearchPage() {
 	const searchParams = useSearchParams();
 	const searchCity = searchParams.has('city') ? searchParams.get('city') : '';
-	const searchQuery = searchParams.has('query') ? searchParams.get('query') : '';
-	const searchState = searchParams.has('state') ? searchParams.get('state') : '';
+	const searchQuery = searchParams.has('query')
+		? searchParams.get('query')
+		: '';
+	const searchState = searchParams.has('state')
+		? searchParams.get('state')
+		: '';
 
-	const {user, searchProducts, updateSearchProducts, updateSearchPagination} = useGlobalStore();
+	const {user, searchProducts, updateSearchProducts, updateSearchPagination} =
+		useGlobalStore();
 
 	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -84,7 +89,7 @@ export default function SearchPage() {
 			// console.log('[FETCH-PRODUCTS-ERROR] :: ', _error);
 		}
 	};
-	
+
 	useEffect(() => {
 		fetchProducts();
 	}, [searchParams]);
@@ -94,65 +99,67 @@ export default function SearchPage() {
 	}, [currentPage]);
 
 	return (
-		<Fragment>
-			<MainNavbar />
-			<main className='bg-[#28312B]'>
-				<section className='h-[28vh] md:h-[320px] w-full bg-white md:bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-8 py-2 md:py-10 md:pb-2'>
-					<h1 className='text-lg md:text-4xl font-medium text-black md:text-white'>
-						Search
-					</h1>
+		<Suspense>
+			<Fragment>
+				<MainNavbar />
+				<main className='bg-[#28312B]'>
+					<section className='h-[28vh] md:h-[320px] w-full bg-white md:bg-home flex flex-col items-center justify-end gap-y-3 md:gap-y-8 py-2 md:py-10 md:pb-2'>
+						<h1 className='text-lg md:text-4xl font-medium text-black md:text-white'>
+							Search
+						</h1>
 
-					<SearchForm />
-				</section>
+						<SearchForm />
+					</section>
 
-				{loading && searchProducts?.length > 0 && (
-					<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
-						<PromotionBanner />
+					{loading && searchProducts?.length > 0 && (
+						<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
+							<PromotionBanner />
 
-						<div className='w-full bg-white h-[60vh] flex flex-col items-center justify-center'>
-							<LoadingAnimationOne />
+							<div className='w-full bg-white h-[60vh] flex flex-col items-center justify-center'>
+								<LoadingAnimationOne />
+							</div>
 						</div>
-					</div>
-				)}
+					)}
 
-				{loading && searchProducts?.length === 0 && (
-					<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
-						<PromotionBanner />
+					{loading && searchProducts?.length === 0 && (
+						<div className='flex flex-col w-full bg-white px-4 md:px-8 sm:pt-6 pb-10 relative'>
+							<PromotionBanner />
 
-						<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 pt-5 sm:pt-0 mt-16 md:mt-5'>
-							{Array(50)
-								.fill(1)
-								.map((item, index) => (
-									<ProductCardSkeleton key={index} />
-								))}
+							<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 pt-5 sm:pt-0 mt-16 md:mt-5'>
+								{Array(50)
+									.fill(1)
+									.map((item, index) => (
+										<ProductCardSkeleton key={index} />
+									))}
+							</div>
 						</div>
-					</div>
-				)}
+					)}
 
-				{!loading && searchProducts?.length === 0 && (
-					<div className='w-full bg-white h-[70vh] flex flex-col items-center justify-center'>
-						<div className='h-[200px] w-1/2 mx-auto bg-white'>
-							<Lottie
-								loop={false}
-								className='h-full'
-								animationData={EmptyAnimation}
+					{!loading && searchProducts?.length === 0 && (
+						<div className='w-full bg-white h-[70vh] flex flex-col items-center justify-center'>
+							<div className='h-[200px] w-1/2 mx-auto bg-white'>
+								<Lottie
+									loop={false}
+									className='h-full'
+									animationData={EmptyAnimation}
+								/>
+							</div>
+						</div>
+					)}
+
+					{!loading && searchProducts?.length > 0 && (
+						<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-10 sm:pt-10 pb-10 relative'>
+							<PromotionBanner />
+
+							<SearchProducts
+								currentPage={currentPage}
+								updateCurrentPage={setCurrentPage}
 							/>
 						</div>
-					</div>
-				)}
-
-				{!loading && searchProducts?.length > 0 && (
-					<div className='flex flex-col w-full bg-white px-4 md:px-8 pt-10 sm:pt-10 pb-10 relative'>
-						<PromotionBanner />
-
-						<SearchProducts
-							currentPage={currentPage}
-							updateCurrentPage={setCurrentPage}
-						/>
-					</div>
-				)}
-			</main>
-			<Footer />
-		</Fragment>
+					)}
+				</main>
+				<Footer />
+			</Fragment>
+		</Suspense>
 	);
 }

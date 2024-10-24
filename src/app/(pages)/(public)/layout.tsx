@@ -1,5 +1,5 @@
 'use client';
-import {useEffect} from 'react';
+import {Suspense, useEffect} from 'react';
 import {
 	useGlobalStore,
 	useDownloadAppStore,
@@ -281,40 +281,46 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	};
 
 	return (
-		<div className='relative'>
-			{deleteBlogModal.isOpen && <DeleteBlogModal />}
-			{createBlogModal.isOpen && <CreateBlogModal />}
-			{referralModal.isOpen && <UserReferralModal />}
-			{shareProductModal.isOpen && <ShareProductModal />}
-			{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
-			{/* {downloadAppModal.isOpen && <DownloadMobileAppModal />} */}
-			{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
-			{readNotificationModal.isOpen && <NotificationModal />}
-			{upgradeToPremiumAccessModal.isOpen && <UpgradeToPremiumModal />}
-			{updateSearchLocationModal.isOpen && <UpdateSearchLocationModal />}
-			{premiumSubscriptionCheckoutModal.isOpen && (
-				<PremiumSubscriptionCheckoutModal />
-			)}
-			{verifyPremiumSubscriptionPaymentModal.isOpen && (
-				<VerifyPremiumSubscriptionPaymentModal
-					transactionRef={transactionRef!}
-					transactionStatus={transactionStatus!}
-				/>
-			)}
-			{verifyProductUploadPaymentModal.isOpen && (
-				<VerifyProductUploadSubscriptionPaymentModal
-					transactionRef={transactionRef!}
-					transactionStatus={transactionStatus!}
-				/>
-			)}
-			{premiumSubscriptionSuccessModal.isOpen && (
-				<PremiumSubscriptionSuccessModal />
-			)}
+		<Suspense>
+			<div className='relative'>
+				{deleteBlogModal.isOpen && <DeleteBlogModal />}
+				{createBlogModal.isOpen && <CreateBlogModal />}
+				{referralModal.isOpen && <UserReferralModal />}
+				{shareProductModal.isOpen && <ShareProductModal />}
+				{welcomeFarmerModal.isOpen && <WelcomeFarmerModal />}
+				{/* {downloadAppModal.isOpen && <DownloadMobileAppModal />} */}
+				{updateUserRoleModal.isOpen && <UpdateUserRoleModal />}
+				{readNotificationModal.isOpen && <NotificationModal />}
+				{upgradeToPremiumAccessModal.isOpen && (
+					<UpgradeToPremiumModal />
+				)}
+				{updateSearchLocationModal.isOpen && (
+					<UpdateSearchLocationModal />
+				)}
+				{premiumSubscriptionCheckoutModal.isOpen && (
+					<PremiumSubscriptionCheckoutModal />
+				)}
+				{verifyPremiumSubscriptionPaymentModal.isOpen && (
+					<VerifyPremiumSubscriptionPaymentModal
+						transactionRef={transactionRef!}
+						transactionStatus={transactionStatus!}
+					/>
+				)}
+				{verifyProductUploadPaymentModal.isOpen && (
+					<VerifyProductUploadSubscriptionPaymentModal
+						transactionRef={transactionRef!}
+						transactionStatus={transactionStatus!}
+					/>
+				)}
+				{premiumSubscriptionSuccessModal.isOpen && (
+					<PremiumSubscriptionSuccessModal />
+				)}
 
-			{/* {updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />} */}
+				{/* {updateVendorProfileModal.isOpen && <UpdateVendorProfileModal />} */}
 
-			{children}
-		</div>
+				{children}
+			</div>
+		</Suspense>
 	);
 };
 

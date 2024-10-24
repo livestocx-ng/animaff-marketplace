@@ -5,7 +5,7 @@ import {
 } from '@/hooks/use-global-store';
 import {MapPin, Search} from 'lucide-react';
 import {Button} from '@/components/ui/button';
-import React, {useEffect, useReducer} from 'react';
+import React, {Suspense, useEffect, useReducer} from 'react';
 import FormTextInput from '@/components/input/form-text-input';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
@@ -38,11 +38,8 @@ const SearchForm = () => {
 	const pathName = usePathname();
 	const searchParams = useSearchParams();
 
-	const {
-		searchQueryCity,
-		searchQueryState,
-		updateSearchQuery,
-	} = useGlobalStore();
+	const {searchQueryCity, searchQueryState, updateSearchQuery} =
+		useGlobalStore();
 
 	const updateSearchLocationModal = useUpdateSearchLocationModalStore();
 
@@ -71,11 +68,12 @@ const SearchForm = () => {
 	}, [searchParams.has('query')]);
 
 	return (
-		<div className='w-full flex flex-col justify-center items-center'>
-			{!pathName.includes('sellers') &&
-				!pathName.includes('marketplace') && (
-					<div className='flex items-center space-x-3 pb-2 md:pb-0'>
-						{/* <Link
+		<Suspense>
+			<div className='w-full flex flex-col justify-center items-center'>
+				{!pathName.includes('sellers') &&
+					!pathName.includes('marketplace') && (
+						<div className='flex items-center space-x-3 pb-2 md:pb-0'>
+							{/* <Link
 							className=''
 							target='_blank'
 							href={
@@ -92,75 +90,81 @@ const SearchForm = () => {
 							/>
 						</Link> */}
 
-						<p
-							onClick={() => updateSearchLocationModal.onOpen()}
-							className='bg-slate-800 cursor-pointer text-white text-xs md:text-sm px-4 pl-2 py-2 flex md:hidden items-center capitalize rounded-md'
-						>
-							&nbsp;
-							<MapPin className='h-5 w-5' />{' '}
-							{searchQueryCity
-								? searchQueryCity
-								: searchQueryState}
-						</p>
-					</div>
-				)}
+							<p
+								onClick={() =>
+									updateSearchLocationModal.onOpen()
+								}
+								className='bg-slate-800 cursor-pointer text-white text-xs md:text-sm px-4 pl-2 py-2 flex md:hidden items-center capitalize rounded-md'
+							>
+								&nbsp;
+								<MapPin className='h-5 w-5' />{' '}
+								{searchQueryCity
+									? searchQueryCity
+									: searchQueryState}
+							</p>
+						</div>
+					)}
 				<div className='text-white text-sm hidden md:flex items-center space-x-2 py-2'>
-				<p> Find anything Livestock in </p>
-				<p
-					onClick={() => updateSearchLocationModal.onOpen()}
-					className='bg-slate-800 cursor-pointer text-white text-xs px-4 pl-2 py-2 flex items-center capitalize rounded-md'
+					<p> Find anything Livestock in </p>
+					<p
+						onClick={() => updateSearchLocationModal.onOpen()}
+						className='bg-slate-800 cursor-pointer text-white text-xs px-4 pl-2 py-2 flex items-center capitalize rounded-md'
+					>
+						&nbsp;
+						<MapPin size={14} />{' '}
+						{searchQueryCity ? searchQueryCity : searchQueryState}
+					</p>
+				</div>
+				<form
+					onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+						event.preventDefault();
+
+						if (formData.query.trim().length === 0) return;
+
+						const updatedSearchParams = new URLSearchParams(
+							searchParams.toString()
+						);
+
+						updatedSearchParams.set(
+							'query',
+							encodeURI(formData.query)
+						);
+						updatedSearchParams.set(
+							'state',
+							searchParams.has('state')
+								? searchParams.get('state')!
+								: ''
+						);
+						updatedSearchParams.set(
+							'city',
+							searchParams.has('city')
+								? searchParams.get('city')!
+								: ''
+						);
+
+						router.push(`/search?${updatedSearchParams}`);
+					}}
+					className='flex w-full justify-center items-center gap-x-5 relative'
 				>
-					&nbsp;
-					<MapPin size={14} />{' '}
-					{searchQueryCity ? searchQueryCity : searchQueryState}
-				</p>
+					<FormTextInput
+						name='query'
+						value={formData.query}
+						handleChange={handleChange}
+						padding='px-5 py-[10px] md:py-3'
+						placeHolder='What are you looking for?'
+						classes='w-[70%] md:w-[60%] bg-[#00A65120] text-black md:text-white text-sm placeholder:text-xs placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
+					/>
+
+					<Button
+						type='submit'
+						// onClick={handleSearch}
+						className='bg-main hover:bg-main rounded-full w-12 h-12'
+					>
+						<Search className='h-12 w-12 text-white' />
+					</Button>
+				</form>
 			</div>
-			<form
-				onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-					event.preventDefault();
-
-					if (formData.query.trim().length === 0) return;
-
-					const updatedSearchParams = new URLSearchParams(
-						searchParams.toString()
-					);
-
-					updatedSearchParams.set('query', encodeURI(formData.query));
-					updatedSearchParams.set(
-						'state',
-						searchParams.has('state')
-							? searchParams.get('state')!
-							: ''
-					);
-					updatedSearchParams.set(
-						'city',
-						searchParams.has('city')
-							? searchParams.get('city')!
-							: ''
-					);
-
-					router.push(`/search?${updatedSearchParams}`);
-				}}
-				className='flex w-full justify-center items-center gap-x-5 relative'
-			>
-				<FormTextInput
-					name='query'
-					value={formData.query}
-					handleChange={handleChange}
-					padding='px-5 py-[10px] md:py-3'
-					placeHolder='What are you looking for?'
-					classes='w-[70%] md:w-[60%] bg-[#00A65120] text-black md:text-white text-sm placeholder:text-xs placeholder:italic border-2 border-green-600 focus:border-green-600 rounded-full'
-				/>
-
-				<Button
-					type='submit'
-					// onClick={handleSearch}
-					className='bg-main hover:bg-main rounded-full w-12 h-12'
-				>
-					<Search className='h-12 w-12 text-white' />
-				</Button>
-			</form>
-		</div>
+		</Suspense>
 	);
 };
 
