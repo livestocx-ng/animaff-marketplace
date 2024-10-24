@@ -3,7 +3,7 @@ import {NextResponse} from 'next/server';
 import {COOKIE_NAME} from '@/lib/constants';
 
 export async function GET(req: Request) {
-	const cookieStore = cookies();
+	const cookieStore = await cookies();
 
 	// // console.log('[COOKIES] :: ', cookieStore);
 
