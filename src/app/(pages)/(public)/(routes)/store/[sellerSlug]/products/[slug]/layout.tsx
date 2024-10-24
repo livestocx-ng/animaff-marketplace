@@ -5,9 +5,9 @@ import {getProductIdFromSlug} from '@/utils/slug.formatter';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 
 interface ProductDescriptionLayoutProps {
-	params: {
+	params?: Promise<{
 		slug: string;
-	};
+	}>;
 	children: React.ReactNode;
 }
 
@@ -24,7 +24,7 @@ export async function generateMetadata(
 	const {data} = await axios.get(
 		`${
 			process.env.NEXT_PUBLIC_API_URL
-		}/user/products/product/${getProductIdFromSlug(params.slug)}`
+		}/user/products/product/${getProductIdFromSlug((await params)?.slug!)}`
 	);
 
 	const imageUrl = getMediaImageUrl(data.data);
