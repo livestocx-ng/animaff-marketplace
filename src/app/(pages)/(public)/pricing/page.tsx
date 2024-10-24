@@ -69,7 +69,7 @@ const PricingPage = () => {
 	};
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<Fragment>
 				<MainNavbar />
 

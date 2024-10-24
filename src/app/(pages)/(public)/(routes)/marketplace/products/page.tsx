@@ -16,7 +16,7 @@ const MarketplaceProductsPage = () => {
 	}, []);
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<div className='h-screen flex flex-col items-center justify-center'>
 				Marketplace Products
 			</div>

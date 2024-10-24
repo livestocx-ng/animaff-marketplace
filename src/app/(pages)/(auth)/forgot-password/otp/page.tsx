@@ -12,7 +12,7 @@ import Footer from '@/components/navigation/footer';
 
 const numberOfInputs = 4;
 
-const SignInPage = () => {
+const ForgotPasswordOtpPage = () => {
 	const router = useRouter();
 	const {user} = useUserHook();
 	const searchParams = useSearchParams();
@@ -92,7 +92,7 @@ const SignInPage = () => {
 	};
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<Fragment>
 				<MainNavbar />
 				<div className='w-full'>
@@ -166,4 +166,4 @@ const SignInPage = () => {
 	);
 };
 
-export default SignInPage;
+export default ForgotPasswordOtpPage;

@@ -169,7 +169,7 @@ const SignUpPage = () => {
 	};
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<Fragment>
 				<MainNavbar />
 				<div className='w-full'>

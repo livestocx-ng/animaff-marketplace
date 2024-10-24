@@ -36,7 +36,7 @@ const AccountPage = () => {
 	}, [searchParams.has('createAd')]);
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<Fragment>
 				<MainNavbar />
 				<div className='w-full relative'>

@@ -15,7 +15,7 @@ export default function GoogleAnalyticsProvider() {
 	}, [pathName, searchParams]);
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			{' '}
 			<Script
 				strategy='afterInteractive'

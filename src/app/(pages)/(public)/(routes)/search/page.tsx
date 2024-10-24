@@ -99,7 +99,7 @@ export default function SearchPage() {
 	}, [currentPage]);
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<Fragment>
 				<MainNavbar />
 				<main className='bg-[#28312B]'>

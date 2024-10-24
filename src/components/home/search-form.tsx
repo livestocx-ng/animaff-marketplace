@@ -68,7 +68,7 @@ const SearchForm = () => {
 	}, [searchParams.has('query')]);
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<div className='w-full flex flex-col justify-center items-center'>
 				{!pathName.includes('sellers') &&
 					!pathName.includes('marketplace') && (

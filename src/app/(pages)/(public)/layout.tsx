@@ -281,7 +281,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	};
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<div className='relative'>
 				{deleteBlogModal.isOpen && <DeleteBlogModal />}
 				{createBlogModal.isOpen && <CreateBlogModal />}

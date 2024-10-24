@@ -55,7 +55,7 @@ const UpdateSearchLocationModal = () => {
 	}, []);
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<div className='fixed h-screen flex flex-col items-center justify-center w-full bg-[#11111190] backdrop-blur-sm z-[15]'>
 				<div
 					onClick={() => {

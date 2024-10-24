@@ -82,7 +82,7 @@ const SignInPage = () => {
 	};
 
 	return (
-		<Suspense>
+		<Suspense fallback={<div></div>}>
 			<div className='w-full'>
 				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
 					<h1 className='text-xl md:text-5xl font-medium text-white'>
