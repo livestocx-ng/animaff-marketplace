@@ -10,12 +10,12 @@ interface SEOParams {
 	};
 }
 
-interface ProductDescriptionLayoutProps {
-	params: {
-		slug: string;
-	};
+type LayoutProps = {
 	children: React.ReactNode;
-}
+	params: {
+	  slug: string;
+	};
+  };
 
 export async function generateMetadata(
 	{params}: SEOParams,
@@ -105,6 +105,6 @@ export async function generateMetadata(
 	};
 }
 
-export default function RootLayout({children}: ProductDescriptionLayoutProps) {
+export default function RootLayout({children}: LayoutProps) {
 	return <div>{children}</div>;
 }
