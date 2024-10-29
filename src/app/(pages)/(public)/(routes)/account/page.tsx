@@ -18,14 +18,9 @@ import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import NotificationsContent from './components/dashboard/notifications-content';
 import {useSearchParams} from 'next/navigation';
 
-const AccountPageContent = () => {
+const SearchParamsHandler = () => {
 	const searchParams = useSearchParams();
-
-	const {currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
-
-	const isProductMediaModalOpen = useProductMediaModalStore(
-		(state) => state.isOpen
-	);
+	const {updateCurrentAccountTab} = useGlobalStore();
 
 	useEffect(() => {
 		if (searchParams.has('createAd')) {
@@ -34,6 +29,16 @@ const AccountPageContent = () => {
 			);
 		}
 	}, [searchParams]);
+
+	return null;
+};
+
+const AccountPageContent = () => {
+	const {currentAccountTab} = useGlobalStore();
+
+	const isProductMediaModalOpen = useProductMediaModalStore(
+		(state) => state.isOpen
+	);
 
 	return (
 		<Fragment>
@@ -114,9 +119,12 @@ const LoadingState = () => {
 // Main page component that provides Suspense boundary
 const AccountPage = () => {
 	return (
-		<Suspense fallback={<LoadingState />}>
+		<>
+			<Suspense fallback={<LoadingState />}>
+				<SearchParamsHandler />
+			</Suspense>
 			<AccountPageContent />
-		</Suspense>
+		</>
 	);
 };
 
