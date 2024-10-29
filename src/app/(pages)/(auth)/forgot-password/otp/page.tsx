@@ -27,7 +27,7 @@ const ForgotPasswordOtpPage = () => {
 		if (user) {
 			router.push('/');
 		}
-	}, [user]);
+	}, [user, router]);
 
 	const handleInputChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
