@@ -33,12 +33,9 @@ const formReducer = (state: FormData, action: FormAction) => {
 	}
 };
 
-const SignInPage = () => {
+const ResetPasswordPage = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-
-	const email = searchParams.get('email');
-	const token = searchParams.get('token');
 
 	const [loading, setLoading] = useState(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
@@ -59,6 +56,9 @@ const SignInPage = () => {
 
 		try {
 			setLoading(true);
+
+			const email = searchParams.get('email');
+			const token = searchParams.get('token');
 
 			await axios.patch(
 				`/api/auth/reset-password?email=${email}&token=${token}`,
@@ -140,4 +140,4 @@ const SignInPage = () => {
 	);
 };
 
-export default SignInPage;
+export default ResetPasswordPage;
