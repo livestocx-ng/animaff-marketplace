@@ -2,7 +2,7 @@
 
 import {toast} from 'react-hot-toast';
 import axios, {AxiosError} from 'axios';
-import {Suspense, useReducer, useState} from 'react';
+import {Suspense, useEffect, useReducer, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useRouter, useSearchParams} from 'next/navigation';
 import AuthHeader from '../../../../components/header/auth-header';
@@ -40,6 +40,14 @@ const ResetPasswordPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
 
+	const [email, setEmail] = useState<string | null>(null);
+	const [token, setToken] = useState<string | null>(null);
+
+	useEffect(() => {
+		setEmail(searchParams.get('email'));
+		setToken(searchParams.get('token'));
+	}, [searchParams]);
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFormData({
 			type: 'UPDATE_FORMDATA',
@@ -56,9 +64,6 @@ const ResetPasswordPage = () => {
 
 		try {
 			setLoading(true);
-
-			const email = searchParams.get('email');
-			const token = searchParams.get('token');
 
 			await axios.patch(
 				`/api/auth/reset-password?email=${email}&token=${token}`,
