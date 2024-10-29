@@ -33,7 +33,7 @@ const AccountPageContent = () => {
 				searchParams.get('createAd')! == 'true' ? 'Products' : 'Account'
 			);
 		}
-	}, [searchParams.has('createAd')]);
+	}, [searchParams]);
 
 	return (
 		<Fragment>
