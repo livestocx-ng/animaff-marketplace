@@ -13,7 +13,7 @@ const MarketplaceProductsPage = () => {
 
 	useEffect(() => {
 		initializeRedirect();
-	}, []);
+	}, [router]);
 
 	return (
 		<Suspense fallback={<div></div>}>
