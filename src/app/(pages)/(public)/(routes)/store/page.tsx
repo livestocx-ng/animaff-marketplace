@@ -1,8 +1,8 @@
 'use client';
-import React, {useEffect} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 
-const StoresPage = () => {
+const StoresPageContent = () => {
 	const router = useRouter();
 
 	const initializeRedirect = () => {
@@ -21,5 +21,22 @@ const StoresPage = () => {
 		</div>
 	);
 };
+
+const LoadingState = () => {
+	return (
+	  <div className="w-full h-screen flex items-center justify-center">
+		{/* <ButtonLoader /> */}
+	  </div>
+	);
+  };
+  
+  // Main page component that provides Suspense boundary
+  const StoresPage = () => {
+	  return (
+		  <Suspense fallback={<LoadingState />}>
+			  <StoresPageContent />
+		  </Suspense>
+	  );
+  };
 
 export default StoresPage;
