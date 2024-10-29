@@ -18,7 +18,7 @@ import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import NotificationsContent from './components/dashboard/notifications-content';
 import {useSearchParams} from 'next/navigation';
 
-const AccountPage = () => {
+const AccountPageContent = () => {
 	const searchParams = useSearchParams();
 
 	const {currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
@@ -106,5 +106,22 @@ const AccountPage = () => {
 		</Suspense>
 	);
 };
+
+const LoadingState = () => {
+	return (
+	  <div className="w-full h-screen flex items-center justify-center">
+		{/* <ButtonLoader /> */}
+	  </div>
+	);
+  };
+  
+  // Main page component that provides Suspense boundary
+  const AccountPage = () => {
+	  return (
+		  <Suspense fallback={<LoadingState />}>
+			  <AccountPageContent />
+		  </Suspense>
+	  );
+  };
 
 export default AccountPage;
