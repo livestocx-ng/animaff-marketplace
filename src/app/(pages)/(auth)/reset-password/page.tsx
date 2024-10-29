@@ -33,7 +33,8 @@ const formReducer = (state: FormData, action: FormAction) => {
 	}
 };
 
-const ResetPasswordPage = () => {
+// Separate the content that uses useSearchParams
+const ResetPasswordContent = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
@@ -79,68 +80,81 @@ const ResetPasswordPage = () => {
 			setLoading(false);
 
 			const error = _error as AxiosError;
-
-			// console.log('[ERROR]', error);
-
 			toast.error('Invalid OTP');
 		}
 	};
 
 	return (
-		<Suspense fallback={<div></div>}>
-			<div className='w-full'>
-				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-					<h1 className='text-xl md:text-5xl font-medium text-white'>
+		<div className='w-full'>
+			<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+				<h1 className='text-xl md:text-5xl font-medium text-white'>
+					Reset Password
+				</h1>
+			</section>
+
+			<div className='flex flex-col justify-center items-center py-20'>
+				<form
+					autoComplete='off'
+					onSubmit={handleSubmit}
+					className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded-lg shadow-md flex flex-col space-y-8'
+				>
+					<h1 className='text-center text-2xl font-semibold'>
 						Reset Password
 					</h1>
-				</section>
+					<div className='space-y-4'>
+						<FormPasswordInput
+							name='newPassword'
+							padding='py-4 px-4'
+							value={formData.newPassword}
+							handleChange={handleChange}
+							placeHolder='New Password'
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+						/>
+						<FormPasswordInput
+							padding='py-4 px-4'
+							name='confirmPassword'
+							handleChange={handleChange}
+							placeHolder='Confirm New Password'
+							value={formData.confirmPassword}
+							classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
+						/>
 
-				<div className='flex flex-col justify-center items-center  py-20'>
-					<form
-						autoComplete='off'
-						onSubmit={handleSubmit}
-						className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded-lg shadow-md flex flex-col space-y-8'
-					>
-						<h1 className='text-center text-2xl font-semibold'>
-							Reset Password
-						</h1>
-						<div className='space-y-4'>
-							<FormPasswordInput
-								name='newPassword'
-								padding='py-4 px-4'
-								value={formData.newPassword}
-								handleChange={handleChange}
-								placeHolder='New Password'
-								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
-							/>
-							<FormPasswordInput
-								padding='py-4 px-4'
-								name='confirmPassword'
-								handleChange={handleChange}
-								placeHolder='Confirm New Password'
-								value={formData.confirmPassword}
-								classes='w-full text-sm placeholder:text-sm border focus:border-slate-500 rounded-lg'
-							/>
-
-							{loading ? (
-								<Button
-									type='button'
-									className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
-								>
-									<ButtonLoader />
-								</Button>
-							) : (
-								<Button
-									type='submit'
-									className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
-								>
-									Create New Password
-								</Button>
-							)}
-						</div>
-					</form>
-				</div>
+						{loading ? (
+							<Button
+								type='button'
+								className='bg-green-700 text-white h-12 hover:bg-green-700 w-full rounded-full py-4 cursor-default'
+							>
+								<ButtonLoader />
+							</Button>
+						) : (
+							<Button
+								type='submit'
+								className='bg-green-600 text-white h-12 hover:bg-green-700 w-full rounded-full py-4'
+							>
+								Create New Password
+							</Button>
+						)}
+					</div>
+				</form>
 			</div>
+		</div>
+	);
+};
+
+// Loading component
+const LoadingState = () => {
+  return (
+    <div className="w-full h-screen flex items-center justify-center">
+      <ButtonLoader />
+    </div>
+  );
+};
+
+// Main page component that provides Suspense boundary
+const ResetPasswordPage = () => {
+	return (
+		<Suspense fallback={<LoadingState />}>
+			<ResetPasswordContent />
 		</Suspense>
 	);
 };
