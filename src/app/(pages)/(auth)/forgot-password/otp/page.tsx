@@ -12,7 +12,7 @@ import Footer from '@/components/navigation/footer';
 
 const numberOfInputs = 4;
 
-const ForgotPasswordOtpPage = () => {
+const ForgotPasswordOtpContent = () => {
 	const router = useRouter();
 	const {user} = useUserHook();
 	const searchParams = useSearchParams();
@@ -165,5 +165,22 @@ const ForgotPasswordOtpPage = () => {
 		</Suspense>
 	);
 };
+
+const LoadingState = () => {
+	return (
+	  <div className="w-full h-screen flex items-center justify-center">
+		{/* <ButtonLoader /> */}
+	  </div>
+	);
+  };
+  
+  // Main page component that provides Suspense boundary
+  const ForgotPasswordOtpPage = () => {
+	  return (
+		  <Suspense fallback={<LoadingState />}>
+			  <ForgotPasswordOtpContent />
+		  </Suspense>
+	  );
+  };
 
 export default ForgotPasswordOtpPage;
