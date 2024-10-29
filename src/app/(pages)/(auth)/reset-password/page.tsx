@@ -145,7 +145,7 @@ const ResetPasswordContent = () => {
 const LoadingState = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <ButtonLoader />
+      {/* <ButtonLoader /> */}
     </div>
   );
 };
