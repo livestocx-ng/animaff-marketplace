@@ -36,92 +36,88 @@ const AccountPageContent = () => {
 	}, [searchParams.has('createAd')]);
 
 	return (
-		<Suspense fallback={<div></div>}>
-			<Fragment>
-				<MainNavbar />
-				<div className='w-full relative'>
-					{isProductMediaModalOpen && <ProductMediaModal />}
+		<Fragment>
+			<MainNavbar />
+			<div className='w-full relative'>
+				{isProductMediaModalOpen && <ProductMediaModal />}
 
-					<section className='h-[28vh] sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-						{currentAccountTab === 'Products' ? (
-							<div className='flex flex-col justify-center items-center text-center space-y-1 text-white px-4 sm:px-10'>
-								<h1 className='text-xl md:text-5xl font-medium'>
-									{currentAccountTab}
-								</h1>
-								<p className='text-xs sm:text-sm font-medium'>
-									New users get 1 free Ad post in their first
-									month.
-								</p>
-								<p className='text-xs sm:text-sm font-medium'>
-									Renew and post unlimited Ads for $3/month.
-								</p>
-							</div>
-						) : (
-							<h1 className='text-xl md:text-5xl font-medium text-white'>
+				<section className='h-[28vh] sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+					{currentAccountTab === 'Products' ? (
+						<div className='flex flex-col justify-center items-center text-center space-y-1 text-white px-4 sm:px-10'>
+							<h1 className='text-xl md:text-5xl font-medium'>
 								{currentAccountTab}
 							</h1>
-						)}
-					</section>
-
-					<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
-						<div className='flex w-full'>
-							<MobileAccountSideBar />
+							<p className='text-xs sm:text-sm font-medium'>
+								New users get 1 free Ad post in their first
+								month.
+							</p>
+							<p className='text-xs sm:text-sm font-medium'>
+								Renew and post unlimited Ads for $3/month.
+							</p>
 						</div>
+					) : (
+						<h1 className='text-xl md:text-5xl font-medium text-white'>
+							{currentAccountTab}
+						</h1>
+					)}
+				</section>
 
-						<div className='flex items-start justify-between w-full'>
-							<AccountSideBar />
+				<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
+					<div className='flex w-full'>
+						<MobileAccountSideBar />
+					</div>
 
-							{currentAccountTab === 'Account' && (
-								<DashboardContent />
-							)}
+					<div className='flex items-start justify-between w-full'>
+						<AccountSideBar />
 
-							{currentAccountTab === 'Products' && (
-								<ProductsContent />
-							)}
+						{currentAccountTab === 'Account' && (
+							<DashboardContent />
+						)}
 
-							{currentAccountTab === 'Product' && (
-								<ProductContent />
-							)}
+						{currentAccountTab === 'Products' && (
+							<ProductsContent />
+						)}
 
-							{/* {currentAccountTab === 'Promotions' && (
+						{currentAccountTab === 'Product' && <ProductContent />}
+
+						{/* {currentAccountTab === 'Promotions' && (
 								<PromotionsContent />
 							)} */}
 
-							{currentAccountTab === 'Messages' && (
-								<MessagesContent />
-							)}
+						{currentAccountTab === 'Messages' && (
+							<MessagesContent />
+						)}
 
-							{currentAccountTab === 'Notifications' && (
-								<NotificationsContent />
-							)}
+						{currentAccountTab === 'Notifications' && (
+							<NotificationsContent />
+						)}
 
-							{currentAccountTab === 'Settings' && (
-								<SettingsContent />
-							)}
-						</div>
+						{currentAccountTab === 'Settings' && (
+							<SettingsContent />
+						)}
 					</div>
 				</div>
-				<Footer />
-			</Fragment>
-		</Suspense>
+			</div>
+			<Footer />
+		</Fragment>
 	);
 };
 
 const LoadingState = () => {
 	return (
-	  <div className="w-full h-screen flex items-center justify-center">
-		{/* <ButtonLoader /> */}
-	  </div>
+		<div className='w-full h-screen flex items-center justify-center'>
+			{/* <ButtonLoader /> */}
+		</div>
 	);
-  };
-  
-  // Main page component that provides Suspense boundary
-  const AccountPage = () => {
-	  return (
-		  <Suspense fallback={<LoadingState />}>
-			  <AccountPageContent />
-		  </Suspense>
-	  );
-  };
+};
+
+// Main page component that provides Suspense boundary
+const AccountPage = () => {
+	return (
+		<Suspense fallback={<LoadingState />}>
+			<AccountPageContent />
+		</Suspense>
+	);
+};
 
 export default AccountPage;
