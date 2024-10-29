@@ -122,8 +122,8 @@ const AccountPage = () => {
 		<>
 			<Suspense fallback={<LoadingState />}>
 				<SearchParamsHandler />
+				<AccountPageContent />
 			</Suspense>
-			<AccountPageContent />
 		</>
 	);
 };
