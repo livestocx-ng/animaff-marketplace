@@ -1,129 +1,107 @@
-import AccountPageWrapper from './account-page-wrapper';
+'use client';
+import {Fragment, Suspense, useEffect} from 'react';
+import {
+	useGlobalStore,
+	useProductMediaModalStore,
+} from '@/hooks/use-global-store';
+import Footer from '@/components/navigation/footer';
+import AccountSideBar from './components/account-side-bar';
+import MainNavbar from '@/components/navigation/main-nav-bar';
+import ProductContent from './components/dashboard/product-content';
+import ProductsContent from './components/dashboard/products-content';
+import SettingsContent from './components/dashboard/settings-content';
+import MessagesContent from './components/dashboard/messages-content';
+import MobileAccountSideBar from './components/mobile-account-sidebar';
+import DashboardContent from './components/dashboard/dashboard-content';
+import PromotionsContent from './components/dashboard/promotions-content';
+import ProductMediaModal from '@/components/modals/product/product-media-modal';
+import NotificationsContent from './components/dashboard/notifications-content';
+import {useSearchParams} from 'next/navigation';
 
-export default function AccountPage() {
-	return <AccountPageWrapper />;
-}
+const AccountPage = () => {
+	const searchParams = useSearchParams();
 
-// 'use client';
-// import {Fragment, Suspense, useEffect} from 'react';
-// import {
-// 	useGlobalStore,
-// 	useProductMediaModalStore,
-// } from '@/hooks/use-global-store';
-// import Footer from '@/components/navigation/footer';
-// import AccountSideBar from './components/account-side-bar';
-// import MainNavbar from '@/components/navigation/main-nav-bar';
-// import ProductContent from './components/dashboard/product-content';
-// import ProductsContent from './components/dashboard/products-content';
-// import SettingsContent from './components/dashboard/settings-content';
-// import MessagesContent from './components/dashboard/messages-content';
-// import MobileAccountSideBar from './components/mobile-account-sidebar';
-// import DashboardContent from './components/dashboard/dashboard-content';
-// import PromotionsContent from './components/dashboard/promotions-content';
-// import ProductMediaModal from '@/components/modals/product/product-media-modal';
-// import NotificationsContent from './components/dashboard/notifications-content';
-// import {useSearchParams} from 'next/navigation';
+	const {currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
 
-// const AccountPageContent = () => {
-// 	const searchParams = useSearchParams();
+	const isProductMediaModalOpen = useProductMediaModalStore(
+		(state) => state.isOpen
+	);
 
-// 	const {currentAccountTab, updateCurrentAccountTab} = useGlobalStore();
+	useEffect(() => {
+		if (searchParams.has('createAd')) {
+			updateCurrentAccountTab(
+				searchParams.get('createAd')! == 'true' ? 'Products' : 'Account'
+			);
+		}
+	}, [searchParams]);
 
-// 	const isProductMediaModalOpen = useProductMediaModalStore(
-// 		(state) => state.isOpen
-// 	);
+	return (
+		<Fragment>
+			<MainNavbar />
+			<div className='w-full relative'>
+				{isProductMediaModalOpen && <ProductMediaModal />}
 
-// 	useEffect(() => {
-// 		if (searchParams.has('createAd')) {
-// 			updateCurrentAccountTab(
-// 				searchParams.get('createAd')! == 'true' ? 'Products' : 'Account'
-// 			);
-// 		}
-// 	}, [searchParams]);
+				<section className='h-[28vh] sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+					{currentAccountTab === 'Products' ? (
+						<div className='flex flex-col justify-center items-center text-center space-y-1 text-white px-4 sm:px-10'>
+							<h1 className='text-xl md:text-5xl font-medium'>
+								{currentAccountTab}
+							</h1>
+							<p className='text-xs sm:text-sm font-medium'>
+								New users get 1 free Ad post in their first
+								month.
+							</p>
+							<p className='text-xs sm:text-sm font-medium'>
+								Renew and post unlimited Ads for $3/month.
+							</p>
+						</div>
+					) : (
+						<h1 className='text-xl md:text-5xl font-medium text-white'>
+							{currentAccountTab}
+						</h1>
+					)}
+				</section>
 
-// 	return (
-// 		<Fragment>
-// 			<MainNavbar />
-// 			<div className='w-full relative'>
-// 				{isProductMediaModalOpen && <ProductMediaModal />}
+				<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
+					<div className='flex w-full'>
+						<MobileAccountSideBar />
+					</div>
 
-// 				<section className='h-[28vh] sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
-// 					{currentAccountTab === 'Products' ? (
-// 						<div className='flex flex-col justify-center items-center text-center space-y-1 text-white px-4 sm:px-10'>
-// 							<h1 className='text-xl md:text-5xl font-medium'>
-// 								{currentAccountTab}
-// 							</h1>
-// 							<p className='text-xs sm:text-sm font-medium'>
-// 								New users get 1 free Ad post in their first
-// 								month.
-// 							</p>
-// 							<p className='text-xs sm:text-sm font-medium'>
-// 								Renew and post unlimited Ads for $3/month.
-// 							</p>
-// 						</div>
-// 					) : (
-// 						<h1 className='text-xl md:text-5xl font-medium text-white'>
-// 							{currentAccountTab}
-// 						</h1>
-// 					)}
-// 				</section>
+					<div className='flex items-start justify-between w-full'>
+						<AccountSideBar />
 
-// 				<div className='w-full flex flex-col justify-center items-center py-10 md:py-10 px-4 sm:px-10'>
-// 					<div className='flex w-full'>
-// 						<MobileAccountSideBar />
-// 					</div>
+						{currentAccountTab === 'Account' && (
+							<DashboardContent />
+						)}
 
-// 					<div className='flex items-start justify-between w-full'>
-// 						<AccountSideBar />
+						{currentAccountTab === 'Products' && (
+							<ProductsContent />
+						)}
 
-// 						{currentAccountTab === 'Account' && (
-// 							<DashboardContent />
-// 						)}
+						{currentAccountTab === 'Product' && <ProductContent />}
 
-// 						{currentAccountTab === 'Products' && (
-// 							<ProductsContent />
-// 						)}
+						{/* {currentAccountTab === 'Promotions' && (
+								<PromotionsContent />
+							)} */}
 
-// 						{currentAccountTab === 'Product' && <ProductContent />}
+						{currentAccountTab === 'Messages' && (
+							<MessagesContent />
+						)}
 
-// 						{/* {currentAccountTab === 'Promotions' && (
-// 								<PromotionsContent />
-// 							)} */}
+						{currentAccountTab === 'Notifications' && (
+							<NotificationsContent />
+						)}
 
-// 						{currentAccountTab === 'Messages' && (
-// 							<MessagesContent />
-// 						)}
+						{currentAccountTab === 'Settings' && (
+							<SettingsContent />
+						)}
+					</div>
+				</div>
+			</div>
+			<Footer />
+		</Fragment>
+	);
+};
 
-// 						{currentAccountTab === 'Notifications' && (
-// 							<NotificationsContent />
-// 						)}
 
-// 						{currentAccountTab === 'Settings' && (
-// 							<SettingsContent />
-// 						)}
-// 					</div>
-// 				</div>
-// 			</div>
-// 			<Footer />
-// 		</Fragment>
-// 	);
-// };
-
-// const LoadingState = () => {
-// 	return (
-// 		<div className='w-full h-screen flex items-center justify-center'>
-// 			{/* <ButtonLoader /> */}
-// 		</div>
-// 	);
-// };
-
-// // Main page component that provides Suspense boundary
-// const AccountPage = () => {
-// 	return (
-// 		<Suspense fallback={<LoadingState />}>
-// 			<AccountPageContent />
-// 		</Suspense>
-// 	);
-// };
-
-// export default AccountPage;
+export default AccountPage;
