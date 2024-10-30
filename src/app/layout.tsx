@@ -1,10 +1,8 @@
-import ReactGA from 'react-ga4';
 import type {Metadata} from 'next';
 import {Poppins} from 'next/font/google';
 import {Toaster} from '@/components/ui/toaster';
 
 import './globals.css';
-import Head from 'next/head';
 import {ToastProvider} from '@/providers';
 import AuthProvider from '@/providers/auth-provider';
 import CookieBannerProvider from '@/providers/cookie-banner-provider';
