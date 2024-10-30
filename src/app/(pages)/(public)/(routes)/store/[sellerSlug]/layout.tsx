@@ -3,9 +3,9 @@ import {Metadata, ResolvingMetadata} from 'next';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 
 interface SellerProfileLayoutProps {
-	params?: Promise<{
+	params: {
 		sellerSlug: string;
-	}>;
+	};
 	children: React.ReactNode;
 }
 
@@ -20,7 +20,7 @@ export async function generateMetadata(
 	let ogImage300x300 = '';
 
 	const {data} = await axios.get(
-		`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${(await params)?.sellerSlug!}`
+		`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${params.sellerSlug!}`
 	);
 
 	// console.log('[SEO-SELLER-DATA] :: ', data);

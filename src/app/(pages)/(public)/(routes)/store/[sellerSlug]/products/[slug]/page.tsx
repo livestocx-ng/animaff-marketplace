@@ -16,9 +16,9 @@ import StoreSingleProductContent from '@/components/product/store-single-product
 import EmptyAnimation from '../../../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
-	params?: Promise<{
+	params: {
 		slug: string;
-	}>;
+	};
 }
 
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
@@ -26,8 +26,6 @@ type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 	const router = useRouter();
 	const pathName = usePathname();
-
-	const resolvedParams = await params;
 
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
@@ -56,15 +54,13 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 					`${
 						process.env.NEXT_PUBLIC_API_URL
 					}/user/products/product/${getProductIdFromSlug(
-						resolvedParams?.slug!
+						params.slug!
 					)}`
 				),
 				axios.get(
 					`${
 						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/info/${getProductIdFromSlug(
-						resolvedParams?.slug!
-					)}`
+					}/user/products/info/${getProductIdFromSlug(params.slug!)}`
 				),
 			]);
 
@@ -85,7 +81,7 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 				`${
 					process.env.NEXT_PUBLIC_API_URL
 				}/user/products/product/${getProductIdFromSlug(
-					resolvedParams?.slug!
+					params.slug!
 				)}/view`,
 				{
 					headers: {

@@ -14,9 +14,9 @@ import {generateOGImageFromURL} from '@/utils/og.image.generator';
 // Define the layout props to match Next.js expectations
 interface LayoutProps {
 	children: React.ReactNode;
-	params?: Promise<{
+	params: {
 		slug: string;
-	}>;
+	};
 }
 
 export async function generateMetadata(
@@ -32,7 +32,7 @@ export async function generateMetadata(
 	const {data} = await axios.get(
 		`${
 			process.env.NEXT_PUBLIC_API_URL
-		}/user/products/product/${getProductIdFromSlug((await params)?.slug!)}`
+		}/user/products/product/${getProductIdFromSlug(params.slug!)}`
 	);
 
 	const imageUrl = getMediaImageUrl(data.data);

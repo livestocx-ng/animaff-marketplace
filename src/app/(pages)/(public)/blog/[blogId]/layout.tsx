@@ -4,9 +4,9 @@ import { formatBlogSlug } from '@/utils/slug.formatter';
 import {generateOGImageFromURL} from '@/utils/og.image.generator';
 
 interface BlogDescriptionLayoutProps {
-	params?: Promise<{
+	params: {
 		blogId: string;
-	}>;
+	};
 	children: React.ReactNode;
 }
 
@@ -18,7 +18,7 @@ export async function generateMetadata(
 	let ogImage300x200 = '';
 	let ogImage300x300 = '';
     
-    const formattedBlogId = (await params)?.blogId.split('_')[1];
+    const formattedBlogId = params.blogId.split('_')[1];
 
 	const {data} = await axios.get(
 		`${

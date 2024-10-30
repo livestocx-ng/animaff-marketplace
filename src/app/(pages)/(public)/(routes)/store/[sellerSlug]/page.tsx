@@ -11,9 +11,9 @@ import SellerInfoProducts from './components/seller-info-products';
 import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 
 interface SellerProfilePageProps {
-	params?: Promise<{
+	params: {
 		sellerSlug: string;
-	}>;
+	};
 } 
 
 const SellerProfilePage = async({params}: SellerProfilePageProps) => {
@@ -25,8 +25,6 @@ const SellerProfilePage = async({params}: SellerProfilePageProps) => {
 		updateSellerPagination,
 	} = useGlobalStore();
 
-	const resolvedParams = await params;
-
 	const [loading, setLoading] = useState<boolean>(true);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [isSellerProductsLoading, setIsSellerProductsLoading] = useState<boolean>(true);
@@ -36,7 +34,7 @@ const SellerProfilePage = async({params}: SellerProfilePageProps) => {
 			setLoading(true);
 
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${resolvedParams?.sellerSlug}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile?slug=${params.sellerSlug}`
 			);
 
 			updateVendor(data.data);
@@ -55,7 +53,7 @@ const SellerProfilePage = async({params}: SellerProfilePageProps) => {
 			setIsSellerProductsLoading(true);
 
 			const {data} = await axios.get(
-				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile/products?slug=${resolvedParams?.sellerSlug}&page=${currentPage}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user/sellers/profile/products?slug=${params.sellerSlug}&page=${currentPage}`
 			);
 
 			// console.log('[DATA] ::  ', data);
