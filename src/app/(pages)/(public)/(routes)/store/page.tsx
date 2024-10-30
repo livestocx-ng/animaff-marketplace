@@ -1,13 +1,13 @@
 'use client';
 import React, {Suspense, useEffect} from 'react';
-import {useRouter} from 'next/navigation';
+import {redirect, useRouter} from 'next/navigation';
 
 const StoresPageContent = () => {
 	const router = useRouter();
 
 	const initializeRedirect = () => {
 		setTimeout(() => {
-			return router.replace('/');
+			return redirect('/');
 		}, 800);
 	};
 
@@ -24,19 +24,23 @@ const StoresPageContent = () => {
 
 const LoadingState = () => {
 	return (
-	  <div className="w-full h-screen flex items-center justify-center">
-		{/* <ButtonLoader /> */}
-	  </div>
+		<div className='w-full h-screen flex items-center justify-center'>
+			{/* <ButtonLoader /> */}
+		</div>
 	);
-  };
-  
-  // Main page component that provides Suspense boundary
-  const StoresPage = () => {
-	  return (
-		  <Suspense fallback={<LoadingState />}>
-			  <StoresPageContent />
-		  </Suspense>
-	  );
-  };
+};
+
+// Main page component that provides Suspense boundary
+const StoresPage = () => {
+	return (
+		<html>
+			<body>
+				<Suspense fallback={<LoadingState />}>
+					<StoresPageContent />
+				</Suspense>
+			</body>
+		</html>
+	);
+};
 
 export default StoresPage;
