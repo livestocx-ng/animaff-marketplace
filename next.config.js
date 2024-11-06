@@ -3,6 +3,7 @@ const nextConfig = {
     // distDir: 'dist',
     transpilePackages: ['lucide-react'],
     experimental: {
+        forceSwcTransforms: true,
         missingSuspenseWithCSRBailout: false,
     },
     images: {
