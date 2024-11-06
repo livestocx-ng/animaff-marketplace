@@ -13,7 +13,6 @@ import {
 	Award,
 	EyeIcon,
 	LineChart,
-	FlagTriangleRight,
 	BarChart3,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -27,8 +26,6 @@ import {Badge} from '../ui/badge';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {Product, ProductInfo} from '@/types/types';
-import {ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatVendorSlug} from '@/utils/slug.formatter';
@@ -36,6 +33,8 @@ import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import {Flag16Filled, ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
 
 interface StoreSingleProductContentProps {
@@ -264,7 +263,7 @@ const StoreSingleProductContent = ({
 								className='flex items-center space-x-3 border-red-500 text-red-500 text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								<p>Report</p>{' '}
-								<FlagTriangleRight className='h-4 w-4 text-red-500' />
+								<Flag16Filled className='h-4 w-4 text-red-500' />
 							</Button>
 						</div>
 					</div>

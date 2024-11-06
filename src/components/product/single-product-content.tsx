@@ -13,7 +13,6 @@ import {
 	Award,
 	EyeIcon,
 	LineChart,
-	FlagTriangleRight,
 	BarChart3,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -30,7 +29,7 @@ import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
+import {Flag16Filled, ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
@@ -281,7 +280,7 @@ const SingleProductContent = ({
 								className='flex items-center space-x-3 border-red-500 text-red-500 hover:text-red-500 text-[10px] md:text-xs h-10 w-[45%] rounded-full py-2'
 							>
 								<p>Report</p>{' '}
-								<FlagTriangleRight className='h-4 w-4 text-red-500' />
+								<Flag16Filled className='h-4 w-4 text-red-500' />
 							</Button>
 						</div>
 					</div>
