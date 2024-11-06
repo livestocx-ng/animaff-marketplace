@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // distDir: 'dist',
+    swcMinify: true,
     transpilePackages: ['lucide-react'],
     webpack: (config) => {
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            '@': path.join(__dirname, './')
+        }
         config.optimization.minimize = true;
         config.optimization.minimizer.push(
             new TerserPlugin({
