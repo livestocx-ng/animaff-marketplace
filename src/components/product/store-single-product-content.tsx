@@ -13,7 +13,6 @@ import {
 	Award,
 	EyeIcon,
 	LineChart,
-	ThumbsDown,
 	FlagTriangleRight,
 	BarChart3,
 } from 'lucide-react';
@@ -28,7 +27,7 @@ import {Badge} from '../ui/badge';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {Product, ProductInfo} from '@/types/types';
-import {ThumbLike16Filled} from '@fluentui/react-icons';
+import {ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -182,7 +181,7 @@ const StoreSingleProductContent = ({
 								) ? (
 									<>
 										{' '}
-										<ThumbsDown className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
+										<ThumbDislike16Filled className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
 										<span>Unlike Product</span>
 									</>
 								) : (

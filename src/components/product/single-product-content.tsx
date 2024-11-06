@@ -13,7 +13,6 @@ import {
 	Award,
 	EyeIcon,
 	LineChart,
-	ThumbsDown,
 	FlagTriangleRight,
 	BarChart3,
 } from 'lucide-react';
@@ -31,7 +30,7 @@ import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {ThumbLike16Filled} from '@fluentui/react-icons';
+import {ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
@@ -199,7 +198,7 @@ const SingleProductContent = ({
 								) ? (
 									<>
 										{' '}
-										<ThumbsDown className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
+										<ThumbDislike16Filled className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
 										<span>Unlike Product</span>
 									</>
 								) : (
