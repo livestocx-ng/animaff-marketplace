@@ -1,12 +1,24 @@
 /** @type {import('next').NextConfig} */
 
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const nextConfig = {
     // distDir: 'dist',
     swcMinify: true,
     transpilePackages: ['lucide-react'],
-    webpack: (config) => {
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+          config.optimization.minimizer.push(
+            new TerserPlugin({
+              terserOptions: {
+                compress: {
+                  drop_console: true,
+                },
+              },
+            })
+          );
+        }
         config.resolve.alias = {
             ...config.resolve.alias,
             '@': path.join(__dirname, './')

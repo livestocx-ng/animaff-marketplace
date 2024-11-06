@@ -34,6 +34,8 @@
 		"axios": "^1.5.1",
 		"bufferutil": "^4.0.8",
 		"child_process": "^1.0.2",
+		"class-variance-authority": "latest",
+		"clsx": "latest",
 		"compressorjs": "^1.2.1",
 		"cookie": "^0.5.0",
 		"express": "^4.19.2",
@@ -62,13 +64,11 @@
 		"react-youtube": "^10.1.0",
 		"socket.io-client": "^4.5.1",
 		"supports-color": "^9.4.0",
+		"tailwind-merge": "latest",
 		"tailwindcss-animate": "^1.0.7",
 		"utf-8-validate": "^5.0.10",
 		"zod": "^3.22.2",
-		"zustand": "^4.4.3",
-		"class-variance-authority": "latest",
-		"clsx": "latest",
-		"tailwind-merge": "latest"
+		"zustand": "^4.4.3"
 	},
 	"devDependencies": {
 		"@types/gtag.js": "^0.0.18",
@@ -79,6 +79,7 @@
 		"autoprefixer": "latest",
 		"postcss": "latest",
 		"tailwindcss": "latest",
+		"terser-webpack-plugin": "5.3.10",
 		"typescript": "latest"
 	},
 	"engines": {
