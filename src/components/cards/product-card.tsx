@@ -1,13 +1,5 @@
 'use client';
-import {
-	Award,
-	MapPin,
-	Forward,
-	ThumbsUp,
-	ThumbsDown,
-	MessageCircle,
-	Phone,
-} from 'lucide-react';
+import {Award, MapPin, Forward, MessageCircle, Phone} from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -241,13 +233,6 @@ const ProductCard = ({product}: ProductCardProps) => {
 							}}
 							className=' flex items-center justify-center h-8 sm:h-8 w-8 sm:w-8 bg-main rounded-full cursor-pointer'
 						>
-							{/* {product?.likedUsers?.includes(
-								parseInt(user?.id!)
-							) ? (
-								<ThumbsDown className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-							) : (
-								<ThumbsUp className='h-4 sm:h-4 w-4 sm:w-4 text-white' />
-							)} */}
 							<Phone className='h-4 w-4 sm:w-4 text-white' />
 						</div>
 

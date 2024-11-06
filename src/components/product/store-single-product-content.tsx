@@ -12,7 +12,6 @@ import {
 	Copy,
 	Award,
 	EyeIcon,
-	ThumbsUp,
 	LineChart,
 	ThumbsDown,
 	FlagTriangleRight,
@@ -29,6 +28,7 @@ import {Badge} from '../ui/badge';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {Product, ProductInfo} from '@/types/types';
+import {ThumbLike16Filled} from '@fluentui/react-icons';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -134,7 +134,7 @@ const StoreSingleProductContent = ({
 									product?.likeCount!
 								)}{' '}
 							</p>
-							<ThumbsUp size={14} />
+							<ThumbLike16Filled />
 						</div>
 						<div className='text-white border-r border-r-white flex items-center space-x-1 px-4'>
 							<p className='text-sm'>
@@ -187,7 +187,7 @@ const StoreSingleProductContent = ({
 									</>
 								) : (
 									<>
-										<ThumbsUp className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
+										<ThumbLike16Filled className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
 										<span>Like Product</span>
 									</>
 								)}

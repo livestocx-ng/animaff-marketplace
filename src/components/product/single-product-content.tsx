@@ -12,7 +12,6 @@ import {
 	Copy,
 	Award,
 	EyeIcon,
-	ThumbsUp,
 	LineChart,
 	ThumbsDown,
 	FlagTriangleRight,
@@ -26,27 +25,18 @@ import {
 } from '@/hooks/use-global-store';
 import {Badge} from '../ui/badge';
 import {Button} from '../ui/button';
-import {
-	AlertDialog,
-	AlertDialogTitle,
-	AlertDialogCancel,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogContent,
-	AlertDialogTrigger,
-	AlertDialogDescription,
-} from '@/components/ui/alert-dialog';
 import {toast} from 'react-hot-toast';
 import {usePathname} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {ThumbLike16Filled} from '@fluentui/react-icons';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
 import Link from 'next/link';
 import {formatVendorSlug} from '@/utils/slug.formatter';
@@ -149,7 +139,7 @@ const SingleProductContent = ({
 									product?.likeCount!
 								)}{' '}
 							</p>
-							<ThumbsUp size={14} />
+							<ThumbLike16Filled  />
 						</div>
 						<div className='text-white border-r border-r-white flex items-center space-x-1 px-4'>
 							<p className='text-sm'>
@@ -214,7 +204,7 @@ const SingleProductContent = ({
 									</>
 								) : (
 									<>
-										<ThumbsUp className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
+										<ThumbLike16Filled className='h-3 md:h-4 w-3 md:w-4 text-white' />{' '}
 										<span>Like Product</span>
 									</>
 								)}

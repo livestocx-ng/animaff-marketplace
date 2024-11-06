@@ -5,54 +5,54 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 const nextConfig = {
     // distDir: 'dist',
-    swcMinify: true,
+    // swcMinify: true,
     transpilePackages: ['lucide-react'],
-    webpack: (config, { isServer }) => {
-        if (!isServer) {
-            config.optimization.minimizer.push(
-                new TerserPlugin({
-                    terserOptions: {
-                        compress: {
-                            drop_console: true,
-                        },
-                    },
-                })
-            );
-        }
-        config.infrastructureLogging = {
-            level: 'verbose',
-        };
-        config.resolve.alias = {
-            ...config.resolve.alias,
-            '@': path.join(__dirname, './')
-        }
-        config.optimization.minimize = true;
-        config.optimization.minimizer.push(
-            new TerserPlugin({
-                terserOptions: {
-                    parse: {
-                        ecma: 8,
-                    },
-                    compress: {
-                        ecma: 5,
-                        warnings: false,
-                        comparisons: false,
-                    },
-                    mangle: {
-                        safari10: true,
-                    },
-                    output: {
-                        ecma: 5,
-                        comments: false,
-                        ascii_only: true,
-                    },
-                },
-            })
-        );
-        return config;
-    },
+    // webpack: (config, { isServer }) => {
+    //     if (!isServer) {
+    //         config.optimization.minimizer.push(
+    //             new TerserPlugin({
+    //                 terserOptions: {
+    //                     compress: {
+    //                         drop_console: true,
+    //                     },
+    //                 },
+    //             })
+    //         );
+    //     }
+    //     config.infrastructureLogging = {
+    //         level: 'verbose',
+    //     };
+    //     config.resolve.alias = {
+    //         ...config.resolve.alias,
+    //         '@': path.join(__dirname, './')
+    //     }
+    //     config.optimization.minimize = true;
+    //     config.optimization.minimizer.push(
+    //         new TerserPlugin({
+    //             terserOptions: {
+    //                 parse: {
+    //                     ecma: 8,
+    //                 },
+    //                 compress: {
+    //                     ecma: 5,
+    //                     warnings: false,
+    //                     comparisons: false,
+    //                 },
+    //                 mangle: {
+    //                     safari10: true,
+    //                 },
+    //                 output: {
+    //                     ecma: 5,
+    //                     comments: false,
+    //                     ascii_only: true,
+    //                 },
+    //             },
+    //         })
+    //     );
+    //     return config;
+    // },
     experimental: {
-        forceSwcTransforms: true,
+        // forceSwcTransforms: true,
         missingSuspenseWithCSRBailout: false,
     },
     images: {
