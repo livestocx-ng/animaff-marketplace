@@ -9,16 +9,19 @@ const nextConfig = {
     transpilePackages: ['lucide-react'],
     webpack: (config, { isServer }) => {
         if (!isServer) {
-          config.optimization.minimizer.push(
-            new TerserPlugin({
-              terserOptions: {
-                compress: {
-                  drop_console: true,
-                },
-              },
-            })
-          );
+            config.optimization.minimizer.push(
+                new TerserPlugin({
+                    terserOptions: {
+                        compress: {
+                            drop_console: true,
+                        },
+                    },
+                })
+            );
         }
+        config.infrastructureLogging = {
+            level: 'verbose',
+        };
         config.resolve.alias = {
             ...config.resolve.alias,
             '@': path.join(__dirname, './')
