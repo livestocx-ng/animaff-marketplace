@@ -15,7 +15,6 @@ import LoadingAnimationOne from '@/components/loader/loading-animation-one';
 import SingleProductContent from '@/components/product/single-product-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import EmptyAnimation from '../../../../../../../../public/animations/animation__3.json';
-import LoadingAnimation from '../../../../../../../../public/animations/animation__3.json';
 
 interface ProductPageParams {
 	params: {
@@ -25,7 +24,7 @@ interface ProductPageParams {
 
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
-const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
+const MarketPlaceProductPage = ({params}: ProductPageParams) => {
 	const router = useRouter();
 	const pathName = usePathname();
 
@@ -55,12 +54,14 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 				axios.get(
 					`${
 						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/product/${getProductIdFromSlug(params.slug)}`
+					}/user/products/product/${getProductIdFromSlug(
+						params.slug!
+					)}`
 				),
 				axios.get(
 					`${
 						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/info/${getProductIdFromSlug(params.slug)}`
+					}/user/products/info/${getProductIdFromSlug(params.slug!)}`
 				),
 			]);
 
@@ -80,7 +81,9 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 			axios.get(
 				`${
 					process.env.NEXT_PUBLIC_API_URL
-				}/user/products/product/${getProductIdFromSlug(params.slug)}/view`,
+				}/user/products/product/${getProductIdFromSlug(
+					params.slug
+				)}/view`,
 				{
 					headers: {
 						Authorization: user?.accessToken,

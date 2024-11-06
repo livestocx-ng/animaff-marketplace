@@ -23,10 +23,9 @@ interface ProductPageParams {
 
 type Tab = 'Seller Info' | 'Review' | 'More From Seller';
 
-const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
+const MarketPlaceProductPage = ({params}: ProductPageParams) => {
 	const router = useRouter();
 	const pathName = usePathname();
-
 	const isProductMediaModalOpen = useProductMediaModalStore(
 		(state) => state.isOpen
 	);
@@ -34,8 +33,8 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 	const {
 		user,
 		product,
-		updatePayload,
 		productInfo,
+		updatePayload,
 		updateProductInfo,
 		updateChatConversation,
 		updateCurrentAccountTab,
@@ -45,64 +44,54 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentTab, setCurrentTab] = useState<Tab>('Seller Info');
 
-	const fetchProduct = async () => {
-		try {
-			setLoading(true);
-
-			const [_product, _productInfo] = await Promise.all([
-				axios.get(
-					`${
-						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/product/${getProductIdFromSlug(
-						params.slug!
-					)}`
-				),
-				axios.get(
-					`${
-						process.env.NEXT_PUBLIC_API_URL
-					}/user/products/info/${getProductIdFromSlug(params.slug!)}`
-				),
-			]);
-
-			updatePayload(_product.data.data);
-			updateProductInfo(_productInfo.data.data);
-
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-
-			const _error = error as AxiosError;
-		}
-	};
-
-	const viewProduct = async () => {
-		try {
-			axios.get(
-				`${
-					process.env.NEXT_PUBLIC_API_URL
-				}/user/products/product/${getProductIdFromSlug(
-					params.slug!
-				)}/view`,
-				{
-					headers: {
-						Authorization: user?.accessToken,
-					},
-				}
-			);
-		} catch (error) {
-			const _error = error as AxiosError;
-		}
-	};
-
 	useEffect(() => {
+		const fetchProduct = async () => {
+			try {
+				setLoading(true);
+				const productId = getProductIdFromSlug(params?.slug!);
+
+				const [_product, _productInfo] = await Promise.all([
+					axios.get(
+						`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}`
+					),
+					axios.get(
+						`${process.env.NEXT_PUBLIC_API_URL}/user/products/info/${productId}`
+					),
+				]);
+
+				updatePayload(_product.data.data);
+				updateProductInfo(_productInfo.data.data);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+				const _error = error as AxiosError;
+			}
+		};
+
 		fetchProduct();
-	}, []);
+	}, [params?.slug]);
 
 	useEffect(() => {
+		const viewProduct = async () => {
+			try {
+				const productId = getProductIdFromSlug(params?.slug!);
+				await axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/user/products/product/${productId}/view`,
+					{
+						headers: {
+							Authorization: user?.accessToken,
+						},
+					}
+				);
+			} catch (error) {
+				const _error = error as AxiosError;
+			}
+		};
+
 		if (user) {
 			viewProduct();
 		}
-	}, [user]);
+	}, [user, params?.slug]);
 
 	const handleLikeUnlikeProduct = async (formData: {value?: boolean}) => {
 		try {
@@ -115,7 +104,6 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 					},
 				}
 			);
-
 			updatePayload(data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
@@ -127,7 +115,7 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 			if (!user)
 				return router.push(`/signin?redirect_to=${pathName.slice(1)}`);
 
-			axios.get(
+			await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-call-seller?product=${product?.id}`,
 				{
 					headers: {
@@ -137,11 +125,8 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 			);
 
 			const telLink = document.createElement('a');
-
 			telLink.href = `tel:${productInfo?.phoneNumber}`;
-
 			telLink.target = '_blank';
-
 			telLink.click();
 		} catch (error) {
 			const _error = error as AxiosError;
@@ -153,9 +138,7 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 			if (!user)
 				return router.push(`/signin?redirect_to=${pathName?.slice(1)}`);
 
-			if (loading) return;
-
-			if (user?.id === product?.user.toString()) return;
+			if (loading || user?.id === product?.user.toString()) return;
 
 			await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/user/products/add-user-to-contact-seller?product=${product?.id}`,
@@ -176,11 +159,8 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 			);
 
 			updateChatConversation(data.data);
-
 			router.push('/account');
-
 			updateCurrentAccountTab('Messages');
-
 			updateShowChatConversation(true);
 		} catch (error) {
 			const _error = error as AxiosError;
@@ -192,19 +172,16 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 			<MainNavbar />
 			<main className='w-full relative'>
 				{isProductMediaModalOpen && <ProductMediaModal />}
-
 				<section className='sm:h-[35vh] w-full bg-home flex flex-col items-center justify-center gap-y-16 pt-28 pb-20 sm:pb-0 md:pt-0'>
 					<h1 className='text-xl md:text-5xl font-medium text-white capitalize px-6 sm:px-0 text-center'>
 						{product?.name}
 					</h1>
 				</section>
-
 				{loading && (
 					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
 						<LoadingAnimationOne />
 					</div>
 				)}
-
 				{!loading && !product && (
 					<div className='w-full bg-white h-[80vh] flex flex-col items-center justify-center'>
 						<div className='h-[200px] w-1/2 mx-auto bg-white'>
@@ -216,7 +193,6 @@ const MarketPlaceProductPage = async ({params}: ProductPageParams) => {
 						</div>
 					</div>
 				)}
-
 				{!loading && product && (
 					<StoreSingleProductContent
 						loading={loading}

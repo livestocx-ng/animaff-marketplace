@@ -29,7 +29,7 @@ import {Badge} from '../ui/badge';
 import {Button} from '../ui/button';
 import {toast} from 'react-hot-toast';
 import {Product, ProductInfo} from '@/types/types';
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {PriceFormatter} from '@/utils/price.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {formatVendorSlug} from '@/utils/slug.formatter';
@@ -74,6 +74,14 @@ const StoreSingleProductContent = ({
 	const updateProductModalPayload = useProductMediaModalStore(
 		(state) => state.updatePayload
 	);
+
+	const [currentUrl, setCurrentUrl] = useState('');
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			setCurrentUrl(window.location.toString());
+		}
+	}, []);
 
 	return (
 		<div className='flex flex-col justify-start items-start pt-0 md:pt-3 pb-10 md:px-8'>
@@ -292,26 +300,26 @@ const StoreSingleProductContent = ({
 				<h1 className='font-medium text-base'>Share on:</h1>
 				<div className='flex space-x-2'>
 					<WhatsappShareButton
-						url={window.location.toString()}
+						url={currentUrl}
 						title={`Check out my ${product?.name} on Animaff: `}
 					>
 						<WhatsappIcon size={30} round />
 					</WhatsappShareButton>
 					<FacebookShareButton
-						url={window.location.toString()}
+						url={currentUrl}
 						title={`Check out my ${product?.name} on Animaff: `}
 					>
 						<FacebookIcon size={30} round />
 					</FacebookShareButton>
 					<TwitterShareButton
-						url={window.location.toString()}
+						url={currentUrl}
 						title={`Check out my ${product?.name} on Animaff: `}
 					>
 						<TwitterIcon size={30} round />
 					</TwitterShareButton>
 
 					<CopyToClipboard
-						text={window.location.toString()}
+						text={currentUrl}
 						onCopy={(text: string, result: boolean) => {
 							toast.success('Copied to clipboard');
 						}}

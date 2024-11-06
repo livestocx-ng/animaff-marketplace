@@ -13,7 +13,6 @@ import SettingsContent from './components/dashboard/settings-content';
 import MessagesContent from './components/dashboard/messages-content';
 import MobileAccountSideBar from './components/mobile-account-sidebar';
 import DashboardContent from './components/dashboard/dashboard-content';
-import PromotionsContent from './components/dashboard/promotions-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import NotificationsContent from './components/dashboard/notifications-content';
 import {useSearchParams} from 'next/navigation';
