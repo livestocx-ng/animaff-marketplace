@@ -2,6 +2,32 @@
 const nextConfig = {
     // distDir: 'dist',
     transpilePackages: ['lucide-react'],
+    webpack: (config) => {
+        config.optimization.minimize = true;
+        config.optimization.minimizer.push(
+            new TerserPlugin({
+                terserOptions: {
+                    parse: {
+                        ecma: 8,
+                    },
+                    compress: {
+                        ecma: 5,
+                        warnings: false,
+                        comparisons: false,
+                    },
+                    mangle: {
+                        safari10: true,
+                    },
+                    output: {
+                        ecma: 5,
+                        comments: false,
+                        ascii_only: true,
+                    },
+                },
+            })
+        );
+        return config;
+    },
     experimental: {
         forceSwcTransforms: true,
         missingSuspenseWithCSRBailout: false,
