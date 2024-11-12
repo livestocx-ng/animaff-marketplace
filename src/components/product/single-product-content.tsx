@@ -8,13 +8,12 @@ import {
 	WhatsappShareButton,
 } from 'react-share';
 import {
-	Phone,
 	Copy,
 	Award,
 	EyeIcon,
-	LineChart,
 	BarChart3,
 } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {cn} from '@/lib/utils';
 import {
@@ -28,16 +27,15 @@ import {usePathname} from 'next/navigation';
 import ProductCard from '../cards/product-card';
 import {Product, ProductInfo} from '@/types/types';
 import {PriceFormatter} from '@/utils/price.formatter';
+import {formatVendorSlug} from '@/utils/slug.formatter';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {Flag16Filled, ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
 import {getMediaImageUrl} from '@/utils/media/media.url';
 import SellerInfoTab from '../product-info/seller-info-tab';
 import ProductReviewTab from '../product-info/product-review-tab';
 import MoreFromSellerTab from '../product-info/more-from-seller-tab';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {likesViewsImpressionFormatter} from '@/utils/like.view.impression.formatter';
-import Link from 'next/link';
-import {formatVendorSlug} from '@/utils/slug.formatter';
+import {Flag16Filled, ThumbLike16Filled, ThumbDislike16Filled} from '@fluentui/react-icons';
 
 interface SingleProductContentProps {
 	currentTab: Tab;
