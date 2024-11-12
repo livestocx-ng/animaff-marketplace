@@ -21,6 +21,7 @@ export interface Blog {
 	hasCTA: boolean;
 	imageUrl: string;
 	description: string;
+	createdAt: Date;
 	articles: {
 		id: number;
 		blog: number;
@@ -236,6 +237,8 @@ export interface ChatMessage {
 	sender: number;
 	recipient: number;
 	conversation: number;
+	hasCTA: boolean;
+	ctaType: string;
 }
 
 export interface PromotionPlan {

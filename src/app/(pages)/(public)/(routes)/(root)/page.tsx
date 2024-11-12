@@ -1,14 +1,14 @@
 'use client';
 import axios, {AxiosError} from 'axios';
 import {Fragment, useEffect, useState} from 'react';
+import Footer from '@/components/navigation/footer';
+import SearchForm from '@/components/home/search-form';
 import {useGlobalStore} from '@/hooks/use-global-store';
+import HomeProducts from '@/components/home/home-products';
+import MainNavbar from '@/components/navigation/main-nav-bar';
 import TestimonialSection from '@/components/common/testimonials';
 import PromotionBanner from '@/components/banner/promotion-banner';
 import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
-import MainNavbar from '@/components/navigation/main-nav-bar';
-import Footer from '@/components/navigation/footer';
-import SearchForm from '@/components/home/search-form';
-import HomeProducts from '@/components/home/home-products';
 
 export default function HomePage() {
 	const {
@@ -65,8 +65,10 @@ export default function HomePage() {
 	}, []);
 
 	useEffect(() => {
-		initializeUserActivity();
-	}, []);
+		if(user){
+			initializeUserActivity();
+		}
+	}, [user]);
 
 	useEffect(() => {
 		fetchProducts();
