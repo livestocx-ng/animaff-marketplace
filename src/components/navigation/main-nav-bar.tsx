@@ -115,13 +115,13 @@ const MainNavbar = () => {
 
 	return (
 		<div className='relative'>
-			{user && !userProductUploadSubscription && (
+			{user !== null && !userProductUploadSubscription && (
 				<div className='fixed z-[12] bg-gradient-to-r from-red-700 to-red-400 w-full py-2 text-center text-white text-[10px] md:text-xs font-semibold'>
 					Your post ads subscription has expired!
 				</div>
 			)}
 
-			{user && userProductUploadSubscription &&
+			{userProductUploadSubscription &&
 				checkProductUploadSubscriptionExpiration(
 					userProductUploadSubscription
 				).isWithinRange && (
@@ -138,9 +138,7 @@ const MainNavbar = () => {
 			<nav
 				className={`w-full py-4 px-8 hidden fixed z-10 lg:flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
-				} ${
-					!userProductUploadSubscription && 'mt-[29px]'
-				}  ${
+				} ${!userProductUploadSubscription && 'mt-[29px]'}  ${
 					userProductUploadSubscription &&
 					checkProductUploadSubscriptionExpiration(
 						userProductUploadSubscription
