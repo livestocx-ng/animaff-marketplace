@@ -1,7 +1,7 @@
 import {Blog, Product, Vendor} from '@/types/types';
 
 export function formatBlogSlug(blog: Blog): string {
-	const formattedName = blog.title.replace(/,/g, '');
+	const formattedName = blog?.title.replace(/,/g, '');
 
 	const formattedNameWithoutCommas = formattedName
 		.replace(/[^\w\s]/g, '')

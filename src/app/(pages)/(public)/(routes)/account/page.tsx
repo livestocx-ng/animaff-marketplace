@@ -1,9 +1,10 @@
 'use client';
-import {Fragment, Suspense, useEffect} from 'react';
 import {
 	useGlobalStore,
 	useProductMediaModalStore,
 } from '@/hooks/use-global-store';
+import {Fragment, useEffect} from 'react';
+import {useSearchParams} from 'next/navigation';
 import Footer from '@/components/navigation/footer';
 import AccountSideBar from './components/account-side-bar';
 import MainNavbar from '@/components/navigation/main-nav-bar';
@@ -15,7 +16,6 @@ import MobileAccountSideBar from './components/mobile-account-sidebar';
 import DashboardContent from './components/dashboard/dashboard-content';
 import ProductMediaModal from '@/components/modals/product/product-media-modal';
 import NotificationsContent from './components/dashboard/notifications-content';
-import {useSearchParams} from 'next/navigation';
 
 const AccountPage = () => {
 	const searchParams = useSearchParams();
@@ -101,6 +101,5 @@ const AccountPage = () => {
 		</Fragment>
 	);
 };
-
 
 export default AccountPage;

@@ -100,41 +100,43 @@ const BlogDetailsPage = async ({params}: BlogDetailsPageParams) => {
 
 	return (
 		<Fragment>
-			<Head>
-				<script
-					type='application/ld+json'
-					dangerouslySetInnerHTML={{
-						__html: JSON.stringify({
-							'@context': 'https://schema.org',
-							'@type': 'BlogPosting',
-							mainEntityOfPage: {
-								'@type': 'WebPage',
-								'@id': `https://animaff.com/blog/${formatBlogSlug(
-									blog!
-								)}`,
-							},
-							headline: blog?.title,
-							description: blog?.description,
-							image: [blog?.imageUrl],
-							author: {
-								'@type': 'Organization',
-								name: 'Animaff',
-							},
-							publisher: {
-								'@type': 'Organization',
-								name: 'Animaff',
-								logo: {
-									'@type': 'ImageObject',
-									url: 'https://animaff.com/logo.png', // Replace with actual logo URL
+			{blog && (
+				<Head>
+					<script
+						type='application/ld+json'
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify({
+								'@context': 'https://schema.org',
+								'@type': 'BlogPosting',
+								mainEntityOfPage: {
+									'@type': 'WebPage',
+									'@id': `https://animaff.com/blog/${formatBlogSlug(
+										blog!
+									)}`,
 								},
-							},
-							datePublished:
-								blog?.createdAt || new Date().toISOString(),
-							dateModified: new Date().toISOString(),
-						}),
-					}}
-				/>
-			</Head>
+								headline: blog?.title,
+								description: blog?.description,
+								image: [blog?.imageUrl],
+								author: {
+									'@type': 'Organization',
+									name: 'Animaff',
+								},
+								publisher: {
+									'@type': 'Organization',
+									name: 'Animaff',
+									logo: {
+										'@type': 'ImageObject',
+										url: 'https://animaff.com/logo.png', // Replace with actual logo URL
+									},
+								},
+								datePublished:
+									blog?.createdAt || new Date().toISOString(),
+								dateModified: new Date().toISOString(),
+							}),
+						}}
+					/>
+				</Head>
+			)}
 
 			<MainNavbar />
 
