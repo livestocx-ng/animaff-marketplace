@@ -6,7 +6,7 @@ import {
   FilterOption,
   FooterNavLink,
 } from "@/types/index.types";
-import { EnterprisePlanComparison, Testimonial } from "@/types/types";
+import { EnterprisePlanComparison, DefaultTestimonial } from "@/types/types";
 
 export const NavLinks: NavLink[] = [
   {
@@ -95,7 +95,7 @@ export const OtherNavLinks: NavLink[] = [
   },
 ];
 
-export const Testimonials: Testimonial[] = [
+export const Testimonials: DefaultTestimonial[] = [
   {
     id: 1,
     author: "Emily Wilson",

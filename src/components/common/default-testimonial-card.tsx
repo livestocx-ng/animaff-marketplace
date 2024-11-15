@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import {FaStar} from 'react-icons/fa';
-import {Testimonial} from '@/types/types';
+import {DefaultTestimonial} from '@/types/types';
 
-const TestimonialCard = ({data}: {data: Testimonial}) => {
+const DefaultTestimonialCard = ({data}: {data: DefaultTestimonial}) => {
 	return (
 		<div className='flex flex-col items-center justify-center space-y-5 md:w-[350px] bg-white border rounded-lg px-8 py-8 mb-5 md:mb-0'>
 			<div className='flex space-x-3 items-center'>
@@ -11,7 +11,7 @@ const TestimonialCard = ({data}: {data: Testimonial}) => {
 				))}
 			</div>
 
-			<p className='text-center text-xs'>{data.testimonial}</p>
+			<p className='text-center text-xs'>{data.description}</p>
 
 			<div className='flex items-center text-main font-medium space-x-4'>
 				<div className='w-[50px] h-[50px] relative'>
@@ -20,7 +20,7 @@ const TestimonialCard = ({data}: {data: Testimonial}) => {
 						// height={50}
 						fill
 						alt='testimonial'
-						src={data.avatarUrl}
+						src={data.avatar}
 						unoptimized={true}
 						className='rounded-full object-cover border border-slate-400 shadow-md'
 					/>
@@ -32,4 +32,4 @@ const TestimonialCard = ({data}: {data: Testimonial}) => {
 	);
 };
 
-export default TestimonialCard;
+export default DefaultTestimonialCard;

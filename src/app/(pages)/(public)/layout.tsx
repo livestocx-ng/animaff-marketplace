@@ -51,6 +51,7 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 
 	const {
 		updateBlogs,
+		updateTestimonials,
 		updateVendorProfile,
 		updatePromotionPlans,
 		updateChatConversations,
@@ -249,10 +250,14 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 	const fetchSubscriptionPlans = async () => {
 		try {
 			const [
+				testimonialsRequest,
 				promotionPlansRequest,
 				premiumSubscriptionPlansRequest,
 				userProductUploadSubscriptionRequest,
 			] = await Promise.all([
+				axios.get(
+					`${process.env.NEXT_PUBLIC_API_URL}/utilities/testimonials`
+				),
 				axios.get(
 					`${process.env.NEXT_PUBLIC_API_URL}/promotions/plans`
 				),
@@ -264,15 +269,13 @@ const PagesLayout = ({children}: PagesLayoutProps) => {
 				),
 			]);
 
+			updateTestimonials(testimonialsRequest.data.data);
+
 			updatePromotionPlans(promotionPlansRequest.data.data);
 
-			updatePremiumSubscriptionPlans(
-				premiumSubscriptionPlansRequest.data.data
-			);
+			updatePremiumSubscriptionPlans(premiumSubscriptionPlansRequest.data.data);
 
-			updateProductUploadSubscriptionPlans(
-				userProductUploadSubscriptionRequest.data.data
-			);
+			updateProductUploadSubscriptionPlans(userProductUploadSubscriptionRequest.data.data);
 		} catch (error) {
 			const _error = error as AxiosError;
 
