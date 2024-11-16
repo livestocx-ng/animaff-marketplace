@@ -8,7 +8,7 @@ const TestimonialSection = () => {
 
 	return (
 		<div className='flex items-center justify-between flex-wrap gap-y-2 sm:gap-y-5 px-4 md:px-8 py-5 bg-white'>
-			{testimonials.length === 0 ? (
+			{testimonials?.length === 0 ? (
 				<>
 					{Testimonials.map((testimonial) => (
 						<DefaultTestimonialCard
@@ -19,7 +19,7 @@ const TestimonialSection = () => {
 				</>
 			) : (
 				<>
-					{testimonials.map((testimonial) => (
+					{testimonials?.map((testimonial) => (
 						<TestimonialCard
 							data={testimonial}
 							key={testimonial.id}

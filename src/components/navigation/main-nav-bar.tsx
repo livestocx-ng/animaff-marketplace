@@ -113,11 +113,28 @@ const MainNavbar = () => {
 		}
 	};
 
+
+	console.log(user);
+
 	return (
 		<div className='relative'>
 			{user && !userProductUploadSubscription && (
-				<div className='fixed z-[12] bg-gradient-to-r from-red-700 to-red-400 w-full py-2 text-center text-white text-[10px] md:text-xs font-semibold'>
-					Your post ads subscription has expired!
+				<div className='fixed z-[12] bg-gradient-to-r from-red-700 to-red-400 w-full py-2 text-center text-white text-[10px] md:text-xs font-semibold flex space-x-2 justify-center'>
+					<p className='text-[10px]'>
+						{user?.productUploadLimit === 0
+							? 'Your subscription has expired!'
+							: 'Your free trial subscription has expired!'}
+					</p>
+					<Link href={'/account?createAd=true'}>
+						<Button
+							type='button'
+							variant={'default'}
+							className={`bg-white text-black hover:bg-white hover:text-black text-[10px] h-2 w-fit`}
+							onClick={() => {}}
+						>
+							Renew!
+						</Button>
+					</Link>
 				</div>
 			)}
 
@@ -138,7 +155,7 @@ const MainNavbar = () => {
 			<nav
 				className={`w-full py-4 px-8 hidden fixed z-10 lg:flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
-				} ${(user && !userProductUploadSubscription) && 'mt-[29px]'}  ${
+				} ${user && !userProductUploadSubscription && 'mt-[29px]'}  ${
 					userProductUploadSubscription &&
 					checkProductUploadSubscriptionExpiration(
 						userProductUploadSubscription
@@ -473,7 +490,7 @@ const MainNavbar = () => {
 			<div
 				className={`w-full py-1 px-4 pl-1 lg:pl-8 lg:px-8 lg:hidden fixed z-10 flex items-center justify-between ${
 					scrolling && 'bg-main backdrop-blur-sm'
-				}  ${
+				} ${user && !userProductUploadSubscription && 'mt-[29px]'} ${
 					userProductUploadSubscription &&
 					checkProductUploadSubscriptionExpiration(
 						userProductUploadSubscription
