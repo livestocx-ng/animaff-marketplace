@@ -18,7 +18,8 @@ import FormTextInput from '@/components/input/form-text-input';
 import {Fragment, Suspense, useEffect, useReducer, useState} from 'react';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
-import { FaStar } from 'react-icons/fa';
+import {FaStar} from 'react-icons/fa';
+import { Testimonial } from '@/types/types';
 
 type FormData = {
 	firstName: string;
@@ -80,7 +81,28 @@ const SignUpPageContent = () => {
 	const welcomeFarmerModal = useUpdateWelcomeFarmerModalStore();
 
 	const [loading, setLoading] = useState<boolean>(false);
+	const [currentIndex, setCurrentIndex] = useState<number>(0);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
+	const [currentTestimonial, setCurrentTestimonial] = useState<Testimonial | null>(null);
+
+	const shuffleTestimonials = () => {
+		if (testimonials.length === 0) {
+			setCurrentTestimonial(null);
+			return;
+		}
+
+		if (!currentTestimonial) {
+			setCurrentTestimonial(testimonials[0]);
+		}
+
+		return setInterval(() => {
+			setCurrentIndex((prevIndex) => {
+				const nextIndex = (prevIndex + 1) % testimonials.length;
+				setCurrentTestimonial(testimonials[nextIndex]);
+				return nextIndex;
+			});
+		}, 7000);
+	};
 
 	const fetchTestimonials = async () => {
 		try {
@@ -95,6 +117,16 @@ const SignUpPageContent = () => {
 			// console.log('[FETCH-TESTIMONIALS-ERROR] :: ', _error);
 		}
 	};
+
+	useEffect(() => {
+		const intervalId = shuffleTestimonials();
+
+		return () => {
+			if (intervalId) {
+				clearInterval(intervalId);
+			}
+		};
+	}, [testimonials]);
 
 	useEffect(() => {
 		fetchTestimonials();
@@ -191,7 +223,7 @@ const SignUpPageContent = () => {
 		<Fragment>
 			<MainNavbar />
 			<div className='w-full'>
-				<section className='h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
+				<section className='h-[18vh] md:h-[35vh] w-full bg-home flex flex-col items-center justify-center pt-10 md:pt-0'>
 					<h1 className='text-xl md:text-5xl font-medium text-white'>
 						Sign Up
 					</h1>
@@ -203,9 +235,9 @@ const SignUpPageContent = () => {
 						onSubmit={handleSubmit}
 						className='w-[90%] sm:w-[600px] py-10 px-4 sm:px-10 border rounded shadow-md flex flex-col space-y-8'
 					>
-						<h1 className='text-center text-2xl font-semibold'>
+						{/* <h1 className='text-center text-2xl font-semibold'>
 							Sign Up
-						</h1>
+						</h1> */}
 						<div className='space-y-4'>
 							<FormTextInput
 								name='firstName'
@@ -443,45 +475,46 @@ const SignUpPageContent = () => {
 						</div>
 
 						<div className='w-full overflow-x-auto gap-x-2 flex'>
-							{testimonials.length > 0 &&
-								testimonials.map((data) => (
-									<div
-										key={data.id}
-										className='flex flex-col items-center justify-between space-y-5 border rounded-lg px-4 py-4 md:mb-0'
-									>
-										<div className='flex space-x-3 items-center w-full'>
-											{[1, 2, 3, 4, 5].map((item) => (
-												<FaStar
-													key={item}
-													className='text-orange-500'
-													size={13}
-												/>
-											))}
-										</div>
-
-										<p className='text-center text-[10px] w-full leading-4'>
-											{data.testimonial}
-										</p>
-
-										<div className='flex flex-col w-full items-center text-main font-medium mt-5'>
-											<div className='w-[35px] h-[35px] relative'>
-												<Image
-													fill
-													// width={50}
-													// height={50}
-													alt='testimonial'
-													unoptimized={true}
-													src={data.avatarUrl}
-													className='rounded-full object-cover border border-slate-400 shadow-md'
-												/>
-											</div>
-
-											<p className='text-[10px] text-center'>
-												{data.author}
-											</p>
-										</div>
+							{currentTestimonial && (
+								<div
+									// key={data.id}
+									className='flex flex-col items-center justify-between space-y-5 border rounded-lg px-4 py-4 md:mb-0'
+								>
+									<div className='flex space-x-3 items-center justify-center w-full'>
+										{[1, 2, 3, 4, 5].map((item) => (
+											<FaStar
+												key={item}
+												className='text-orange-500'
+												size={13}
+											/>
+										))}
 									</div>
-								))}
+
+									<p className='text-center text-[10px] w-full leading-4'>
+										{currentTestimonial.testimonial}
+									</p>
+
+									<div className='flex flex-col w-full items-center text-main font-medium mt-5'>
+										<div className='w-[35px] h-[35px] relative'>
+											<Image
+												fill
+												// width={50}
+												// height={50}
+												alt='testimonial'
+												unoptimized={true}
+												src={
+													currentTestimonial.avatarUrl
+												}
+												className='rounded-full object-cover border border-slate-400 shadow-md'
+											/>
+										</div>
+
+										<p className='text-[10px] text-center'>
+											{currentTestimonial.author}
+										</p>
+									</div>
+								</div>
+							)}
 						</div>
 					</form>
 				</div>
