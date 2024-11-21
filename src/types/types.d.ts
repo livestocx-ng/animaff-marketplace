@@ -369,3 +369,15 @@ export interface EnterprisePlanComparison {
 	platform: string;
 	customBusinessWebsite: string;
 }
+
+export type GridItem =
+	| {
+			type: 'product';
+			id: string;
+			product: Product;
+	  }
+	| {
+			type: 'testimonial';
+			id: string;
+			testimonial: Testimonial;
+	  };

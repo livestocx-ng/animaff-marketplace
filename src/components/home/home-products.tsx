@@ -1,11 +1,12 @@
 'use client';
 import {RotateCw} from 'lucide-react';
+import { createGridItems } from '@/utils';
 import {usePathname} from 'next/navigation';
 import {Button} from '@/components/ui/button';
-import {useGlobalStore} from '@/hooks/use-global-store';
-import {Dispatch, Fragment, SetStateAction, useState} from 'react';
-import ProductCardSkeleton from '@/components/skeletons/product-card-skeleton';
 import ProductCard from '../cards/product-card';
+import {useGlobalStore} from '@/hooks/use-global-store';
+import TestimonialCard from '../common/testimonial-card';
+import {Dispatch, Fragment, SetStateAction, useState} from 'react';
 
 interface Tab {
 	id: number;
@@ -33,7 +34,7 @@ const TabItems: Tab[] = [
 
 const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 	const pathName = usePathname();
-	const {products, totalPages, hasNextPage} = useGlobalStore();
+	const {products, totalPages, hasNextPage, testimonials} = useGlobalStore();
 
 	const [currentTab, setCurrentTab] = useState<Tab>(TabItems[0]);
 
@@ -67,9 +68,19 @@ const HomeProducts = ({currentPage, updateCurrentPage}: HomeProductsProps) => {
 			</div>
 
 			<div className='flex flex-wrap items-center w-full justify-evenly gap-y-2 gap-x-2 sm:gap-x-2 md:gap-x-2 mt-2'>
-				{products?.map((product) => (
+				{/* {products?.map((product) => (
 					<ProductCard key={product.id} product={product} />
-				))}
+				))} */}
+				{createGridItems(products, testimonials, 4).map((item, index) =>
+					item.type === 'product' ? (
+						<ProductCard key={item.id} product={item.product} />
+					) : (
+						<TestimonialCard
+							key={item.id}
+							data={item.testimonial}
+						/>
+					)
+				)}
 			</div>
 
 			{!hasNextPage && totalPages > 1 && (
