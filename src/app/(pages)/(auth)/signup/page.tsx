@@ -19,7 +19,7 @@ import {Fragment, Suspense, useEffect, useReducer, useState} from 'react';
 import FormPasswordInput from '@/components/input/form-password-input';
 import {ValidateSignupFormData} from '@/utils/form-validations/auth.validation';
 import {FaStar} from 'react-icons/fa';
-import { Testimonial } from '@/types/types';
+import {Testimonial} from '@/types/types';
 
 type FormData = {
 	firstName: string;
@@ -83,7 +83,8 @@ const SignUpPageContent = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 	const [formData, updateFormData] = useReducer(formReducer, initialState);
-	const [currentTestimonial, setCurrentTestimonial] = useState<Testimonial | null>(null);
+	const [currentTestimonial, setCurrentTestimonial] =
+		useState<Testimonial | null>(null);
 
 	const shuffleTestimonials = () => {
 		if (testimonials.length === 0) {
@@ -478,24 +479,10 @@ const SignUpPageContent = () => {
 							{currentTestimonial && (
 								<div
 									// key={data.id}
-									className='flex flex-col items-center justify-between space-y-5 border rounded-lg px-4 py-4 md:mb-0'
+									className='flex flex-col items-cente justify-between space-y-3 border rounded-lg p-2 md:mb-0 w-full'
 								>
-									<div className='flex space-x-3 items-center justify-center w-full'>
-										{[1, 2, 3, 4, 5].map((item) => (
-											<FaStar
-												key={item}
-												className='text-orange-500'
-												size={13}
-											/>
-										))}
-									</div>
-
-									<p className='text-center text-[10px] w-full leading-4'>
-										{currentTestimonial.testimonial}
-									</p>
-
-									<div className='flex flex-col w-full items-center text-main font-medium mt-5'>
-										<div className='w-[35px] h-[35px] relative'>
+									<div className='flex items-center text-main font-medium space-x-3'>
+										<div className='w-[45px] h-[45px] relative'>
 											<Image
 												fill
 												// width={50}
@@ -509,10 +496,24 @@ const SignUpPageContent = () => {
 											/>
 										</div>
 
-										<p className='text-[10px] text-center'>
+										<p className='text-xs '>
 											{currentTestimonial.author}
 										</p>
+
+										<div className='flex space-x-1 items-center'>
+											{[1, 2, 3, 4, 5].map((item) => (
+												<FaStar
+													key={item}
+													className='text-orange-500'
+													size={13}
+												/>
+											))}
+										</div>
 									</div>
+
+									<p className='text-center text-xs md:text-sm w-full leading-4'>
+										{currentTestimonial.testimonial}
+									</p>
 								</div>
 							)}
 						</div>
