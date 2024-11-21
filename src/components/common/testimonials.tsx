@@ -19,7 +19,7 @@ const TestimonialSection = () => {
 				</>
 			) : (
 				<>
-					{testimonials?.map((testimonial) => (
+					{testimonials?.slice(0, 3).map((testimonial) => (
 						<TestimonialCard
 							data={testimonial}
 							key={testimonial.id}
