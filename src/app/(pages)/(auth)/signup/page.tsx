@@ -183,6 +183,7 @@ const SignUpPageContent = () => {
 			const emailAvailability = await axios.get(
 				`${process.env.NEXT_PUBLIC_API_URL}/auth/email-availability?email=${formData.email}`
 			);
+			
 
 			if (emailAvailability.data.data === true) {
 				setLoading(false);
@@ -192,7 +193,7 @@ const SignUpPageContent = () => {
 				});
 			}
 
-			const {data} = await axios.post('/api/auth/signup', formData);
+			const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, formData);
 
 			if (data?.ok == false) {
 				setLoading(false);
@@ -214,7 +215,7 @@ const SignUpPageContent = () => {
 		} catch (error) {
 			setLoading(false);
 
-			// console.error('[SIGNUP-ERROR]', error);
+			console.error('[SIGNUP-ERROR]', error);
 
 			toast.error('An error occurred', {className: 'text-sm'});
 		}
