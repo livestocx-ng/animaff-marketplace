@@ -1,4 +1,6 @@
 'use client';
+import Link from 'next/link';
+import Image from 'next/image';
 import {
 	useGlobalStore,
 	useUpdateSearchLocationModalStore,
@@ -73,11 +75,11 @@ const SearchForm = () => {
 				{!pathName.includes('sellers') &&
 					!pathName.includes('marketplace') && (
 						<div className='flex items-center space-x-3 pb-2 md:pb-0'>
-							{/* <Link
+							 <Link
 							className=''
 							target='_blank'
 							href={
-								'https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile&pcampaignid=web_share'
+								'https://play.google.com/store/apps/details?id=com.livestocx.animaff&pcampaignid=web_share'
 							}
 						>
 							<Image
@@ -88,7 +90,7 @@ const SearchForm = () => {
 								className='object-contain'
 								src={'/icon__playstore__2.svg'}
 							/>
-						</Link> */}
+						</Link> 
 
 							<p
 								onClick={() =>
