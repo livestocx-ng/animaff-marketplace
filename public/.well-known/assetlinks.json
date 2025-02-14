@@ -1,11 +1,15 @@
 [
 	{
-		"relation": ["delegate_permission/common.handle_all_urls"],
+		"relation": [
+			"delegate_permission/common.handle_all_urls",
+			"delegate_permission/common.get_login_creds"
+		],
 		"target": {
 			"namespace": "android_app",
 			"package_name": "com.livestocx.animaff",
 			"sha256_cert_fingerprints": [
-				"E3:3A:E4:BC:34:CD:D3:C4:F3:CD:DE:51:B5:1C:83:A9:84:0B:63:71:C4:0C:48:9A:5F:E9:60:3C:AD:8F:C0:3A"
+				"E3:3A:E4:BC:34:CD:D3:C4:F3:CD:DE:51:B5:1C:83:A9:84:0B:63:71:C4:0C:48:9A:5F:E9:60:3C:AD:8F:C0:3A",
+				"91:E0:E6:A8:EB:7A:E1:1A:36:D4:47:91:67:55:11:BB:59:DC:6D:04:B9:6A:2D:61:57:FB:17:4E:CD:F4:00:CC"
 			]
 		}
 	}
